@@ -86,7 +86,7 @@ public class Actividad {
 	    
 	        return false;
 	    }
-	
+	 
 	
     public void agregarActividadPrevia(Actividad actividad) {
         this.actividadesPreviasSugeridas.add(actividad);
