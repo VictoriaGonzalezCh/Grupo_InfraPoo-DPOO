@@ -9,10 +9,10 @@ import uniandes.dpoo.learningpath.LearningPath;
 
 public class Estudiante extends Usuario {
 	
-	private static List<Actividad> actividadesCompletadas; 
+	private List<Actividad> actividadesCompletadas; 
     private List<LearningPath> learningPathsCompletados;
     private List<LearningPath> learningPathsEnCurso;
-    private static List<Actividad> actividadesEnCurso;
+    private List<Actividad> actividadesEnCurso;
 	
 	public static Estudiante nuevoEstudiante(int id, String login, String contraseña) {
 		return new Estudiante(id, login, contraseña);
@@ -22,13 +22,14 @@ public class Estudiante extends Usuario {
 	public Estudiante(int id, String login, String contraseña) {
 		this.login = login;
 		this.contraseña = contraseña;
-		Estudiante.actividadesCompletadas = new ArrayList<>();
+		this.actividadesCompletadas = new ArrayList<>();
 		this.learningPathsCompletados = new ArrayList<>();
-		Estudiante.actividadesEnCurso = new ArrayList<>();
+		this.actividadesEnCurso = new ArrayList<>();
+		this.learningPathsEnCurso = new ArrayList<>();
 	}
 	
-	public static void registrarseLearningPath(Estudiante estudiante, LearningPath learningPath) {
-		estudiante.learningPathsEnCurso.add(learningPath);
+	public void registrarseLearningPath(LearningPath learningPath) {
+		this.learningPathsEnCurso.add(learningPath);
 	}
 	
 	public void learningPathCompletada(LearningPath learningPath) {
@@ -42,14 +43,14 @@ public class Estudiante extends Usuario {
 		else {System.out.println("La actividad no esta en curso");}
 	}
 	
-	private static boolean verificarPrerequisitos(Actividad actividad) {
+	private boolean verificarPrerequisitos(Actividad actividad) {
 		List<Actividad> prerequisitos = actividad.getPrerequisitos();
 		if (prerequisitos.contains(actividad) && actividadesCompletadas.contains(actividad)) 
 			{return true;}
 		return false;
 	}
 	
-	public static void iniciarActividad(Actividad actividad) {
+	public void iniciarActividad(Actividad actividad) {
 		if (!verificarPrerequisitos(actividad)) 
 			{System.out.println("Advertencia: No se pueden iniciar actividades sin completar los prerequisitos");
 			}
@@ -66,7 +67,7 @@ public class Estudiante extends Usuario {
 	}
 	
 	
-	public static double establecerProgresoEstudiante(LearningPath learningPath) {
+	public double establecerProgresoEstudiante(LearningPath learningPath) {
 		List<Actividad> actividadesObligatorias = learningPath.obtenerActividadesObligatorias();
 		List<Actividad> actividadesObligatoriasCompletadas = new ArrayList<>();
 		
@@ -87,7 +88,7 @@ public class Estudiante extends Usuario {
 	}
 
 	public void setActividadesCompletadas(List<Actividad> actividadesCompletadas) {
-		Estudiante.actividadesCompletadas = actividadesCompletadas;
+		this.actividadesCompletadas = actividadesCompletadas;
 	}
 
 	public List<LearningPath> getLearningPathsCompletados() {
@@ -103,10 +104,10 @@ public class Estudiante extends Usuario {
 	}
 
 	public void setActividadesEnCurso(List<Actividad> actividadesEnCurso) {
-		Estudiante.actividadesEnCurso = actividadesEnCurso;
+		this.actividadesEnCurso = actividadesEnCurso;
 	}
 
-	public static Feedback crearFeedbackEstudiante(Estudiante autor, Actividad actividad, int rating, String comentario) {
+	public Feedback crearFeedbackEstudiante(Estudiante autor, Actividad actividad, int rating, String comentario) {
         // El profesor puede crear un feedback
         Feedback feedback = new Feedback(autor, comentario, rating, actividad);
         //System.out.println("Feedback creado por el estudiante: " + getLogin());

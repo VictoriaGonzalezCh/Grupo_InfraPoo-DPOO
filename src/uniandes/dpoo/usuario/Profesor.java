@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import uniandes.dpoo.learningpath.Actividad;
+import uniandes.dpoo.learningpath.Encuesta;
 import uniandes.dpoo.learningpath.Examen;
 import uniandes.dpoo.learningpath.Feedback;
 import uniandes.dpoo.learningpath.LearningPath;
@@ -124,7 +125,7 @@ public class Profesor extends Usuario {
 	            break;
 	            
 	        case "examen":
-	        	System.out.println("Especifique cuentas preguntas de opcion multiple quiere que tenga el quiz: ");
+	        	System.out.println("Especifique cuantas preguntas de opcion multiple quiere que tenga el quiz: ");
 	            String numPreguntasExamen = scanner.nextLine();
 	        	
 	            Examen actividadExamen = new Examen(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
@@ -134,6 +135,17 @@ public class Profesor extends Usuario {
 	            actividad = actividadExamen;
 	            
 	            break;  
+	        case "encuesta":
+	        	System.out.println("Especifique cuantas preguntas de opcion multiple quiere que tenga el quiz: ");
+	            String numPreguntasEncuesta = scanner.nextLine();
+	        	
+	            Encuesta actividadEncuesta = new Encuesta(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+	            for (int i = 0; i < Integer.parseInt(numPreguntasEncuesta); i++) {
+	            	actividadEncuesta.agregarPregunta(scanner);
+	            }
+	            actividad = actividadEncuesta;
+	            
+	            break; 
 	            
 	        default:
 	            System.out.println("Tipo de actividad no reconocido.");
@@ -172,7 +184,7 @@ public class Profesor extends Usuario {
 	}
 	
 	
-	public static Feedback crearFeedbackProfesor(Profesor autor, Actividad actividad, int rating, String comentario) {
+	public Feedback crearFeedbackProfesor(Profesor autor, Actividad actividad, int rating, String comentario) {
         // El profesor puede crear un feedback
         Feedback feedback = new Feedback(autor, comentario, rating, actividad);
         
