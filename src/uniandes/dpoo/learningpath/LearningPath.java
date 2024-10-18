@@ -1,7 +1,10 @@
 package uniandes.dpoo.learningpath;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import uniandes.dpoo.usuario.Estudiante;
 
 public class LearningPath {
 	
@@ -13,7 +16,7 @@ public class LearningPath {
 	private String duracionMinutos;
 	private String rating;
 	private List<Actividad> listaActividades;
-	
+	private HashMap<Estudiante, ProgresoEstudiante> progresoEstudiantes;
 	
 	public LearningPath() {
 		this.listaActividades = new ArrayList<>();
@@ -28,8 +31,34 @@ public class LearningPath {
 		this.duracionMinutos = duracionMinutos;
 		this.rating = rating;
 		this.listaActividades = new ArrayList<>();
+		this.progresoEstudiantes = new HashMap<>();
 	}
 	
+	
+	public ProgresoEstudiante obtenerProgresoDeEstudiante(Estudiante estudiante) {
+        return progresoEstudiantes.get(estudiante);
+    }
+
+    public void registrarProgresoEstudiante(Estudiante estudiante, ProgresoEstudiante progreso) {
+        progresoEstudiantes.put(estudiante, progreso);
+    }
+    
+	public void registrarActividadCompletadaPorEstudiante(Estudiante estudiante, Actividad actividad) {
+        // Obtener o crear el progreso del estudiante
+        ProgresoEstudiante progreso = progresoEstudiantes.get(estudiante);
+        if (progreso == null) {
+            progreso = new ProgresoEstudiante();
+            progresoEstudiantes.put(estudiante, progreso);
+        }
+        
+        // Añadir las respuestas para la actividad completada
+        progreso.añadirRespuestasEstudiante(actividad);
+        
+        // Actualiza otras métricas como la fecha de finalización
+        progreso.setFechaFinalizacion("Ahora");
+        //progreso.setTasaExitoFracaso(calcularTasaExito(actividad));  // Calcula la tasa de éxito
+    }
+    
 	
 	public void agregarActividad(Actividad actividad) {
 		this.listaActividades.add(actividad);

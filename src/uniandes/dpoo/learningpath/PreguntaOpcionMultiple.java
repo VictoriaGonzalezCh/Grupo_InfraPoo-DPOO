@@ -50,6 +50,10 @@ public class PreguntaOpcionMultiple {
         }
     }
 	
+	public void mostrarRespuestas() {
+		System.out.println("Explicacion y respuesta: " + respuestaCorrecta + explicacion);
+	}
+	
 	public String getEnunciado() {
         return enunciado;
     }

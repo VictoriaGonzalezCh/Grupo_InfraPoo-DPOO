@@ -41,9 +41,6 @@ public class Tarea extends Actividad {
         return estado;
     }
 
-    
-	
-	
 	
     public String getMedioEntrega() {
         return medioEntrega;

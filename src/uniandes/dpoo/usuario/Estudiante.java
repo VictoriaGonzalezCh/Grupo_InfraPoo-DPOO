@@ -2,10 +2,16 @@ package uniandes.dpoo.usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import uniandes.dpoo.learningpath.Actividad;
+import uniandes.dpoo.learningpath.Encuesta;
+import uniandes.dpoo.learningpath.Examen;
 import uniandes.dpoo.learningpath.Feedback;
 import uniandes.dpoo.learningpath.LearningPath;
+import uniandes.dpoo.learningpath.ProgresoEstudiante;
+import uniandes.dpoo.learningpath.Quiz;
+import uniandes.dpoo.learningpath.Tarea;
 
 public class Estudiante extends Usuario {
 	
@@ -59,11 +65,37 @@ public class Estudiante extends Usuario {
 		
 	}
 	
+	private boolean verificarLearningPathCompletado(LearningPath learningPath) {
+	    List<Actividad> actividadesObligatorias = learningPath.obtenerActividadesObligatorias();
+	    for (Actividad actividad : actividadesObligatorias) {
+	        if (!actividadesCompletadas.contains(actividad)) {
+	            return false; // Aún no se han completado todas las actividades
+	        }
+	    }
+	    return true; // Todas las actividades obligatorias están completadas
+	}
+	
+	
 	public void registrarActividadCompletada(Actividad actividad) {
-		if (actividadesEnCurso.contains(actividad)) 
-			{if (actividad.getResultado() == "exitoso" ) 
-				{actividadesCompletadas.add(actividad); actividadesEnCurso.remove(actividad);}}
-		else {System.out.println("La actividad no esta en curso");}
+	    if (actividadesEnCurso.contains(actividad)) {
+	        if (actividad.getResultado().equals("exitoso")) {
+	            actividadesCompletadas.add(actividad);
+	            actividadesEnCurso.remove(actividad);
+
+	            // Verificar si se completó el LearningPath
+	            for (LearningPath lp : learningPathsEnCurso) {
+	                if (lp.obtenerActividadesObligatorias().contains(actividad)) {
+	                    if (verificarLearningPathCompletado(lp)) {
+	                        learningPathsCompletados.add(lp);
+	                        learningPathsEnCurso.remove(lp);
+	                        System.out.println("LearningPath completado: " + lp.getTitulo());
+	                    }
+	                }
+	            }
+	        }
+	    } else {
+	        System.out.println("La actividad no está en curso.");
+	    }
 	}
 	
 	
@@ -108,11 +140,37 @@ public class Estudiante extends Usuario {
 	}
 
 	public Feedback crearFeedbackEstudiante(Estudiante autor, Actividad actividad, int rating, String comentario) {
-        // El profesor puede crear un feedback
+        // El estudiante puede crear un feedback
         Feedback feedback = new Feedback(autor, comentario, rating, actividad);
         //System.out.println("Feedback creado por el estudiante: " + getLogin());
         actividad.agregarFeedback(feedback);
         return feedback;
     }
+	
+	public void realizarActividad(Actividad actividad, LearningPath lp, Scanner scanner) {
+	    if (actividad instanceof Quiz) {
+	        Quiz quiz = (Quiz) actividad;  // Realizamos un cast
+	        quiz.responderPreguntas(scanner);  // Invocamos el método
+	        
+	    } else if (actividad instanceof Examen) {
+	        Examen examen = (Examen) actividad;
+	        examen.responderPreguntas(scanner);
+	        
+	    } else if (actividad instanceof Encuesta) {
+	        Encuesta encuesta = (Encuesta) actividad;
+	        encuesta.responderPreguntas(scanner);
+	        encuesta.setEstado("enviado");
+	        
+	    } else if (actividad instanceof Tarea) {
+	        //Tarea tarea = (Tarea) actividad;
+	        //tarea.responderTareas(scanner);
+	        
+	    } else {
+	        System.out.println("Tipo de actividad no soportada.");
+	    }
+	    
+	    registrarActividadCompletada(actividad);
+	    lp.registrarActividadCompletadaPorEstudiante(this, actividad);
+	}
 
 }

@@ -1,7 +1,9 @@
 package uniandes.dpoo.learningpath;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import uniandes.dpoo.usuario.Profesor;
@@ -10,6 +12,7 @@ public class Encuesta extends Actividad {
 	
 	private List<PreguntaAbierta> preguntasAbiertas;
 	String estado = "no enviada";
+	private HashMap<PreguntaAbierta, String> respuestasEstudiante = new HashMap<>(); 
 	
 	public Encuesta(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
             List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
@@ -65,6 +68,42 @@ public class Encuesta extends Actividad {
             System.out.println();  
         }
     }
+	
+	public void responderPreguntas(Scanner scanner) {
+		if (preguntasAbiertas == null || preguntasAbiertas.isEmpty()) {
+	        System.out.println("No hay preguntas para responder.");
+	        return;
+	    }
+		
+		System.out.println("Responda las siguientes preguntas: ");
+        for (PreguntaAbierta pregunta : preguntasAbiertas) {
+            pregunta.mostrarPregunta();
+        	String respuestaIngresada = scanner.nextLine();
+        	respuestasEstudiante.put(pregunta, respuestaIngresada); 
+        }
+        
+    }
+	
+	public void mostrarRespuestasEstudiante() {
+	    if (respuestasEstudiante.isEmpty()) {
+	        System.out.println("No hay respuestas disponibles para esta actividad.");
+	        return;
+	    }
+
+	    System.out.println("Respuestas del estudiante para la actividad:");
+	    for (Entry<PreguntaAbierta, String> entrada : respuestasEstudiante.entrySet()) {
+	        PreguntaAbierta pregunta = entrada.getKey();
+	        String respuesta = entrada.getValue();
+	        
+	        System.out.println("Pregunta: " + pregunta.getEnunciado());
+	        System.out.println("Respuesta del estudiante: " + respuesta);
+	        System.out.println();
+	    }
+	}
+	
+	public HashMap<PreguntaAbierta, String> getRespuestasEstudiante() {
+		return respuestasEstudiante;
+	}
 
 	public List<PreguntaAbierta> getPreguntasAbiertas() {
 		return preguntasAbiertas;

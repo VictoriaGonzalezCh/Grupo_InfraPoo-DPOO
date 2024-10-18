@@ -1,8 +1,10 @@
 package uniandes.dpoo.learningpath;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import uniandes.dpoo.usuario.Estudiante;
 import uniandes.dpoo.usuario.Profesor;
 
 public class Actividad {
@@ -42,7 +44,7 @@ public class Actividad {
 			this.resultado = "pendiente";  // Estado inicial por defecto
 			this.feedbacks = new ArrayList<>();
 			this.actividadesSeguimientoRecomendadas = actividadesSeguimientoRecomendadas;
-			}
+	}
 	
 	public int getId() {
 		return id;
@@ -233,7 +235,10 @@ public class Actividad {
             System.out.println("- " + act.getDescripcion());
         }
     }
+	 
+		
+		
+    }
 	
 	
-	
-}
+

@@ -159,15 +159,18 @@ public class Profesor extends Usuario {
         actividad.setPrerequisitos(prerrequisitos);
     }
 	
-	public void calificarTareasOExamenes(Actividad actividad, boolean esExito) {
+	public void calificarTareasOExamenes(Actividad actividad, Estudiante estudiante, boolean esExito) {
         if (actividad instanceof Tarea) {
             Tarea tarea = (Tarea) actividad;
             tarea.calificarTarea(esExito);
+            
         } else if (actividad instanceof Examen) {
             Examen examen = (Examen) actividad;
+            examen.mostrarRespuestasEstudiante();
             examen.calificarExamen();
         }
     }
+	
 	
 	
 	public void editarResultado(Actividad actividad, String cambioResultado) {

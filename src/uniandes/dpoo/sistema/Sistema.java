@@ -73,6 +73,21 @@ public class Sistema {
     	return resultado;
     	}
     
+    public LearningPath buscarLearningPathPorActividad(Actividad actividadEncontrada) {
+        // Recorrer todos los LearningPaths disponibles
+        for (LearningPath lp : learningPaths) {
+            // Recorrer las actividades de cada LearningPath
+            for (Actividad actividad : lp.obtenerListaActividades()) {
+                // Si la actividad coincide, retornar el LearningPath correspondiente
+                if (actividad.equals(actividadEncontrada)) {
+                    return lp;
+                }
+            }
+        }
+        // Si no se encuentra ningún LearningPath que contenga la actividad, retornar null
+        return null;
+    }
+    
     
     public Actividad buscarActividadPorId(int id) {
     	Actividad resultado = null;
@@ -87,18 +102,18 @@ public class Sistema {
     }
     
     
-    public Estudiante stringAEstudiante(String login) {
+    public Estudiante stringAEstudiante(int id) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getLogin().equals(login) && usuario instanceof Estudiante) {
+            if (usuario.getId() == (id) && usuario instanceof Estudiante) {
                 return (Estudiante) usuario;  // Hacemos un cast a Estudiante
             }
         }
         return null;  // Si no se encuentra, retorna null
     }
     
-    public Profesor stringAProfesor(String login) {
+    public Profesor stringAProfesor(int id) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getLogin().equals(login) && usuario instanceof Profesor) {
+            if (usuario.getId() == (id) && usuario instanceof Profesor) {
                 return (Profesor) usuario; 
             }
         }
