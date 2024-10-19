@@ -51,10 +51,8 @@ public class ProgresoEstudiante {
 	        
 	    } else if (actividad instanceof Encuesta) {
 	        Encuesta encuesta = (Encuesta) actividad;
-	        respuestasPorEstudianteEncuesta.put(actividad, encuesta.getRespuestasEstudiante() );
-	        
-	    } else if (actividad instanceof Tarea) {
-	        Tarea tarea = (Tarea) actividad;
+	        respuestasPorEstudianteEncuesta.put(actividad, encuesta.getRespuestasEstudiante() );    
+	    
 	        
 	    }}
 	
