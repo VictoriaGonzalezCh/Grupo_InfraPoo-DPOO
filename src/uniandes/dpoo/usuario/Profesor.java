@@ -100,15 +100,15 @@ public class Profesor extends Usuario {
 	        case "recurso educativo":
 	        	System.out.println("Especifique el tipo de recurso para el recurso educativo: ");
 	             String tipoRecurso = scanner.nextLine();
+	             System.out.println("Escriba lo que quiere que tenga el recurso: ");
+	             String recurso = scanner.nextLine();
 	             
-	            actividad = new RecursoEducativo(id, tipoRecurso, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+	            actividad = new RecursoEducativo(id, tipoRecurso, recurso, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+	            
 	            break;
 	            
 	        case "tarea":
-	        	 System.out.println("Especifique el medio de entrega para la tarea (por ejemplo, en línea, físico): ");
-	             String medioDeEntrega = scanner.nextLine();
-	            
-	            actividad = new Tarea(id, medioDeEntrega, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+	            actividad = new Tarea(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
 	            break;
 	            
 	        case "quiz":
@@ -146,7 +146,8 @@ public class Profesor extends Usuario {
 	            }
 	            actividad = actividadEncuesta;
 	            
-	            break; 
+	            break;   
+	        
 	            
 	        default:
 	            System.out.println("Tipo de actividad no reconocido.");

@@ -14,14 +14,7 @@ public class Tarea extends Actividad {
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
   super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.estado = "no enviada";
-	}
-	
-	public Tarea(int id, String medioEntrega, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
-            List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
-		this.medioEntrega = medioEntrega;
-		this.estado = "no enviada";
+		this.medioEntrega = "definido por el estudiante";
 	}
 	
 	public void establecermedioEntrega(String medioEntrega) {

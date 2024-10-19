@@ -14,6 +14,7 @@ import uniandes.dpoo.learningpath.PreguntaAbierta;
 import uniandes.dpoo.learningpath.PreguntaOpcionMultiple;
 import uniandes.dpoo.learningpath.ProgresoEstudiante;
 import uniandes.dpoo.learningpath.Quiz;
+import uniandes.dpoo.learningpath.RecursoEducativo;
 import uniandes.dpoo.learningpath.Tarea;
 
 public class Estudiante extends Usuario {
@@ -167,10 +168,19 @@ public class Estudiante extends Usuario {
 	        encuesta.setEstado("enviado");
 	        
 	    } else if (actividad instanceof Tarea) {
-	        //Tarea tarea = (Tarea) actividad;
-	        //tarea.responderTareas(scanner);
-	        
-	    } else {
+	        Tarea tarea = (Tarea) actividad;
+	        tarea.enviarTarea();
+	        System.out.println("Diga por que medio envio la tarea:");
+	        String medioEntrega = scanner.nextLine();
+	        tarea.establecermedioEntrega(medioEntrega);    
+	    }
+		 else if (actividad instanceof RecursoEducativo) {
+			RecursoEducativo recursoEducativo = (RecursoEducativo) actividad;
+			recursoEducativo.mostrarRecurso();
+			recursoEducativo.recursoTerminado();
+		}
+	    
+	    else {
 	        System.out.println("Tipo de actividad no soportada.");
 	    }
 	    
@@ -221,7 +231,6 @@ public class Estudiante extends Usuario {
                 System.out.println("El estudiante no ha respondido este Examen.");
             }
 		}
-		
 		
 	}
 

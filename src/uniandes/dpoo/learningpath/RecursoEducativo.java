@@ -7,6 +7,7 @@ import uniandes.dpoo.usuario.Profesor;
 public class RecursoEducativo extends Actividad {
 
 	String tipoRecurso;
+	String recurso;
 	String estado;
 	
 	public RecursoEducativo(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
@@ -16,12 +17,17 @@ public class RecursoEducativo extends Actividad {
 		this.estado = "no terminada";
 	}
 	
-	public RecursoEducativo(int id, String tipoRecurso, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
+	public RecursoEducativo(int id, String tipoRecurso, String recurso, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
             List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
   super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas); 
 		this.tipoRecurso = tipoRecurso;
+		this.recurso = recurso;
 		this.estado = "no terminada";
+	}
+	
+	public void mostrarRecurso() {
+		System.out.println("Recurso: " + this.recurso);
 	}
 	
 	public void recursoTerminado() {
@@ -33,9 +39,7 @@ public class RecursoEducativo extends Actividad {
 		if (estado.equals("exitosa") ) {resultado = true;}
 		
 		return resultado;
-	}
-
-	
+	}	
 	
 	
 	public String getTipoRecurso() {
