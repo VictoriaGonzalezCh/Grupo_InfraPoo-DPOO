@@ -151,7 +151,9 @@ public class Estudiante extends Usuario {
     }
 	
 	public void realizarActividad(Actividad actividad, LearningPath lp, Scanner scanner) {
-	    if (actividad instanceof Quiz) {
+		lp.obtenerProgresoDeEstudiante(this).setFechaInicio(java.time.LocalDateTime.now().toString());
+		
+		if (actividad instanceof Quiz) {
 	        Quiz quiz = (Quiz) actividad;  // Realizamos un cast
 	        quiz.responderPreguntas(scanner);  // Invocamos el método
 	        
@@ -173,7 +175,7 @@ public class Estudiante extends Usuario {
 	    }
 	    
 	    registrarActividadCompletada(actividad);
-	    lp.registrarRespuestasEstudiante(this, actividad);
+	    lp.registrarActividadCompletadaPorEstudiante(this, actividad);
 	    
 	}
 	
@@ -224,10 +226,6 @@ public class Estudiante extends Usuario {
 	}
 
 	
-	
-	public void calificarEstudiante() {
-		
-	}
 	
 	
 }

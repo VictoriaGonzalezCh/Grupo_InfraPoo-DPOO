@@ -1,5 +1,8 @@
 package uniandes.dpoo.learningpath;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class ProgresoEstudiante {
 	private Actividad actividad;
 	private String fechaInicio;
 	private String fechaFinalizacion;
-	private String tiempoDedicado;
+	private int tiempoDedicado;
 	private int tasaExitoFracaso;
 	
 	
@@ -25,7 +28,7 @@ public class ProgresoEstudiante {
 		this.respuestasPorEstudianteEncuesta = new HashMap<>();
 	}
 		// TODO Auto-generated constructor stub
-	public ProgresoEstudiante(Estudiante estudiante, Actividad actividad, String fechaInicio, String fechaFinalizacion, String tiempoDedicado, int tasaExitoFracaso) {
+	public ProgresoEstudiante(Estudiante estudiante, Actividad actividad, String fechaInicio, String fechaFinalizacion, int tiempoDedicado, int tasaExitoFracaso) {
 		this.estudiante = estudiante;
         this.actividad = actividad;
 		this.fechaInicio = fechaInicio;
@@ -54,7 +57,6 @@ public class ProgresoEstudiante {
 	        Tarea tarea = (Tarea) actividad;
 	        
 	    }}
-	
 	
 	
 	public void cambiarResultadoActividad(Actividad actividad, String nuevoResultado) {
@@ -111,11 +113,11 @@ public class ProgresoEstudiante {
 	public void setFechaFinalizacion(String fechaFinalizacion) {
 		this.fechaFinalizacion = fechaFinalizacion;
 	}
-	public String getTiempoDedicado() {
+	public int getTiempoDedicado() {
 		return tiempoDedicado;
 	}
-	public void setTiempoDedicado(String tiempoDedicado) {
-		this.tiempoDedicado = tiempoDedicado;
+	public void setTiempoDedicado(String tiempoInicial, String tiempoFinal) {
+		this.tiempoDedicado = calculartiempoDedicado(tiempoInicial, tiempoFinal);
 	}
 	public int getTasaExitoFracaso() {
 		return tasaExitoFracaso;
@@ -124,8 +126,18 @@ public class ProgresoEstudiante {
 		this.tasaExitoFracaso = tasaExitoFracaso;
 	}
 	
-	
+	public int calculartiempoDedicado(String tiempoInicial, String tiempoFinal) {
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+		
+		LocalDateTime fechaInicio = LocalDateTime.parse(tiempoInicial, formatter);
+        LocalDateTime fechaFin = LocalDateTime.parse(tiempoFinal, formatter);
+        
+        // Calcular la duración entre las dos fechas
+        Duration duracion = Duration.between(fechaInicio, fechaFin);
+        
+        // Retornar el tiempo dedicado en minutos
+        return (int) duracion.toMinutes(); 
+	}
 	
 		
-	
 }

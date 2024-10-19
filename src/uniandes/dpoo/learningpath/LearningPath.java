@@ -16,12 +16,13 @@ public class LearningPath {
 	private String duracionMinutos;
 	private String rating;
 	private List<Actividad> listaActividades;
-	//private HashMap<Estudiante, ProgresoEstudiante> progresoEstudiantes;
-	private ProgresoEstudiante progresoEstudiante;
+	private HashMap<Estudiante, ProgresoEstudiante> progresoEstudiante;
+	//private ProgresoEstudiante progresoEstudiante;
 	
 	public LearningPath() {
 		this.listaActividades = new ArrayList<>();
-		this.progresoEstudiante = new ProgresoEstudiante();
+		this.progresoEstudiante = new HashMap<>();
+		//this.progresoEstudiante = new ProgresoEstudiante();
 	}
 
 	public LearningPath(int id, String titulo, String descripcionContenido, String descripcionObjetivo, String nivelDificultad, String duracionMinutos, String rating) {
@@ -33,13 +34,14 @@ public class LearningPath {
 		this.duracionMinutos = duracionMinutos;
 		this.rating = rating;
 		this.listaActividades = new ArrayList<>();
-		this.progresoEstudiante = new ProgresoEstudiante();
+		this.progresoEstudiante = new HashMap<>();
+		//this.progresoEstudiante = new ProgresoEstudiante();
 	}
 	
 	
-	//public ProgresoEstudiante obtenerProgresoDeEstudiante(Estudiante estudiante) {
-    //    return progresoEstudiantes.get(estudiante);
-    //}
+	public ProgresoEstudiante obtenerProgresoDeEstudiante(Estudiante estudiante) {
+        return progresoEstudiante.get(estudiante);
+    }
 
     //public void registrarProgresoEstudiante(Estudiante estudiante, ProgresoEstudiante progreso) {
     //    progresoEstudiantes.put(estudiante, progreso);
@@ -65,79 +67,56 @@ public class LearningPath {
 	//	progresoEstudiante.add(actividad);
 	//}
 	
-	public void registrarActividadCompletadaPorEstudiante(Estudiante estudiante, Actividad actividad) {
-        // Obtener o crear el progreso del estudiante
-        ProgresoEstudiante progreso = progresoEstudiante.get(estudiante);
-        if (progreso == null) {
-            progreso = new ProgresoEstudiante();
-            progresoEstudiantes.put(estudiante, progreso);
-        }
-        
-        // Añadir las respuestas para la actividad completada
-        progreso.añadirRespuestasEstudiante(actividad);
-        
-        // Actualiza otras métricas como la fecha de finalización
-        progreso.setFechaFinalizacion("Ahora");
-        //progreso.setTasaExitoFracaso(calcularTasaExito(actividad));  
-        // Calcula la tasa de éxito
-    
-        public void registrarActividadCompletadaPorEstudiante(Estudiante estudiante, Actividad actividad) {
-            // Obtener o crear el progreso del estudiante
-            ProgresoEstudiante progreso = progresoEstudiante.getEstudiante();
-            if (progreso == null) {
-                progreso = new ProgresoEstudiante();
-                progresoEstudiantes.put(estudiante, progreso);
-            }
-            
-            // Registrar las respuestas del estudiante según el tipo de actividad
-            if (actividad instanceof Quiz) {
-                Quiz quiz = (Quiz) actividad;
-                HashMap<PreguntaOpcionMultiple, String> respuestasQuiz = quiz.obtenerRespuestas();
-                progreso.añadirRespuestasEstudiante(actividad, respuestasQuiz); // Guardar respuestas del quiz
-            }
-            else if (actividad instanceof Examen) {
-                Examen examen = (Examen) actividad;
-                HashMap<PreguntaAbierta, String> respuestasExamen = examen.obtenerRespuestas();
-                progreso.añadirRespuestasEstudiante(actividad, respuestasExamen); // Guardar respuestas del examen
-            }
-            else if (actividad instanceof Encuesta) {
-                Encuesta encuesta = (Encuesta) actividad;
-                HashMap<PreguntaAbierta, String> respuestasEncuesta = encuesta.obtenerRespuestas();
-                progreso.añadirRespuestasEstudiante(actividad, respuestasEncuesta); // Guardar respuestas de la encuesta
-            }
-            // Se pueden agregar más tipos de actividades si es necesario
 
-            // Actualizar la fecha de finalización y otros datos relevantes
-            progreso.setFechaFinalizacion(java.time.LocalDateTime.now().toString());  // Guardar la fecha actual
-            progreso.actualizarMetricasExito(actividad);  // Si tienes una lógica para calcular tasa de éxito o fracaso
-        }
+       public void registrarActividadCompletadaPorEstudiante(Estudiante estudiante, Actividad actividad) {
+    	   ProgresoEstudiante progreso = progresoEstudiante.get(estudiante);
+    	   if (progreso == null) {
+    	        // Si no existe, se crea un nuevo progreso y se asocia con el estudiante
+    	        progreso = new ProgresoEstudiante();
+    	        progresoEstudiante.put(estudiante, progreso);
+    	    }
+    	    
+    	    // Añadir las respuestas del estudiante para la actividad completada
+    	    progreso.añadirRespuestasEstudiante(estudiante, actividad);
+    	    
+    	    // Actualizar la fecha de finalización del progreso
+    	    progreso.setFechaFinalizacion(java.time.LocalDateTime.now().toString());
+    	    progreso.setTiempoDedicado(progreso.getFechaInicio(), progreso.getFechaFinalizacion());
+    	}
+    	   
+    	
 	
-	
-	public ProgresoEstudiante obtenerProgresoDeEstudiante(Estudiante estudiante) {
-        if (this.progresoEstudiante != null && progresoEstudiante.getEstudiante().equals(estudiante)) {
-            return progresoEstudiante;
-        } else {
-            System.out.println("Este estudiante no está inscrito en este Learning Path o no tiene progreso.");
-            return null;  // O puedes devolver un progreso vacío o manejar de otra forma
-        }
-    }
+	//public ProgresoEstudiante obtenerProgresoDeEstudiante(Estudiante estudiante) {
+    //    if (this.progresoEstudiante != null && progresoEstudiante.getEstudiante().equals(estudiante)) {
+    //        return progresoEstudiante;
+    //    } else {
+    //        System.out.println("Este estudiante no está inscrito en este Learning Path o no tiene progreso.");
+    //        return null;  // O puedes devolver un progreso vacío o manejar de otra forma
+    //    }
+    //}
 	
 	
 	public void asociarProgresoConEstudiante(Estudiante estudiante) {
-	    this.progresoEstudiante = new ProgresoEstudiante();  // Vincula al estudiante con su progreso
+		if (!progresoEstudiante.containsKey(estudiante)) {
+	        // Si no tiene progreso, creamos uno nuevo y lo asociamos con el estudiante
+	        ProgresoEstudiante nuevoProgreso = new ProgresoEstudiante();
+	        progresoEstudiante.put(estudiante, nuevoProgreso);
+	    } else {
+	        // O puedes manejar el caso en que ya exista progreso, si es necesario
+	        System.out.println("El estudiante ya tiene un progreso asociado.");
+	    }
 	}
 	
-	
 	public HashMap<PreguntaAbierta, String> obtenerRespuestaEncuestaDeEstudiante(Estudiante estudiante, Actividad actividad) {
-		return progresoEstudiante.getRespuestasPorEstudianteEncuesta().get(actividad);
+		return progresoEstudiante.get(estudiante).getRespuestasPorEstudianteEncuesta().get(actividad);
 	}
 	
 	public HashMap<PreguntaAbierta, String> obtenerRespuestaExamenDeEstudiante(Estudiante estudiante, Actividad actividad) {
-		return progresoEstudiante.getRespuestasPorEstudianteExamen().get(actividad);
+		return progresoEstudiante.get(estudiante).getRespuestasPorEstudianteExamen().get(actividad);
 	}
 	
 	public HashMap<PreguntaOpcionMultiple, String> obtenerRespuestaQuizDeEstudiante(Estudiante estudiante, Actividad actividad) {
-		return progresoEstudiante.getRespuestasPorEstudianteQuiz().get(actividad);
+		return progresoEstudiante.get(estudiante).getRespuestasPorEstudianteQuiz().get(actividad);
 	}
 	
 	
