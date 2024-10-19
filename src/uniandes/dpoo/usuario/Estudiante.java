@@ -1,6 +1,7 @@
 package uniandes.dpoo.usuario;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,6 +10,8 @@ import uniandes.dpoo.learningpath.Encuesta;
 import uniandes.dpoo.learningpath.Examen;
 import uniandes.dpoo.learningpath.Feedback;
 import uniandes.dpoo.learningpath.LearningPath;
+import uniandes.dpoo.learningpath.PreguntaAbierta;
+import uniandes.dpoo.learningpath.PreguntaOpcionMultiple;
 import uniandes.dpoo.learningpath.ProgresoEstudiante;
 import uniandes.dpoo.learningpath.Quiz;
 import uniandes.dpoo.learningpath.Tarea;
@@ -170,7 +173,61 @@ public class Estudiante extends Usuario {
 	    }
 	    
 	    registrarActividadCompletada(actividad);
-	    lp.registrarActividadCompletadaPorEstudiante(this, actividad);
+	    lp.registrarRespuestasEstudiante(this, actividad);
+	    
+	}
+	
+	
+	public void mostrarRespuestasEstudiantes(Actividad actividad, LearningPath lp) {
+		
+		if (actividad instanceof Quiz) {
+			HashMap<PreguntaOpcionMultiple, String> respuestasQuiz = lp.obtenerRespuestaQuizDeEstudiante(this, actividad);
+			
+			if (respuestasQuiz != null) {
+                System.out.println("Respuestas del Quiz:");
+                for (PreguntaOpcionMultiple pregunta : respuestasQuiz.keySet()) {
+                    System.out.println("Pregunta: " + pregunta.getEnunciado());
+                    System.out.println("Respuesta: " + respuestasQuiz.get(pregunta));
+                }
+            } else {
+                System.out.println("El estudiante no ha respondido este Quiz.");
+            }
+		}
+			
+		else if (actividad instanceof Encuesta) {
+			HashMap<PreguntaAbierta, String> respuestasEncuesta = lp.obtenerRespuestaEncuestaDeEstudiante(this, actividad);
+            if (respuestasEncuesta != null) {
+                System.out.println("Respuestas de la Encuesta:");
+                for (PreguntaAbierta pregunta : respuestasEncuesta.keySet()) {
+                    System.out.println("Pregunta: " + pregunta.getEnunciado());
+                    System.out.println("Respuesta: " + respuestasEncuesta.get(pregunta));
+                }
+            } else {
+                System.out.println("El estudiante no ha respondido esta Encuesta.");
+            }
+		}
+		
+		else if (actividad instanceof Examen) {
+			HashMap<PreguntaAbierta, String> respuestasExamen = lp.obtenerRespuestaExamenDeEstudiante(this, actividad);
+			if (respuestasExamen != null) {
+                System.out.println("Respuestas del Examen:");
+                for (PreguntaAbierta pregunta : respuestasExamen.keySet()) {
+                    System.out.println("Pregunta: " + pregunta.getEnunciado());
+                    System.out.println("Respuesta: " + respuestasExamen.get(pregunta));
+                }
+            } else {
+                System.out.println("El estudiante no ha respondido este Examen.");
+            }
+		}
+		
+		
 	}
 
+	
+	
+	public void calificarEstudiante() {
+		
+	}
+	
+	
 }

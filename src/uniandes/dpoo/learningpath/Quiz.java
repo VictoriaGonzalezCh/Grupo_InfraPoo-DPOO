@@ -17,16 +17,16 @@ public class Quiz extends Actividad {
 	HashMap<PreguntaOpcionMultiple, String> respuestasEstudiante = new HashMap<>(); 
 	
 	public Quiz(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-		super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+		super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();
 	}
 	
 	public Quiz(int id, int calificacionMinima, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();
 		this.calificacionMinima = calificacionMinima;
 	}

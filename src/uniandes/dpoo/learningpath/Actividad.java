@@ -19,7 +19,7 @@ public class Actividad {
 	protected String fechaLimite;
 	protected String resultado;
 	protected boolean obligatoria;
-	protected Profesor creador;
+	protected int idCreador;
 	protected List<Actividad> prerequisitos;
 	protected String tituloActividad;
 	protected List<Feedback> feedbacks;
@@ -29,7 +29,7 @@ public class Actividad {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
+	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
 			this.id = id;
 			this.tituloActividad = tituloActividad;
 			this.descripcion = descripcion;
@@ -39,7 +39,7 @@ public class Actividad {
 			this.actividadesPreviasSugeridas = actividadesPreviasSugeridas;
 			this.fechaLimite = fechaLimite;
 			this.obligatoria = obligatoria;
-			this.creador = creador;
+			this.idCreador = idCreador;
 			this.prerequisitos = prerequisitos;
 			this.resultado = "pendiente";  // Estado inicial por defecto
 			this.feedbacks = new ArrayList<>();
@@ -171,12 +171,12 @@ public class Actividad {
 		this.obligatoria = obligatoria;
 	}
 
-	public Profesor getCreador() {
-		return creador;
+	public int getCreador() {
+		return idCreador;
 	}
 
-	public void setCreador(Profesor creador) {
-		this.creador = creador;
+	public void setCreador(int idCreador) {
+		this.idCreador = idCreador;
 	}
 
 	public List<Actividad> getPrerequisitos() {
@@ -220,7 +220,7 @@ public class Actividad {
         System.out.println("Duración Esperada: " + duracionEsperada);
         System.out.println("Fecha Límite: " + fechaLimite);
         System.out.println("Obligatoria: " + (obligatoria ? "Sí" : "No"));
-        System.out.println("Creador: " + creador);
+        System.out.println("Creador: " + idCreador);
         System.out.println("Resultado: " + resultado);
         
         // Mostrar actividades previas sugeridas

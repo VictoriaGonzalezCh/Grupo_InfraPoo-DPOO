@@ -11,6 +11,8 @@ public class ProgresoEstudiante {
 	private HashMap<Actividad, HashMap<PreguntaAbierta, String>> respuestasPorEstudianteExamen;
 	private HashMap<Actividad, HashMap<PreguntaAbierta, String>> respuestasPorEstudianteEncuesta;
 	
+	private Estudiante estudiante;
+	private Actividad actividad;
 	private String fechaInicio;
 	private String fechaFinalizacion;
 	private String tiempoDedicado;
@@ -23,7 +25,9 @@ public class ProgresoEstudiante {
 		this.respuestasPorEstudianteEncuesta = new HashMap<>();
 	}
 		// TODO Auto-generated constructor stub
-	public ProgresoEstudiante(String fechaInicio, String fechaFinalizacion, String tiempoDedicado, int tasaExitoFracaso) {
+	public ProgresoEstudiante(Estudiante estudiante, Actividad actividad, String fechaInicio, String fechaFinalizacion, String tiempoDedicado, int tasaExitoFracaso) {
+		this.estudiante = estudiante;
+        this.actividad = actividad;
 		this.fechaInicio = fechaInicio;
 		this.fechaFinalizacion = fechaFinalizacion;
 		this.tiempoDedicado = tiempoDedicado;
@@ -31,8 +35,8 @@ public class ProgresoEstudiante {
 		this.respuestasPorEstudianteExamen = new HashMap<>();
 		this.respuestasPorEstudianteEncuesta = new HashMap<>();
 	}	
-
-	public void añadirRespuestasEstudiante(Actividad actividad) {
+	
+	public void añadirRespuestasEstudiante(Estudiante estudiante, Actividad actividad) {
 		
 		if (actividad instanceof Quiz) {
 	        Quiz quiz = (Quiz) actividad;  // Realizamos un cast
@@ -49,20 +53,30 @@ public class ProgresoEstudiante {
 	    } else if (actividad instanceof Tarea) {
 	        Tarea tarea = (Tarea) actividad;
 	        
-	       
 	    }}
 	
+	
+	
 	public void cambiarResultadoActividad(Actividad actividad, String nuevoResultado) {
-	    // Cambia el resultado asociado a la actividad en el progreso del estudiante
-	    if (respuestasPorEstudianteQuiz.containsKey(actividad)) {
-	        // Aquí cambiarías el estado o resultado de la actividad como quieras manejarlo
-	        System.out.println("Cambiando resultado para la actividad: " + actividad.getTituloActividad());
-	        // Por ejemplo, podrías agregar una lógica para almacenar el resultado
-	        actividad.cambiarResultado(nuevoResultado);  // Suponiendo que tienes un campo 'resultado' o similar
-	    } else {
-	        System.out.println("La actividad no fue encontrada en el progreso del estudiante.");
-	    }
-	}
+        actividad.cambiarResultado(nuevoResultado);  // Suponiendo que Actividad tiene un método para cambiar el resultado
+    }
+	
+	
+	public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public Actividad getActividad() {
+        return actividad;
+    }
+
+    public void setActividad(Actividad actividad) {
+        this.actividad = actividad;
+    }
 	
 	public HashMap<Actividad, HashMap<PreguntaOpcionMultiple, String>> getRespuestasPorEstudianteQuiz() {
 		return respuestasPorEstudianteQuiz;

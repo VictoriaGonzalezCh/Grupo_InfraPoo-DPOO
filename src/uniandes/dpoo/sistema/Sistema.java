@@ -163,7 +163,12 @@ public class Sistema {
 		return true;
     }
     
-    
+    public void realizarActividadEstudiante(Actividad actividadEncontrada, Estudiante estudianteEncontrado, Scanner scanner) {
+    	
+    	LearningPath learningPath = buscarLearningPathPorActividad(actividadEncontrada);
+    	    	
+        estudianteEncontrado.realizarActividad(actividadEncontrada, learningPath, scanner);
+    }
     
 }
 

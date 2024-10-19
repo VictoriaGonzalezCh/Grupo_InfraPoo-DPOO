@@ -65,12 +65,13 @@ public class Consola {
                     System.out.println("5. Calificar Tareas o Exámenes");
                     System.out.println("6. Editar Resultado");
                     System.out.println("7. Crear reseña");
-                    System.out.println("8. Añadir prerequisitos a un actividad");
+                    System.out.println("8. Añadir prerequisitos a una actividad");
                     System.out.println("9. Añadir actividades de seguimiento a una actividad");
                     System.out.println("10. Añadir actividades previas a una actividad");
                     System.out.println("11. Ver reseñas de una actividad");
                     System.out.println("12. Ver información de una actividad");
                     System.out.println("13. Mostrar información de un LearningPath");
+                    System.out.println("13. Mostrar respuestas de un estudiante");
                     int opcion = scanner.nextInt();
                     scanner.nextLine();
 
@@ -113,8 +114,11 @@ public class Consola {
                             break;
                         case 13:
                         	mostrarInfoLearningPath(scanner);
-                            break;    
-                        
+                            break;
+                        case 14:
+                        	verResultadoEstudiante(scanner);
+                            break;
+                            
                             
                         default:
                             System.out.println("Opción no válida.");
@@ -128,7 +132,6 @@ public class Consola {
                     System.out.println("5. Ver reseñas de una actividad");
                     System.out.println("6. Ver información de una actividad");
                     System.out.println("7. Mostrar información de un LearningPath");
-                    System.out.println("8. Realizar actividad");
                     int opcion = scanner.nextInt();
                     scanner.nextLine();
 
@@ -153,9 +156,6 @@ public class Consola {
                             break;
                         case 7:
                         	mostrarInfoLearningPath(scanner);
-                            break;
-                        case 8:
-                        	realizarActividadEstudiante(scanner);
                             break;
                     
                         default:
@@ -239,7 +239,7 @@ public class Consola {
         
         int id = Sistema.generarIDUnicoLearningPaths();
         
-        System.out.println("El Learning Path ha sido registrado exitosamente.");
+        System.out.println("El Learning Path ha sido registrado exitosamente.");        
         
         LearningPath nuevoLearningPath = new LearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, duracionMinutos, rating);
         
@@ -287,7 +287,7 @@ public class Consola {
         
         Profesor profesorEncontrado = sistema.stringAProfesor(Integer.parseInt(idUsuario));
         
-        Actividad nuevaActividad = Profesor.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, profesorEncontrado, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
+        Actividad nuevaActividad = Profesor.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, profesorEncontrado.getId(), nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
         
         LearningPath learningPathEncontrado = sistema.buscarLearningPath(Integer.parseInt(idLP));
         learningPathEncontrado.agregarActividad(nuevaActividad);
@@ -336,8 +336,8 @@ public class Consola {
         //Actividad actividadEncontrada = sistema.buscarActividadDentroLearningPath(tituloParaEditar, tituloActividadParaEditar );
         Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(idActividadParaEditar));
         
-        System.out.println("Login de tu usuario: ");
-        String login = scanner.nextLine();
+        System.out.println("Id de tu usuario: ");
+        String id = scanner.nextLine();
         
         System.out.println("Descripción nueva de la actividad: ");
         String nuevaDescripcion = scanner.nextLine();
@@ -361,7 +361,7 @@ public class Consola {
         List<Actividad> actividadesPreviasSugeridas = new ArrayList<>();  // Puedes adaptarlo según cómo obtengas las actividades
         List<Actividad> prerequisitos = new ArrayList<>();
         
-        Profesor.editarActividad(actividadEncontrada, login, nuevaDescripcion, nuevoObjetivo, nuevoNivelDificultad, nuevaDuracionEsperada,
+        Profesor.editarActividad(actividadEncontrada, Integer.parseInt(id), nuevaDescripcion, nuevoObjetivo, nuevoNivelDificultad, nuevaDuracionEsperada,
                 actividadesPreviasSugeridas, nuevaFechaLimite, nuevaObligatoria, prerequisitos);
     }
     
@@ -387,9 +387,9 @@ public class Consola {
         
         System.out.println("Escriba el id de la actividad (exitoso, insatisfactorio, completado): ");
         String id = scanner.nextLine();
+        Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
         
         //Actividad actividadEncontrada = sistema.buscarActividadDentroLearningPath(tituloLP, tituloActividad );
-        Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
         
         System.out.println("Escriba el id del estudiante del quiere buscar las respuestas de esa actividad: ");
         String idUsuario = scanner.nextLine();
@@ -400,7 +400,9 @@ public class Consola {
         
         LearningPath learningPath = sistema.buscarLearningPathPorActividad(actividadEncontrada);
         ProgresoEstudiante progreso = learningPath.obtenerProgresoDeEstudiante(estudianteEncontrado);
-
+        
+        estudianteEncontrado.get(actividadEncontrada);
+        
         if (progreso != null) {
             // Cambiamos el resultado en el progreso del estudiante
             progreso.cambiarResultadoActividad(actividadEncontrada, nuevoResultado);
@@ -424,49 +426,8 @@ public class Consola {
         
         LearningPath learningPath = sistema.buscarLearningPathPorActividad(actividadEncontrada);
         
-        ProgresoEstudiante progreso = learningPath.obtenerProgresoDeEstudiante(estudianteEncontrado);
-
-        if (progreso != null) {
-            // Según el tipo de actividad, obtenemos las respuestas correspondientes
-            if (actividadEncontrada instanceof Quiz) {
-                HashMap<PreguntaOpcionMultiple, String> respuestasQuiz = progreso.getRespuestasPorEstudianteQuiz().get(actividadEncontrada);
-                if (respuestasQuiz != null) {
-                    System.out.println("Respuestas del Quiz:");
-                    for (PreguntaOpcionMultiple pregunta : respuestasQuiz.keySet()) {
-                        System.out.println("Pregunta: " + pregunta.getEnunciado());
-                        System.out.println("Respuesta: " + respuestasQuiz.get(pregunta));
-                    }
-                } else {
-                    System.out.println("El estudiante no ha respondido este Quiz.");
-                }
-
-            } else if (actividadEncontrada instanceof Examen) {
-                HashMap<PreguntaAbierta, String> respuestasExamen = progreso.getRespuestasPorEstudianteExamen().get(actividadEncontrada);
-                if (respuestasExamen != null) {
-                    System.out.println("Respuestas del Examen:");
-                    for (PreguntaAbierta pregunta : respuestasExamen.keySet()) {
-                        System.out.println("Pregunta: " + pregunta.getEnunciado());
-                        System.out.println("Respuesta: " + respuestasExamen.get(pregunta));
-                    }
-                } else {
-                    System.out.println("El estudiante no ha respondido este Examen.");
-                }
-
-            } else if (actividadEncontrada instanceof Encuesta) {
-                HashMap<PreguntaAbierta, String> respuestasEncuesta = progreso.getRespuestasPorEstudianteEncuesta().get(actividadEncontrada);
-                if (respuestasEncuesta != null) {
-                    System.out.println("Respuestas de la Encuesta:");
-                    for (PreguntaAbierta pregunta : respuestasEncuesta.keySet()) {
-                        System.out.println("Pregunta: " + pregunta.getEnunciado());
-                        System.out.println("Respuesta: " + respuestasEncuesta.get(pregunta));
-                    }
-                } else {
-                    System.out.println("El estudiante no ha respondido esta Encuesta.");
-                }
-
-            } else {
-                System.out.println("Tipo de actividad no soportada.");
-            }}
+        estudianteEncontrado.mostrarRespuestasEstudiantes(actividadEncontrada, learningPath);
+        
     }
     
     private void inscribirseLearningPath(Scanner scanner){
@@ -493,7 +454,10 @@ public class Consola {
 
         Estudiante estudianteEncontrado = sistema.stringAEstudiante((Integer.parseInt(idUsuario)));
         Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
+        
         estudianteEncontrado.iniciarActividad(actividadEncontrada);
+        
+        sistema.realizarActividadEstudiante(actividadEncontrada, estudianteEncontrado, scanner);
         
     }
     
@@ -645,19 +609,7 @@ public class Consola {
         	LPEncontrado.mostrarInfoLearningPath();
         }
     
-        private void realizarActividadEstudiante(Scanner scanner) {
-        	System.out.println("Escriba el id de la actividad la cual quiere realizar: ");
-        	String id = scanner.nextLine();
-        	Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
-        	
-        	LearningPath learningPath = sistema.buscarLearningPathPorActividad(actividadEncontrada);
-        	
-        	System.out.println("Id de tu usuario: ");
-            String idUsuario = scanner.nextLine();
-            Estudiante estudianteEncontrado = sistema.stringAEstudiante(Integer.parseInt(idUsuario));
-        	
-            estudianteEncontrado.realizarActividad(actividadEncontrada, learningPath, scanner);
-        }
+       
 }
 
 
