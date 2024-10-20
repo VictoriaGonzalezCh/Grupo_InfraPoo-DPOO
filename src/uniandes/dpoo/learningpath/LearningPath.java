@@ -1,5 +1,7 @@
 package uniandes.dpoo.learningpath;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,25 +15,34 @@ public class LearningPath {
 	private String descripcionContenido;
 	private String descripcionObjetivo;
 	private String nivelDificultad;
-	private String duracionMinutos;
+	private int duracionMinutos;
 	private String rating;
 	private List<Actividad> listaActividades;
 	private HashMap<Estudiante, ProgresoEstudiante> progresoEstudiante;
+	private String fechaCreacion;
+	private String fechaModificacion;
+	private int version;
+
 	//private ProgresoEstudiante progresoEstudiante;
 	
 	public LearningPath() {
 		this.listaActividades = new ArrayList<>();
 		this.progresoEstudiante = new HashMap<>();
+		this.duracionMinutos = 0;
+		this.fechaCreacion = "";
+		this.fechaModificacion = "";
+		this.version = 1;
+		
 		//this.progresoEstudiante = new ProgresoEstudiante();
 	}
 
-	public LearningPath(int id, String titulo, String descripcionContenido, String descripcionObjetivo, String nivelDificultad, String duracionMinutos, String rating) {
+
+	public LearningPath(int id, String titulo, String descripcionContenido, String descripcionObjetivo, String nivelDificultad, String rating) {
 		this.setId(id);
 		this.titulo = titulo;
 		this.descripcionContenido = descripcionContenido;
 		this.descripcionObjetivo = descripcionObjetivo;
 		this.nivelDificultad = nivelDificultad;
-		this.duracionMinutos = duracionMinutos;
 		this.rating = rating;
 		this.listaActividades = new ArrayList<>();
 		this.progresoEstudiante = new HashMap<>();
@@ -139,15 +150,6 @@ public class LearningPath {
         return actividadesObligatorias;
     }
 	
-	public boolean fueCompletadoExitosamente() {
-        List<Actividad> actividadesObligatorias = obtenerActividadesObligatorias();
-        for (Actividad actividad : actividadesObligatorias) {
-            if (!actividad.isCompletada()) { // Asegúrate de que esta verificación esté disponible
-                return false; // Si alguna actividad obligatoria no está completada, retorna false
-            }
-        }
-        return true; // Si todas las actividades obligatorias están completadas, retorna true
-    }
 	
 	 public void mostrarInfoLearningPath() {
 	        System.out.println("Título: " + titulo);
@@ -205,13 +207,17 @@ public class LearningPath {
 	}
 
 
-	public String getDuracionMinutos() {
+	public int getDuracionMinutos() {
 		return duracionMinutos;
 	}
 
 
-	public void setDuracionMinutos(String duracionMinutos) {
-		this.duracionMinutos = duracionMinutos;
+	public void setDuracionMinutos() {
+		int duracionTotal = 0;
+	    for (Actividad actividad : listaActividades) {  
+	        duracionTotal += Integer.parseInt(actividad.getDuracionEsperada());  
+	    }
+	    this.duracionMinutos = duracionTotal;
 	}
 
 
@@ -235,6 +241,36 @@ public class LearningPath {
 	public Actividad[] getActividades() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public String getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion() {
+		LocalDate fechaActual = LocalDate.now();
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
+		String fechaComoString = fechaActual.format(formato);
+		this.fechaCreacion = fechaComoString;
+	}
+
+	public String getFechaModificacion() {
+		return fechaModificacion;
+	}
+
+	public void setFechaModificacion() {
+		LocalDate fechaActual = LocalDate.now();
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
+		String fechaComoString = fechaActual.format(formato);
+		this.fechaModificacion = fechaComoString;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion() {
+		this.version++;
 	}
 	
 }

@@ -38,7 +38,7 @@ public class PreguntaOpcionMultiple {
 	
 	public boolean verificarRespuesta(String respuesta) {
 		boolean resultado = false;
-		if (respuestaCorrecta.equals(respuesta)) { resultado = true;}
+		if (respuestaCorrecta.equals(respuesta)) {resultado = true;}
 		return resultado;
 		
 	}

@@ -58,7 +58,19 @@ public class ProgresoEstudiante {
 	
 	
 	public void cambiarResultadoActividad(Actividad actividad, String nuevoResultado) {
-        actividad.cambiarResultado(nuevoResultado);  // Suponiendo que Actividad tiene un método para cambiar el resultado
+		if (actividad instanceof Tarea) {
+            Tarea tarea = (Tarea) actividad;
+            tarea.calificarTarea(nuevoResultado);
+            
+        } else if (actividad instanceof Examen) {
+            Examen examen = (Examen) actividad;
+            examen.mostrarRespuestasEstudiante();
+            examen.calificarExamen();
+        }
+		
+		
+		
+		//actividad.cambiarResultado(nuevoResultado);  // Suponiendo que Actividad tiene un método para cambiar el resultado
     }
 	
 	

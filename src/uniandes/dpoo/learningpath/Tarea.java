@@ -10,9 +10,9 @@ public class Tarea extends Actividad {
 	String medioEntrega;
 	
 	public Tarea(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.estado = "no enviada";
 		this.medioEntrega = "definido por el estudiante";
 	}
@@ -25,9 +25,8 @@ public class Tarea extends Actividad {
 		this.estado = "enviada";
 	}
 	
-	public void calificarTarea(boolean esExitosa) {
-		if (esExitosa) {this.estado = "exitosa";}
-		else {this.estado = "no exitosa";}
+	public void calificarTarea(String esExitosa) {
+		this.estado = esExitosa;
 	}
 	
 	public String obtenerEstado() {

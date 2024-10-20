@@ -17,6 +17,11 @@ public class Usuario {
 	}
 	
 	
+	@Override
+    public String toString() {
+        return "ID: " + id + ", Login: " + login;
+    }
+	
 	public int getId() {
 		return id;
 	}

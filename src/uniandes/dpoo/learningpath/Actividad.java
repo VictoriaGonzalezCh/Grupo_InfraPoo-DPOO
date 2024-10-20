@@ -17,19 +17,20 @@ public class Actividad {
 	protected List<Actividad> actividadesPreviasSugeridas;
 	protected List<Actividad> actividadesSeguimientoRecomendadas;
 	protected String fechaLimite;
-	protected String resultado;
 	protected boolean obligatoria;
-	protected int idCreador;
+	protected Profesor creador;
 	protected List<Actividad> prerequisitos;
 	protected String tituloActividad;
 	protected List<Feedback> feedbacks;
+	protected String resultado;
 	
 	public Actividad() {
 		this.feedbacks = new ArrayList<>();
+		this.resultado = "N.A";
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
+	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
 			this.id = id;
 			this.tituloActividad = tituloActividad;
 			this.descripcion = descripcion;
@@ -39,9 +40,8 @@ public class Actividad {
 			this.actividadesPreviasSugeridas = actividadesPreviasSugeridas;
 			this.fechaLimite = fechaLimite;
 			this.obligatoria = obligatoria;
-			this.idCreador = idCreador;
+			this.creador = creador;
 			this.prerequisitos = prerequisitos;
-			this.resultado = "pendiente";  // Estado inicial por defecto
 			this.feedbacks = new ArrayList<>();
 			this.actividadesSeguimientoRecomendadas = actividadesSeguimientoRecomendadas;
 	}
@@ -171,12 +171,12 @@ public class Actividad {
 		this.obligatoria = obligatoria;
 	}
 
-	public int getCreador() {
-		return idCreador;
+	public Profesor getCreador() {
+		return creador;
 	}
 
-	public void setCreador(int idCreador) {
-		this.idCreador = idCreador;
+	public void setCreador(Profesor creador) {
+		this.creador = creador;
 	}
 
 	public List<Actividad> getPrerequisitos() {
@@ -220,19 +220,19 @@ public class Actividad {
         System.out.println("Duración Esperada: " + duracionEsperada);
         System.out.println("Fecha Límite: " + fechaLimite);
         System.out.println("Obligatoria: " + (obligatoria ? "Sí" : "No"));
-        System.out.println("Creador: " + idCreador);
+        System.out.println("Creador: " + creador.getLogin());
         System.out.println("Resultado: " + resultado);
         
         // Mostrar actividades previas sugeridas
         System.out.println("Actividades Previas Sugeridas:");
         for (Actividad act : actividadesPreviasSugeridas) {
-            System.out.println("- " + act.getDescripcion());
+            System.out.println("- " + act.getTituloActividad());
         }
 
         // Mostrar prerrequisitos
         System.out.println("Prerrequisitos:");
         for (Actividad act : prerequisitos) {
-            System.out.println("- " + act.getDescripcion());
+            System.out.println("- " + act.getTituloActividad());
         }
     }
 	 

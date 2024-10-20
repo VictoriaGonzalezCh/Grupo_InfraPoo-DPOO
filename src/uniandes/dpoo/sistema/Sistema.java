@@ -22,13 +22,27 @@ public class Sistema {
 
     
 	private List<Usuario> usuarios;
+	private Usuario usuarioAutenticado;
     private List<LearningPath> learningPaths;
 
     public Sistema() {
         this.usuarios = new ArrayList<>();
+        this.usuarioAutenticado = null;
         this.learningPaths = new ArrayList<>();
     }
 
+    public List<Integer> mostrarlistaUsuarios() {
+        List<Integer> ids = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            ids.add(usuario.getId());
+        }
+        return ids; // Devolver la lista de IDs
+    } 
+    
+    public List<Usuario> mostrarlistaUsuarios1() {
+        return usuarios; // Esto devuelve la lista completa de usuarios
+    }
+    
     public void registrarUsuario(Usuario usuario) {
         usuarios.add(usuario);
     }
@@ -36,17 +50,24 @@ public class Sistema {
     public Usuario login(String login, String contraseña) {
         for (Usuario usuario : usuarios) {
             if (usuario.getLogin().equals(login) && usuario.validarContraseña(contraseña)) {
+            	this.usuarioAutenticado = usuario;
                 return usuario;
             }
         }
         return null;
     }
+    
+    public void logout() {
+        this.usuarioAutenticado = null; 
+    }
+
+    public Usuario obtenerUsuarioAutenticado() {
+        return this.usuarioAutenticado; 
+    }
 
     public void agregarLearningPath(LearningPath learningPath) {
         learningPaths.add(learningPath);
     }
-    
-    
     
     public LearningPath buscarLearningPath(int id) {
     	LearningPath resultado = null;
@@ -105,9 +126,22 @@ public class Sistema {
     public Estudiante stringAEstudiante(int id) {
         for (Usuario usuario : usuarios) {
             if (usuario.getId() == (id) && usuario instanceof Estudiante) {
-                return (Estudiante) usuario;  // Hacemos un cast a Estudiante
+              return (Estudiante) usuario;  // Hacemos un cast a Estudiante
             }
         }
+        return null;  // Si no se encuentra, retorna null
+    }
+    
+    public Estudiante stringAEstudiante1(int id) {
+        for (Usuario usuario : usuarios) {
+            System.out.println("Verificando usuario: " + usuario.getId()); // Mensaje de depuración
+            if (usuario.getId() == id && usuario instanceof Estudiante) {
+                System.out.println("Usuario encontrado con ID: " + id); // Mensaje de depuración
+                    return (Estudiante) usuario;  // Hacemos un cast a Estudiante
+          
+            }
+        }
+        System.out.println("No se encontró un Estudiante con el ID: " + id); // Mensaje de depuración
         return null;  // Si no se encuentra, retorna null
     }
     
@@ -188,6 +222,16 @@ public class Sistema {
     	LearningPath learningPath = buscarLearningPathPorActividad(actividadEncontrada);
     	    	
         estudianteEncontrado.realizarActividad(actividadEncontrada, learningPath, scanner);
+        
+        estudianteEncontrado.registrarLearningPathCompletada(learningPath);
+        
+    }
+    
+    public void obtenerResultadoActividadEstudiante(Actividad actividadEncontrada, Estudiante estudianteEncontrado) {
+    	
+    	LearningPath learningPath = buscarLearningPathPorActividad(actividadEncontrada);
+    	
+        estudianteEncontrado.mostrarResultadoEstudiantes(actividadEncontrada, learningPath);
     }
     
 }

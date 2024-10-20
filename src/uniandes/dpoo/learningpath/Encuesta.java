@@ -11,22 +11,22 @@ import uniandes.dpoo.usuario.Profesor;
 public class Encuesta extends Actividad {
 	
 	private List<PreguntaAbierta> preguntasAbiertas;
-	String estado = "no enviada";
+	private String estado = "no enviada";
 	private HashMap<PreguntaAbierta, String> respuestasEstudiante = new HashMap<>(); 
 	
 	public Encuesta(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
   this.preguntasAbiertas = new ArrayList<>();
   this.estado = "no enviada";
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Encuesta(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
             List<Actividad> prerequisitos, String estado, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
   this.preguntasAbiertas = new ArrayList<>();
   this.estado = estado;
 }

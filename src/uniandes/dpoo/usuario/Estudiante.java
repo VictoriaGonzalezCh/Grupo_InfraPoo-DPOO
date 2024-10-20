@@ -12,7 +12,6 @@ import uniandes.dpoo.learningpath.Feedback;
 import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.learningpath.PreguntaAbierta;
 import uniandes.dpoo.learningpath.PreguntaOpcionMultiple;
-import uniandes.dpoo.learningpath.ProgresoEstudiante;
 import uniandes.dpoo.learningpath.Quiz;
 import uniandes.dpoo.learningpath.RecursoEducativo;
 import uniandes.dpoo.learningpath.Tarea;
@@ -30,13 +29,17 @@ public class Estudiante extends Usuario {
 	}
 	
 	public Estudiante(int id, String login, String contraseña) {
-		this.login = login;
-		this.contraseña = contraseña;
-		this.actividadesCompletadas = new ArrayList<>();
+		super(id, login, contraseña);
+		this.learningPathsEnCurso = new ArrayList<>();
 		this.learningPathsCompletados = new ArrayList<>();
 		this.actividadesEnCurso = new ArrayList<>();
-		this.learningPathsEnCurso = new ArrayList<>();
+		this.actividadesCompletadas = new ArrayList<>();
 	}
+	
+	@Override
+    public String toString() {
+        return super.toString() + " (Estudiante)";
+    }
 	
 	public void registrarseLearningPath(LearningPath learningPath) {
 		this.learningPathsEnCurso.add(learningPath);
@@ -46,11 +49,19 @@ public class Estudiante extends Usuario {
 		this.learningPathsCompletados.add(learningPath);
 	}
 	
-	public void registrarLearningPathCompletada(LearningPath learningPath, Actividad actividad) {
-		if (learningPathsEnCurso.contains(learningPath)) 
-			{if (actividad.getResultado() == "exitoso" ) 
-				{actividadesCompletadas.add(actividad); actividadesEnCurso.remove(actividad);}}
-		else {System.out.println("La actividad no esta en curso");}
+	
+	public void registrarLearningPathCompletada(LearningPath learningPath) {
+	    // Verificar si el LearningPath está en curso
+	    if (learningPathsEnCurso.contains(learningPath)) {
+	        // Verificar si el LearningPath fue completado
+	        if (verificarLearningPathCompletado(learningPath)) {
+	            // Registrar el LearningPath como completado
+	            learningPathCompletada(learningPath);
+	            // Remover de la lista de LearningPaths en curso
+	            learningPathsEnCurso.remove(learningPath);
+	            System.out.println("¡Has terminado el Learning Path!");
+	        }
+	    }
 	}
 	
 	private boolean verificarPrerequisitos(Actividad actividad) {
@@ -69,7 +80,7 @@ public class Estudiante extends Usuario {
 		
 	}
 	
-	private boolean verificarLearningPathCompletado(LearningPath learningPath) {
+	public boolean verificarLearningPathCompletado(LearningPath learningPath) {
 	    List<Actividad> actividadesObligatorias = learningPath.obtenerActividadesObligatorias();
 	    for (Actividad actividad : actividadesObligatorias) {
 	        if (!actividadesCompletadas.contains(actividad)) {
@@ -156,28 +167,33 @@ public class Estudiante extends Usuario {
 		
 		if (actividad instanceof Quiz) {
 	        Quiz quiz = (Quiz) actividad;  // Realizamos un cast
-	        quiz.responderPreguntas(scanner);  // Invocamos el método
+	        quiz.responderPreguntas(scanner, quiz);  // Invocamos el método
+	        registrarActividadCompletada(actividad);
 	        
 	    } else if (actividad instanceof Examen) {
 	        Examen examen = (Examen) actividad;
 	        examen.responderPreguntas(scanner);
+	        registrarActividadCompletada(actividad);
 	        
 	    } else if (actividad instanceof Encuesta) {
 	        Encuesta encuesta = (Encuesta) actividad;
 	        encuesta.responderPreguntas(scanner);
 	        encuesta.setEstado("enviado");
+	        registrarActividadCompletada(actividad);
 	        
 	    } else if (actividad instanceof Tarea) {
 	        Tarea tarea = (Tarea) actividad;
 	        tarea.enviarTarea();
 	        System.out.println("Diga por que medio envio la tarea:");
 	        String medioEntrega = scanner.nextLine();
-	        tarea.establecermedioEntrega(medioEntrega);    
+	        tarea.establecermedioEntrega(medioEntrega); 
+	        registrarActividadCompletada(actividad);
 	    }
 		 else if (actividad instanceof RecursoEducativo) {
 			RecursoEducativo recursoEducativo = (RecursoEducativo) actividad;
 			recursoEducativo.mostrarRecurso();
 			recursoEducativo.recursoTerminado();
+			registrarActividadCompletada(actividad);
 		}
 	    
 	    else {
@@ -232,6 +248,29 @@ public class Estudiante extends Usuario {
             }
 		}
 		
+	}
+	
+	public void mostrarResultadoEstudiantes(Actividad actividad, LearningPath lp) {
+		
+		if (actividad instanceof Quiz) {
+			System.out.println("El resultado de esta actividad es: " + actividad.getResultado());
+		}
+			
+		else if (actividad instanceof Encuesta) {
+			System.out.println("El resultado de esta actividad es: " + actividad.getResultado());
+		}
+		
+		else if (actividad instanceof Examen) {
+			System.out.println("El resultado de esta actividad es: " + actividad.getResultado());
+		}
+		
+		else if (actividad instanceof RecursoEducativo) {
+			System.out.println("El resultado de esta actividad es: " + actividad.getResultado());
+		}
+		
+		else if (actividad instanceof Tarea) {
+			System.out.println("El resultado de esta actividad es: " + actividad.getResultado());
+		}
 	}
 
 	

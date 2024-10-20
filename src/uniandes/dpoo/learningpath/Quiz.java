@@ -11,26 +11,27 @@ import uniandes.dpoo.usuario.Profesor;
 
 public class Quiz extends Actividad {
 
-	List<PreguntaOpcionMultiple> preguntasMultiples;
-	int calificacionMinima;
-	PreguntaOpcionMultiple pregunta;
-	HashMap<PreguntaOpcionMultiple, String> respuestasEstudiante = new HashMap<>(); 
+	private List<PreguntaOpcionMultiple> preguntasMultiples;
+	private int calificacionMinima;
+	private PreguntaOpcionMultiple pregunta;
+	private String resultado;
+	private HashMap<PreguntaOpcionMultiple, String> respuestasEstudiante = new HashMap<>();
+	
 	
 	public Quiz(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-		super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+		super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();
 	}
 	
 	public Quiz(int id, int calificacionMinima, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, int idCreador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();
 		this.calificacionMinima = calificacionMinima;
 	}
-	
 	
 	
 	public void agregarPregunta(Scanner scanner) {
@@ -83,7 +84,9 @@ public class Quiz extends Actividad {
         }
     }
 	
-	public void responderPreguntas(Scanner scanner) {
+	public void responderPreguntas(Scanner scanner, Quiz quiz) {
+		int contadorCorrectas = 0;
+		
 		if (preguntasMultiples == null || preguntasMultiples.isEmpty()) {
 	        System.out.println("No hay preguntas para responder.");
 	        return;
@@ -94,7 +97,7 @@ public class Quiz extends Actividad {
             pregunta.mostrarPregunta();
         	String respuestaIngresada = scanner.nextLine();
         	boolean respuesta = pregunta.verificarRespuesta(respuestaIngresada);
-        	if (respuesta) {respuestasEstudiante.put(pregunta, "correcto");}
+        	if (respuesta) {respuestasEstudiante.put(pregunta, "correcto"); contadorCorrectas ++;}
         	else {respuestasEstudiante.put(pregunta, "incorrecto");}
         }   
         
@@ -102,8 +105,21 @@ public class Quiz extends Actividad {
         for (PreguntaOpcionMultiple pregunta : preguntasMultiples) {
             pregunta.mostrarRespuestas();}
         
+        if (contadorCorrectas >= calificacionMinima) {
+            quiz.setResultado("Exitoso"); // Asegúrate de que quiz está correctamente referenciado
+        } else {
+            quiz.setResultado("No exitoso"); // No es un método estático, usa quiz en lugar de Quiz
+        }
     }
 	
+	public String getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(String resultado) {
+		this.resultado = resultado;
+	}
+
 	public void mostrarRespuestasEstudiante() {
 	    if (respuestasEstudiante.isEmpty()) {
 	        System.out.println("No hay respuestas disponibles para esta actividad.");
@@ -133,6 +149,7 @@ public class Quiz extends Actividad {
     public int getCalificacionMinima() {
         return calificacionMinima;
     }
+    
 	
 	
 }
