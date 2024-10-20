@@ -57,6 +57,8 @@ public class Consola {
             } else {
                 // Verificar si es un profesor o estudiante
                 if (usuarioLogueado instanceof Profesor) {
+                	boolean continuar = true;
+                	while (continuar) {
                     // Opciones para profesor
                     System.out.println("1. Crear Learning Path");
                     System.out.println("2. Editar Learning Path");
@@ -71,7 +73,7 @@ public class Consola {
                     System.out.println("11. Ver información de una actividad");
                     System.out.println("12. Mostrar información de un LearningPath");
                     System.out.println("13. Mostrar respuestas de un estudiante");
-                    
+                    System.out.println("14. Salir");
                     int opcion = scanner.nextInt();
                     scanner.nextLine();
 
@@ -116,12 +118,17 @@ public class Consola {
                         	verResultadoEstudiante(scanner);
                             break;
                         
-                            
+                        case 14:
+                            continuar = false;  // Salir del menú de profesor
+                            System.out.println("Volviendo al menú principal...");
+                            break;    
                             
                         default:
                             System.out.println("Opción no válida.");
-                    }
+                    }}
                 } else if (usuarioLogueado instanceof Estudiante) {
+                	boolean continuar = true;
+                	while (continuar) {
                     // Opciones para estudiante
                     System.out.println("1. Inscribirse a un Learning Path");
                     System.out.println("2. Iniciar una Actividad");
@@ -131,6 +138,7 @@ public class Consola {
                     System.out.println("6. Ver información de una actividad");
                     System.out.println("7. Mostrar información de un LearningPath");
                     System.out.println("8. Mostrar respuestas de un estudiante");
+                    System.out.println("9. Salir");
                     int opcion = scanner.nextInt();
                     scanner.nextLine();
 
@@ -159,13 +167,17 @@ public class Consola {
                         case 8:
                         	verResultadoEstudiante(scanner);
                             break;
-                    
+                        case 9:
+                            continuar = false;  // Salir del menú de profesor
+                            System.out.println("Volviendo al menú principal...");
+                            break; 
+                        
                         default:
                             System.out.println("Opción no válida.");
                     }
                 }
             }
-        }
+        }}
     }
 
     private void login(Scanner scanner) {
@@ -295,7 +307,7 @@ public class Consola {
         
         LearningPath learningPathEncontrado = sistema.buscarLearningPath(Integer.parseInt(idLP));
         learningPathEncontrado.agregarActividad(nuevaActividad);
-        System.out.println("El id para el Learning Path es " + id );
+        System.out.println("El id para la actividad es " + id );
     }
     
     
