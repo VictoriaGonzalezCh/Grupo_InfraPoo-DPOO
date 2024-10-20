@@ -163,6 +163,26 @@ public class Sistema {
 		return true;
     }
     
+    public boolean loginTituloLPNoRepetidos(String titulo) {
+    	for (LearningPath learningPaths : learningPaths) {
+    		if (learningPaths.getTitulo().equals(titulo)) {
+                return false; 
+            }
+        }
+		return true;
+    }
+    
+    public boolean loginTituloActividadNoRepetidos(String titulo) {
+        for (LearningPath learningPath : learningPaths) {
+            for (Actividad actividad : learningPath.obtenerListaActividades()) { // Recorre las actividades dentro de cada Learning Path
+                if (actividad.getTituloActividad().equalsIgnoreCase(titulo)) {  // Verifica si el título de la actividad se repite
+                    return false;  // Si encuentra una actividad con el mismo título, retorna false
+                }
+            }
+        }
+        return true;  // Si no se encuentra ninguna actividad con el mismo título, retorna true
+    }
+    
     public void realizarActividadEstudiante(Actividad actividadEncontrada, Estudiante estudianteEncontrado, Scanner scanner) {
     	
     	LearningPath learningPath = buscarLearningPathPorActividad(actividadEncontrada);

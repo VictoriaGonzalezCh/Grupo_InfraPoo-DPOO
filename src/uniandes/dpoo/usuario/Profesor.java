@@ -126,7 +126,7 @@ public class Profesor extends Usuario {
 	            break;
 	            
 	        case "examen":
-	        	System.out.println("Especifique cuantas preguntas de opcion multiple quiere que tenga el quiz: ");
+	        	System.out.println("Especifique cuantas preguntas abiertas quiere que tenga el examen: ");
 	            String numPreguntasExamen = scanner.nextLine();
 	        	
 	            Examen actividadExamen = new Examen(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);
@@ -137,7 +137,7 @@ public class Profesor extends Usuario {
 	            
 	            break;  
 	        case "encuesta":
-	        	System.out.println("Especifique cuantas preguntas de opcion multiple quiere que tenga el quiz: ");
+	        	System.out.println("Especifique cuantas preguntas abiertas quiere que tenga el examen: ");
 	            String numPreguntasEncuesta = scanner.nextLine();
 	        	
 	            Encuesta actividadEncuesta = new Encuesta(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, idCreador, prerequisitos, actividadesSeguimientoRecomendadas);

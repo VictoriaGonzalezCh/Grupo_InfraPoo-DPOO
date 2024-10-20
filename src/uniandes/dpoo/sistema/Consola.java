@@ -199,6 +199,7 @@ public class Consola {
         Profesor profesor = new Profesor(id, login, contraseña);
         sistema.registrarUsuario(profesor);
         System.out.println("Profesor registrado exitosamente.");
+        System.out.println("El id del usuario es " + id );
     }
 
     private void registrarEstudiante(Scanner scanner) {
@@ -218,6 +219,7 @@ public class Consola {
         Estudiante estudiante = new Estudiante(id, login, contraseña);
         sistema.registrarUsuario(estudiante);
         System.out.println("Estudiante registrado exitosamente.");
+        System.out.println("El id del usuario es " + id );
     }
     
     private void crearLearningPath(Scanner scanner) {        
@@ -246,7 +248,7 @@ public class Consola {
         LearningPath nuevoLearningPath = new LearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, duracionMinutos, rating);
         
         sistema.agregarLearningPath(nuevoLearningPath);
-        
+        System.out.println("El id para el Learning Path es " + id );
     }
     
     private void crearActividad(Scanner scanner) {        
@@ -293,13 +295,13 @@ public class Consola {
         
         LearningPath learningPathEncontrado = sistema.buscarLearningPath(Integer.parseInt(idLP));
         learningPathEncontrado.agregarActividad(nuevaActividad);
-        
+        System.out.println("El id para el Learning Path es " + id );
     }
     
     
     private void editarLearningPath(Scanner scanner) {
     	
-    	System.out.println("Escriba el id del Learning Path que quiere editar: ");
+    	System.out.println("Escriba el titulo del Learning Path que quiere editar: ");
         String idParaEditar = scanner.nextLine();
         
         LearningPath learningPathEncontrado = sistema.buscarLearningPath(Integer.parseInt(idParaEditar));
@@ -332,7 +334,7 @@ public class Consola {
     	//System.out.println("Escriba el título del Learning Path dentro del cual esta la actividad que quiere editar: ");
         //String tituloParaEditar = scanner.nextLine();
         
-        System.out.println("Escriba el id de la Actividad que quiere editar: ");
+        System.out.println("Escriba el titulo de la Actividad que quiere editar: ");
         String idActividadParaEditar = scanner.nextLine();
         
         //Actividad actividadEncontrada = sistema.buscarActividadDentroLearningPath(tituloParaEditar, tituloActividadParaEditar );

@@ -231,5 +231,10 @@ public class LearningPath {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public Actividad[] getActividades() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
