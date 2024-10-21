@@ -149,6 +149,14 @@ public class Quiz extends Actividad {
     public int getCalificacionMinima() {
         return calificacionMinima;
     }
+
+    public void setPreguntasMultiples(List<PreguntaOpcionMultiple> preguntasMultiples) {
+        if (preguntasMultiples != null) {
+            this.preguntasMultiples = preguntasMultiples;
+        } else {
+            System.out.println("La lista de preguntas no puede ser nula.");
+        }
+    }
     
 	
 	

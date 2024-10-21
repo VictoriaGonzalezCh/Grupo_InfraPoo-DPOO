@@ -59,15 +59,12 @@ public class Consola {
                     System.out.println("4. Editar Actividad");
                     System.out.println("5. Calificar actividad");
                     System.out.println("6. Crear reseña");
-                    System.out.println("7. Añadir prerequisitos a una actividad");
-                    System.out.println("8. Añadir actividades de seguimiento a una actividad");
-                    System.out.println("9. Añadir actividades previas a una actividad");
-                    System.out.println("10. Ver reseñas de una actividad");
-                    System.out.println("11. Ver información de una actividad");
-                    System.out.println("12. Mostrar información de un LearningPath");
-                    System.out.println("13. Mostrar respuestas de un estudiante");
-                    System.out.println("14. Mostrar resultado de actividad por estudiante");
-                    System.out.println("14. Salir");
+                    System.out.println("7. Ver reseñas de una actividad");
+                    System.out.println("8. Ver información de una actividad");
+                    System.out.println("9. Mostrar información de un LearningPath");
+                    System.out.println("10. Mostrar respuestas de un estudiante");
+                    System.out.println("11. Mostrar resultado de actividad por estudiante");
+                    System.out.println("12. Salir");
                     int opcion = scanner.nextInt();
                     scanner.nextLine();
 
@@ -91,30 +88,21 @@ public class Consola {
                             crearFeedbackProfesor(scanner);
                             break;
                         case 7:
-                        	añadirPrerequisito(scanner);
-                            break;
-                        case 8:
-                        	añadirActividadesSeguimientoRecomendadas(scanner);
-                            break;
-                        case 9:
-                        	añadirActividadPrevia(scanner);
-                            break;
-                        case 10:
                             verReseñasActividades(scanner);
                             break;
-                        case 11:
+                        case 8:
                             mostrarInfoActividad(scanner);
                             break;
-                        case 12:
+                        case 9:
                         	mostrarInfoLearningPath(scanner);
                             break;
-                        case 13:
+                        case 10:
                         	verRespuestasEstudiante(scanner);
                             break;
-                        case 14:
+                        case 11:
                         	verResultadoEstudiante(scanner);
                             break;
-                        case 15:
+                        case 12:
                             continuar = false;  // Salir del menú de profesor
                             usuarioLogueado = null;
                             System.out.println("Volviendo al menú principal...");
@@ -267,7 +255,7 @@ public class Consola {
         System.out.println("El id para el Learning Path es " + id );
     }
     
-    private void crearActividad(Scanner scanner) {        
+    public static void crearActividad(Scanner scanner) {        
     	
     	LearningPath learningPathEncontrado = null;
     	
@@ -361,37 +349,73 @@ public class Consola {
         //Actividad actividadEncontrada = sistema.buscarActividadDentroLearningPath(tituloParaEditar, tituloActividadParaEditar );
         Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(idActividadParaEditar));
         
-        //System.out.println("Id de tu usuario: ");
-        //String id = scanner.nextLine();
-        
-        System.out.println("Descripción nueva de la actividad: ");
-        String nuevaDescripcion = scanner.nextLine();
+        System.out.println("¿Qué desea hacer?");
+        System.out.println("1. Editar la descripción de la actividad");
+        System.out.println("2. Añadir una actividad de prerrequisito o seguimiento");
+        int eleccion = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("Descripción nueva del objetivo: ");
-        String nuevoObjetivo = scanner.nextLine();
+        switch (eleccion) {
+        case 1:
+        	System.out.println("Descripción nueva de la actividad: ");
+            String nuevaDescripcion = scanner.nextLine();
 
-        System.out.println("Nuevo nivel de dificultad (por ejemplo, fácil, medio, difícil): ");
-        String nuevoNivelDificultad = scanner.nextLine();
+            System.out.println("Descripción nueva del objetivo: ");
+            String nuevoObjetivo = scanner.nextLine();
 
-        System.out.println("Nueva duración esperada (en minutos): ");
-        String nuevaDuracionEsperada = scanner.nextLine();
-        
-        System.out.println("Nueva fecha límite (formato: dd/MM/yyyy): ");
-        String nuevaFechaLimite = scanner.nextLine();
+            System.out.println("Nuevo nivel de dificultad (por ejemplo, fácil, medio, difícil): ");
+            String nuevoNivelDificultad = scanner.nextLine();
 
-        System.out.println("¿Es una actividad obligatoria? (true/false): ");
-        boolean nuevaObligatoria = Boolean.parseBoolean(scanner.nextLine());
+            System.out.println("Nueva duración esperada (en minutos): ");
+            String nuevaDuracionEsperada = scanner.nextLine();
+            
+            System.out.println("Nueva fecha límite (formato: dd/MM/yyyy): ");
+            String nuevaFechaLimite = scanner.nextLine();
+
+            System.out.println("¿Es una actividad obligatoria? (true/false): ");
+            boolean nuevaObligatoria = Boolean.parseBoolean(scanner.nextLine());
+            
+            // Aquí asumes que ya tienes la lista de actividades previas sugeridas
+            List<Actividad> actividadesPreviasSugeridas = new ArrayList<>();  // Puedes adaptarlo según cómo obtengas las actividades
+            List<Actividad> prerequisitos = new ArrayList<>();
+            
+            Profesor usuario = (Profesor)sistema.obtenerUsuarioAutenticado();
+            
+            Profesor.editarActividad(actividadEncontrada, usuario, nuevaDescripcion, nuevoObjetivo, nuevoNivelDificultad, nuevaDuracionEsperada,
+                    actividadesPreviasSugeridas, nuevaFechaLimite, nuevaObligatoria, prerequisitos);
+            
+            System.out.println("La actividad ha sido editada exitosamente.");
+            break;
         
-        // Aquí asumes que ya tienes la lista de actividades previas sugeridas
-        List<Actividad> actividadesPreviasSugeridas = new ArrayList<>();  // Puedes adaptarlo según cómo obtengas las actividades
-        List<Actividad> prerequisitos = new ArrayList<>();
+        case 2:
+        	System.out.println("¿Desea añadir una actividad como prerrequisito, seguimiento o actividad previa?");
+            System.out.println("1. Prerrequisito");
+            System.out.println("2. Seguimiento");
+            System.out.println("2. Previa ");
+            int tipoActividadRelacionada = Integer.parseInt(scanner.nextLine());
+
+            System.out.println("Escriba el ID de la actividad relacionada: ");
+            String idActividadRelacionada = scanner.nextLine();
+            Actividad actividadRelacionada = sistema.buscarActividadPorId(Integer.parseInt(idActividadRelacionada));
+
+            if (actividadRelacionada == null) {
+                System.out.println("No se encontró ninguna actividad con el ID proporcionado.");
+                return;
+            }
+            
+            if (tipoActividadRelacionada == 1) {
+            	añadirPrerequisito(scanner);
+            }
+            
+            else if (tipoActividadRelacionada == 2) {
+            	añadirActividadesSeguimientoRecomendadas(scanner);
+            }
+            
+            else if (tipoActividadRelacionada == 3) {
+            	añadirActividadPrevia(scanner);
+            }
+        }
         
-        Profesor usuario = (Profesor)sistema.obtenerUsuarioAutenticado();
         
-        Profesor.editarActividad(actividadEncontrada, usuario, nuevaDescripcion, nuevoObjetivo, nuevoNivelDificultad, nuevaDuracionEsperada,
-                actividadesPreviasSugeridas, nuevaFechaLimite, nuevaObligatoria, prerequisitos);
-        
-        System.out.println("La actividad ha sido editada exitosamente.");
     }
     
     //private void calificarTareasExamenes(Scanner scanner) {

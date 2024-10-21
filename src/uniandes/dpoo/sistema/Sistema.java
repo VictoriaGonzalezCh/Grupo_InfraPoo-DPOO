@@ -233,6 +233,10 @@ public class Sistema {
     	
         estudianteEncontrado.mostrarResultadoEstudiantes(actividadEncontrada, learningPath);
     }
+
+	public List<LearningPath> getLearningPaths() {
+		return learningPaths;
+	}
     
 }
 

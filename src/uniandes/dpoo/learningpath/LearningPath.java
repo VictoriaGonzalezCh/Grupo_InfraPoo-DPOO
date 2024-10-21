@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import uniandes.dpoo.usuario.Estudiante;
 
@@ -238,9 +239,8 @@ public class LearningPath {
 		this.id = id;
 	}
 
-	public Actividad[] getActividades() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Actividad> getActividades() {
+		return listaActividades;
 	}
 	
 	public String getFechaCreacion() {
@@ -271,6 +271,13 @@ public class LearningPath {
 
 	public void setVersion() {
 		this.version++;
+	}
+
+
+	public List<Estudiante> getEstudiantesInscritos() {
+	    // Devuelve la lista de estudiantes inscritos basándose en las claves del HashMap
+	    Set<Estudiante> estudiantesSet = progresoEstudiante.keySet(); // Obtiene el Set de estudiantes
+	    return new ArrayList<>(estudiantesSet);  // Crea una lista a partir del Set
 	}
 	
 }
