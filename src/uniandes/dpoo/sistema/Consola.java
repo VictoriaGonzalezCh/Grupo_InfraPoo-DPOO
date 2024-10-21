@@ -202,6 +202,8 @@ public class Consola {
         sistema.registrarUsuario(profesor);
         System.out.println("Profesor registrado exitosamente.");
         System.out.println("El id del usuario es " + id );
+        
+        
     }
 
     private void registrarEstudiante(Scanner scanner) {
@@ -417,23 +419,7 @@ public class Consola {
         
         
     }
-    
-    //private void calificarTareasExamenes(Scanner scanner) {
-    	//System.out.println("Escriba el título del Learning Path dentro del cual quiere buscar la actividad: ");
-        //String tituloLP = scanner.nextLine();
         
-      //  System.out.println("Escriba el id del quiz o examen ");
-      //  String id = scanner.nextLine();
-        
-        //Actividad actividadEncontrada = sistema.buscarActividadDentroLearningPath(tituloLP, tituloActividad );
-        //Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
-        
-        //System.out.println("A que resultado quiere cambiar el resultado actual? (exitoso o no exitoso):");
-        //String nuevoResultado = scanner.nextLine();
-        
-        //actividadEncontrada.cambiarResultado(nuevoResultado);
-    //}
-    
     
     private void verRespuestasEstudiante(Scanner scanner) {
     	System.out.println("Escriba el id de la actividad de la cual quiere ver las respuestas ingresadas por el estudiante: ");

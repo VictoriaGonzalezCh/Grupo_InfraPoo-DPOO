@@ -40,16 +40,17 @@ class ReseñaTest {
         actividad1.setDuracionEsperada("60");
         actividad1.setObligatoria(true);
         
-        
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
-	}
+	//@AfterEach
+	//void tearDown() throws Exception {
+	//}
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+	//@Test
+	//void test() {
+	//	assertTrue(actividad1.getFeedbacks().equals(actividad1.getFeedbacks()), )
+	//	crearReseña
+	//	fail("Not yet implemented");
+	//}
 
 }
