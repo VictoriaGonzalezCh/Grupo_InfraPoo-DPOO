@@ -38,7 +38,7 @@ public class ArchivoPruebaReseña {
         actividad1.setDuracionEsperada("60");
         actividad1.setObligatoria(true);
         
-        
+        learningPath1.agregarActividad(actividad1);
         
         System.out.println("El id para que deje la reseña es: " + actividad1.getId());
         
