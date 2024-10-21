@@ -38,6 +38,8 @@ public class ArchivoPruebaReseña {
         actividad1.setDuracionEsperada("60");
         actividad1.setObligatoria(true);
         
+        
+        
         System.out.println("El id para que deje la reseña es: " + actividad1.getId());
         
         // Crear una actividad para la reseña
@@ -60,7 +62,7 @@ public class ArchivoPruebaReseña {
         System.out.println("\nReseña ingresada:");
         feedback.mostrarFeedback();
         System.out.println("Rating: " + feedback.getRating());
-
+        
         // Cerrar el scanner
         scanner.close();
     }
