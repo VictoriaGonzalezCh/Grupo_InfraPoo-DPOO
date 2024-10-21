@@ -13,7 +13,7 @@ import uniandes.dpoo.usuario.Usuario;
 
 public class Consola {
 	
-    private Sistema sistema;
+    private static Sistema sistema;
     private Usuario usuarioLogueado;
 
     
