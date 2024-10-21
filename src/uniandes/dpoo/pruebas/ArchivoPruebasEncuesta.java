@@ -20,14 +20,18 @@ public class ArchivoPruebasEncuesta {
         List<Actividad> actividadesPrevias = new ArrayList<>();
         
         // Crear una nueva encuesta
-        Encuesta encuesta = new Encuesta(1, "Encuesta de Satisfacción", 
+        Encuesta encuesta = new Encuesta(Sistema.generarIDUnicoActividades(), "Encuesta de Satisfacción", 
                                           "Encuesta para medir la satisfacción del estudiante.",
                                           "Medir satisfacción", "Baja", "30 minutos", 
                                           actividadesPrevias, "2024-12-31", true, 
                                           profesor, null, null);
         
-        // Agregar preguntas a la encuesta
-        for (int i = 0; i < 2; i++) {
+        System.out.println("¿Cuántas preguntas desea agregar a la encuesta?");
+        int cantidadPreguntas = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea después del número
+
+        // Agregar preguntas a la encuesta según lo indicado por el usuario
+        for (int i = 0; i < cantidadPreguntas; i++) {
             encuesta.agregarPregunta(scanner);
         }
 
@@ -43,8 +47,20 @@ public class ArchivoPruebasEncuesta {
 
         // Cambiar el estado de la encuesta
         encuesta.cambiarEstadoEncuesta();
+        
+     // Mostrar la actividad completa
+        System.out.println("Detalles de la actividad:");
+        System.out.println("Título: " + encuesta.getTituloActividad());
+        System.out.println("Descripción: " + encuesta.getDescripcion());
+        System.out.println("Objetivo: " + encuesta.getObjetivo());
+        System.out.println("Nivel de dificultad: " + encuesta.getNivelDificultad());
+        System.out.println("Duración esperada: " + encuesta.getDuracionEsperada());
+        System.out.println("Fecha límite: " + encuesta.getFechaLimite());
+        System.out.println("Estado: " + encuesta.getEstado());
+        
 
         // Cerrar el scanner
         scanner.close();
     }
+
 }

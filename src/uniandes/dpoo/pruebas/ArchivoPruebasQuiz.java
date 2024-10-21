@@ -2,6 +2,7 @@ package uniandes.dpoo.pruebas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import uniandes.dpoo.learningpath.*;
 import uniandes.dpoo.learningpath.LearningPath;
@@ -22,40 +23,103 @@ public class ArchivoPruebasQuiz {
 	    nuevoQuiz.setObligatoria(true);
 	    nuevoQuiz.setNivelDificultad("medio");
 	    nuevoQuiz.setFechaLimite("15/11/2024");
-
-	    // Establecer calificación mínima
-	    nuevoQuiz.establecerCalificacionMinima(3); // Supongamos que se califica de 1 a 5
+	    
+	    Scanner scanner = new Scanner(System.in);
+	    
+	    System.out.println("Ingrese la calificación mínima para pasar (por ejemplo, de 1 a 5):");
+        int calificacionMinima = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea después del número
+        nuevoQuiz.establecerCalificacionMinima(calificacionMinima);
 
 	    // Agregar actividades previas y prerequisitos si es necesario
 	    nuevoQuiz.setActividadesPreviasSugeridas(new ArrayList<>());
 	    nuevoQuiz.setPrerequisitos(new ArrayList<>());
 	    nuevoQuiz.setActividadesSeguimientoRecomendadas(new ArrayList<>());
 
-	    // Crear algunas preguntas de opción múltiple
-	    List<PreguntaOpcionMultiple> preguntas = new ArrayList<>();
+	 // Preguntar cuántas preguntas desea agregar
+        System.out.println("¿Cuántas preguntas desea agregar al quiz?");
+        int cantidadPreguntas = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea después del número
 
-	    // Crear preguntas y agregarlas a la lista
-	    for (int i = 0; i < 3; i++) {
-	        List<String> opciones = new ArrayList<>();
-	        opciones.add("Opción A");
-	        opciones.add("Opción B");
-	        opciones.add("Opción C");
-	        opciones.add("Opción D");
+        // Crear preguntas de opción múltiple
+        List<PreguntaOpcionMultiple> preguntas = new ArrayList<>();
+        
+        for (int i = 0; i < cantidadPreguntas; i++) {
+            System.out.println("Ingrese el enunciado de la pregunta " + (i + 1) + ":");
+            String enunciado = scanner.nextLine();
+            
+            List<String> opciones = new ArrayList<>();
+            // Pedir opciones
+            for (int j = 0; j < 4; j++) {
+                System.out.println("Ingrese la opción " + (char) ('A' + j) + " para la pregunta " + (i + 1) + ":");
+                String opcion = scanner.nextLine();
+                opciones.add(opcion);
+            }
+            
+            // Crear la pregunta de opción múltiple
+            PreguntaOpcionMultiple pregunta = new PreguntaOpcionMultiple();
+            pregunta.nuevoEnunciado(enunciado);
+            pregunta.crearOpciones(opciones);
 
-	        PreguntaOpcionMultiple pregunta = new PreguntaOpcionMultiple();
-	        pregunta.nuevoEnunciado("Pregunta " + (i + 1) + "?");
-	        pregunta.crearOpciones(opciones);
-	        pregunta.establecerRespuestaCorrecta("Opción A"); // Supongamos que la opción A es correcta
-	        pregunta.crearExplicacion("Explicación de la respuesta correcta.");
+            // Pedir la respuesta correcta
+            System.out.println("¿Cuál es la respuesta correcta para la pregunta " + (i + 1) + " (A/B/C/D)?");
+            String respuestaCorrecta = scanner.nextLine();
+            pregunta.establecerRespuestaCorrecta("Opción " + respuestaCorrecta);
 
-	        preguntas.add(pregunta);
-	    }
-
-	    // Establecer las preguntas en el quiz
-	    nuevoQuiz.setPreguntasMultiples(preguntas);
+            // Pedir una explicación de la respuesta
+            System.out.println("Ingrese una explicación para la respuesta correcta:");
+            String explicacion = scanner.nextLine();
+            pregunta.crearExplicacion(explicacion);
+            
+            // Agregar la pregunta a la lista de preguntas
+            preguntas.add(pregunta);
+        }
+        
+        // Agregar las preguntas al quiz
+        nuevoQuiz.setPreguntasMultiples(preguntas);
 	    
 	    imprimirDetallesQuiz(nuevoQuiz);
-	}
+	    
+	 // **RESPONDER EL QUIZ**
+        int respuestasCorrectas = 0;
+        for (int i = 0; i < preguntas.size(); i++) {
+            PreguntaOpcionMultiple pregunta = preguntas.get(i);
+            System.out.println(pregunta.getEnunciado());
+            List<String> opciones = pregunta.getOpciones();
+            for (int j = 0; j < opciones.size(); j++) {
+                System.out.println((char) ('A' + j) + ") " + opciones.get(j));
+            }
+            
+            System.out.println("Ingrese su respuesta (A/B/C/D):");
+            String respuestaUsuario = scanner.nextLine().trim().toUpperCase();
+
+            // Verificar si la respuesta es correcta
+            if (pregunta.getRespuestaCorrecta().equals(respuestaUsuario)) {
+                respuestasCorrectas++;
+                System.out.println("¡Correcto!\n");
+            } else {
+                System.out.println("Incorrecto. La respuesta correcta es: " + pregunta.getRespuestaCorrecta() + "\n");
+            }
+        }
+
+        // Calcular el progreso del estudiante
+        System.out.println("Respondiste correctamente " + respuestasCorrectas + " de " + preguntas.size() + " preguntas.");
+        
+        // Determinar si el estudiante aprobó o no
+        double puntuacion = (double) respuestasCorrectas / preguntas.size() * 5; // Calificación sobre 5
+        System.out.println("Tu puntuación es: " + puntuacion);
+        
+        if (puntuacion >= calificacionMinima) {
+            System.out.println("¡Felicidades! Has aprobado el quiz.");
+        } else {
+            System.out.println("Lo siento, no has aprobado el quiz.");
+        }
+
+        // Cerrar el scanner
+        scanner.close();
+    }
+	    
+
 	 
 	public static void imprimirDetallesQuiz(Quiz nuevoQuiz) {
 	    // Mostrar información del quiz

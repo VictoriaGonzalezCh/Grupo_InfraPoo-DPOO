@@ -29,10 +29,15 @@ public class ArchivoPruebasExamen {
 
         Scanner scanner = new Scanner(System.in);
 
-        for (int i = 0; i < 2; i++) {
-            nuevoExamen.agregarPregunta(scanner);
-        }
+        System.out.println("¿Cuántas preguntas desea agregar al examen?");
+        int cantidadPreguntas = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea después del número
 
+        // Agregar preguntas a la encuesta según lo indicado por el usuario
+        for (int i = 0; i < cantidadPreguntas; i++) {
+        	nuevoExamen.agregarPregunta(scanner);
+        }
+        
         imprimirDetallesExamen(nuevoExamen);
         nuevoExamen.responderPreguntas(scanner);
         nuevoExamen.mostrarRespuestasEstudiante();
