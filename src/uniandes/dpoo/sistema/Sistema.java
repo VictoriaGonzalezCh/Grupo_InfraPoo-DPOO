@@ -237,7 +237,47 @@ public class Sistema {
 	public List<LearningPath> getLearningPaths() {
 		return learningPaths;
 	}
-    
+
+	public List<LearningPath> obtenerTodosLosLearningPaths() {
+        return new ArrayList<>(learningPaths);  // Devuelve una copia de la lista de LearningPaths
+    }
+
+	public List<Actividad> obtenerTodasLasActividades() {
+	    List<Actividad> todasLasActividades = new ArrayList<>();
+
+	    // Iterar sobre cada LearningPath y obtener sus actividades
+	    for (LearningPath lp : learningPaths) {
+	        todasLasActividades.addAll(lp.getActividades());
+	    }
+
+	    return todasLasActividades;
+	}
+
+	public void agregarActividad(LearningPath learningPath1, Actividad actividad) {
+	    // Buscar el Learning Path por su ID
+	    
+	    if (learningPath1 != null) {
+	        // Si se encontró el Learning Path, agregar la actividad
+	        learningPath1.agregarActividad(actividad);
+	        System.out.println("Actividad agregada exitosamente al Learning Path con ID " + learningPath1);
+	    } else {
+	        System.out.println("Learning Path con ID " + learningPath1 + " no encontrado.");
+	    }
+	}
+
+	public void agregarEstudiante(Estudiante estudiante) {
+        // Verificar si el estudiante ya existe (comparamos por ID)
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof Estudiante && usuario.getId() == estudiante.getId()) {
+                System.out.println("El estudiante con ID " + estudiante.getId() + " ya existe.");
+                return; // Salir si ya existe
+            }
+        }
+
+        // Agregar el estudiante a la lista de usuarios
+        usuarios.add(estudiante);
+        System.out.println("Estudiante " + estudiante.getLogin() + " agregado con éxito.");
+    }
 }
 
 	

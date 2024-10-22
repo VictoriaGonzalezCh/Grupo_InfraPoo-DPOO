@@ -27,8 +27,10 @@ public class LearningPath implements Serializable{
 	private String fechaModificacion;
 	private int version;
 
-	//private ProgresoEstudiante progresoEstudiante;
 	
+	
+
+
 	public LearningPath() {
 		this.listaActividades = new ArrayList<>();
 		this.progresoEstudiante = new HashMap<>();
@@ -37,7 +39,7 @@ public class LearningPath implements Serializable{
 		this.fechaModificacion = "";
 		this.version = 1;
 		
-		//this.progresoEstudiante = new ProgresoEstudiante();
+		
 	}
 
 
@@ -50,7 +52,7 @@ public class LearningPath implements Serializable{
 		this.rating = rating;
 		this.listaActividades = new ArrayList<>();
 		this.progresoEstudiante = new HashMap<>();
-		//this.progresoEstudiante = new ProgresoEstudiante();
+		
 	}
 	
 	
@@ -58,29 +60,6 @@ public class LearningPath implements Serializable{
         return progresoEstudiante.get(estudiante);
     }
 
-    //public void registrarProgresoEstudiante(Estudiante estudiante, ProgresoEstudiante progreso) {
-    //    progresoEstudiantes.put(estudiante, progreso);
-    //}
-    
-	//public void registrarActividadCompletadaPorEstudiante(Estudiante estudiante, Actividad actividad) {
-        // Obtener o crear el progreso del estudiante
-    //    ProgresoEstudiante progreso = progresoEstudiantes.get(estudiante);
-    //    if (progreso == null) {
-    //        progreso = new ProgresoEstudiante();
-    //        progresoEstudiantes.put(estudiante, progreso);
-    //    }
-        
-        // Añadir las respuestas para la actividad completada
-    //    progreso.añadirRespuestasEstudiante(actividad);
-        
-        // Actualiza otras métricas como la fecha de finalización
-      //  progreso.setFechaFinalizacion("Ahora");
-        //progreso.setTasaExitoFracaso(calcularTasaExito(actividad));  // Calcula la tasa de éxito
-    //}
-    
-	//public void registrarRespuestasEstudiante(Actividad actividad) {
-	//	progresoEstudiante.add(actividad);
-	//}
 	
 
        public void registrarActividadCompletadaPorEstudiante(Estudiante estudiante, Actividad actividad) {
@@ -101,14 +80,7 @@ public class LearningPath implements Serializable{
     	   
     	
 	
-	//public ProgresoEstudiante obtenerProgresoDeEstudiante(Estudiante estudiante) {
-    //    if (this.progresoEstudiante != null && progresoEstudiante.getEstudiante().equals(estudiante)) {
-    //        return progresoEstudiante;
-    //    } else {
-    //        System.out.println("Este estudiante no está inscrito en este Learning Path o no tiene progreso.");
-    //        return null;  // O puedes devolver un progreso vacío o manejar de otra forma
-    //    }
-    //}
+
 	
 	
 	public void asociarProgresoConEstudiante(Estudiante estudiante) {
@@ -281,6 +253,15 @@ public class LearningPath implements Serializable{
 	    // Devuelve la lista de estudiantes inscritos basándose en las claves del HashMap
 	    Set<Estudiante> estudiantesSet = progresoEstudiante.keySet(); // Obtiene el Set de estudiantes
 	    return new ArrayList<>(estudiantesSet);  // Crea una lista a partir del Set
+	}
+	
+	public HashMap<Estudiante, ProgresoEstudiante> getProgresoEstudiante() {
+		return progresoEstudiante;
+	}
+
+
+	public void setProgresoEstudiante(HashMap<Estudiante, ProgresoEstudiante> progresoEstudiante) {
+		this.progresoEstudiante = progresoEstudiante;
 	}
 	
 }

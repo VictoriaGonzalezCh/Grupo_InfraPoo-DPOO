@@ -179,22 +179,14 @@ public class Consola {
         System.out.println("Contraseña: ");
         String contraseña = scanner.nextLine();
         
-        Usuario usuarios = (Usuario) Persistencia.cargarObjeto("Usuarios");
+        //Usuario usuarios = (Usuario) Persistencia.cargarObjeto("Usuarios");
         
-        
-            if (usuarios.getLogin().equals(login) && usuarios.getContraseña().equals(contraseña)) {
-                usuarioLogueado = usuarios;
-                System.out.println("Inicio de sesión exitoso.");
-                return;
-            
+        usuarioLogueado = sistema.login(login, contraseña);
+        if (usuarioLogueado != null) {
+            System.out.println("Inicio de sesión exitoso.");
+        } else {
+            System.out.println("Correo o contraseña incorrectos.");
         }
-        
-        //usuarioLogueado = sistema.login(login, contraseña);
-        //if (usuarioLogueado != null) {
-        //    System.out.println("Inicio de sesión exitoso.");
-        //} else {
-        //    System.out.println("Correo o contraseña incorrectos.");
-        //}
     }
 
     private void registrarProfesor(Scanner scanner) throws IOException {
@@ -356,9 +348,6 @@ public class Consola {
     }
         
     private void editarActividad(Scanner scanner) {
-    	
-    	//System.out.println("Escriba el título del Learning Path dentro del cual esta la actividad que quiere editar: ");
-        //String tituloParaEditar = scanner.nextLine();
         
         System.out.println("Escriba el id de la Actividad que quiere editar: ");
         String idActividadParaEditar = scanner.nextLine();
