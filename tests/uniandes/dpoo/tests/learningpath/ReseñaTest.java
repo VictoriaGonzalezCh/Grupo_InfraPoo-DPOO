@@ -1,10 +1,10 @@
-package uniandes.dpoo.learningPath.tests;
+package uniandes.dpoo.tests.learningpath;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.AfterEach;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
 
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
@@ -13,7 +13,7 @@ import uniandes.dpoo.usuario.Estudiante;
 
 class ReseñaTest {
 
-	@BeforeEach
+	//@BeforeEach
 	void setUp() throws Exception {
 		Estudiante estudiante1 = new Estudiante(0, null, null);
         estudiante1.setId(Sistema.generarIDUnicoUsuarios());

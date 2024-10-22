@@ -1,6 +1,7 @@
 package uniandes.dpoo.learningpath;
 
 import java.time.LocalDate;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,8 +10,10 @@ import java.util.Set;
 
 import uniandes.dpoo.usuario.Estudiante;
 
-public class LearningPath {
-	
+import java.io.Serializable;
+
+public class LearningPath implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String titulo;
 	private String descripcionContenido;

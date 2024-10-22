@@ -1,6 +1,7 @@
 package uniandes.dpoo.usuario;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,9 @@ import uniandes.dpoo.learningpath.Quiz;
 import uniandes.dpoo.learningpath.RecursoEducativo;
 import uniandes.dpoo.learningpath.Tarea;
 
-public class Estudiante extends Usuario {
+public class Estudiante extends Usuario implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private List<Actividad> actividadesCompletadas; 
     private List<LearningPath> learningPathsCompletados;

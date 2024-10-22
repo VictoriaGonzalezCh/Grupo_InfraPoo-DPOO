@@ -1,5 +1,6 @@
 package uniandes.dpoo.sistema;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.learningpath.ProgresoEstudiante;
+import uniandes.dpoo.persistencia.Persistencia;
 import uniandes.dpoo.usuario.Estudiante;
 import uniandes.dpoo.usuario.Profesor;
 import uniandes.dpoo.usuario.Usuario;
@@ -21,7 +23,7 @@ public class Consola {
         sistema = new Sistema();
     }
 
-    public void iniciar() {
+    public void iniciar() throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido al sistema de Learning Path");
 
@@ -170,21 +172,32 @@ public class Consola {
         }}
     }
 
-    private void login(Scanner scanner) {
+    @SuppressWarnings("unchecked")
+	private void login(Scanner scanner) throws ClassNotFoundException, IOException {
         System.out.println("Login: ");
         String login = scanner.nextLine();
         System.out.println("Contraseña: ");
         String contraseña = scanner.nextLine();
         
-        usuarioLogueado = sistema.login(login, contraseña);
-        if (usuarioLogueado != null) {
-            System.out.println("Inicio de sesión exitoso.");
-        } else {
-            System.out.println("Correo o contraseña incorrectos.");
+        Usuario usuarios = (Usuario) Persistencia.cargarObjeto("Usuarios");
+        
+        
+            if (usuarios.getLogin().equals(login) && usuarios.getContraseña().equals(contraseña)) {
+                usuarioLogueado = usuarios;
+                System.out.println("Inicio de sesión exitoso.");
+                return;
+            
         }
+        
+        //usuarioLogueado = sistema.login(login, contraseña);
+        //if (usuarioLogueado != null) {
+        //    System.out.println("Inicio de sesión exitoso.");
+        //} else {
+        //    System.out.println("Correo o contraseña incorrectos.");
+        //}
     }
 
-    private void registrarProfesor(Scanner scanner) {
+    private void registrarProfesor(Scanner scanner) throws IOException {
     	System.out.println("Login: ");
         String login = scanner.nextLine();
         
@@ -203,10 +216,10 @@ public class Consola {
         System.out.println("Profesor registrado exitosamente.");
         System.out.println("El id del usuario es " + id );
         
-        
+        Persistencia.guardarObjeto(profesor, "Usuarios");
     }
 
-    private void registrarEstudiante(Scanner scanner) {
+    private void registrarEstudiante(Scanner scanner) throws IOException {
     	System.out.println("Login: ");
         String login = scanner.nextLine();
         
@@ -228,9 +241,11 @@ public class Consola {
         //}
         System.out.println("Estudiante registrado exitosamente.");
         System.out.println("El id del usuario es " + id );
+        
+        Persistencia.guardarObjeto(estudiante, "Usuarios");
     }
     
-    private void crearLearningPath(Scanner scanner) {        
+    private void crearLearningPath(Scanner scanner) throws IOException {        
         System.out.println("Título del Learning Path: ");
         String titulo = scanner.nextLine();
         
@@ -255,6 +270,8 @@ public class Consola {
         sistema.agregarLearningPath(nuevoLearningPath);
         nuevoLearningPath.setFechaCreacion();
         System.out.println("El id para el Learning Path es " + id );
+        
+        Persistencia.guardarObjeto(nuevoLearningPath, "LearningPaths");
     }
     
     public static void crearActividad(Scanner scanner) {        
@@ -272,8 +289,6 @@ public class Consola {
         System.out.println("Escriba el título de la Actividad: ");
         String tituloActividad = scanner.nextLine();
     	
-        System.out.println("Id de tu usuario: ");
-        String idUsuario = scanner.nextLine();
         
         System.out.println("Descripción de la actividad: ");
         String descripcion = scanner.nextLine();
