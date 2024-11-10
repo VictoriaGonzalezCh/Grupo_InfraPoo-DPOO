@@ -9,6 +9,7 @@ import java.util.Set;
 
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
+import uniandes.dpoo.persistencia.Persistencia;
 import uniandes.dpoo.usuario.Estudiante;
 import uniandes.dpoo.usuario.Profesor;
 import uniandes.dpoo.usuario.Usuario;
@@ -278,6 +279,100 @@ public class Sistema {
         usuarios.add(estudiante);
         System.out.println("Estudiante " + estudiante.getLogin() + " agregado con éxito.");
     }
+	
+	public void crearLearningPath(int id, String titulo, String descripcionContenido, String descripcionObjetivo, String nivelDificultad, String rating) {
+		LearningPath nuevoLearningPath = new LearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating);
+        
+        agregarLearningPath(nuevoLearningPath);
+        nuevoLearningPath.setFechaCreacion();
+        System.out.println("El id para el Learning Path es " + id );
+        
+        //Persistencia.guardarObjeto(nuevoLearningPath, "LearningPaths");
+	}
+	
+	public void crearNuevaActividad(LearningPath learningPathEncontrado, String tipoActividad, int id, String tituloActividad, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, Profesor usuario, String nivelDificultad, List<Actividad>  actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner){
+		Actividad nuevaActividad = Profesor.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
+        
+        learningPathEncontrado.agregarActividad(nuevaActividad);
+        learningPathEncontrado.setDuracionMinutos();
+        System.out.println("El id para la actividad es " + id );
+	}
+	
+	public void editarLearningPath(LearningPath learningPathEncontrado, String nuevoTitulo, String nuevaDescripcionContenido, String nuevaDescripcionObjetivo, String nuevoNivelDificultad, String nuevoRating) {
+		Profesor.editarLearningPath(learningPathEncontrado, nuevoTitulo, nuevaDescripcionContenido, nuevaDescripcionObjetivo, nuevoNivelDificultad, nuevoRating);
+        
+        System.out.println("El Learning Path ha sido editado exitosamente.");
+	}
+	
+	public void editarActividad(Actividad actividadEncontrada, String nuevaDescripcion, String nuevoObjetivo, String nuevoNivelDificultad, String nuevaDuracionEsperada, List<Actividad> actividadesPreviasSugeridas, String nuevaFechaLimite, boolean nuevaObligatoria, List<Actividad> prerequisitos) {
+
+        Profesor usuario = (Profesor)obtenerUsuarioAutenticado();
+        
+        Profesor.editarActividad(actividadEncontrada, usuario, nuevaDescripcion, nuevoObjetivo, nuevoNivelDificultad, nuevaDuracionEsperada,
+                actividadesPreviasSugeridas, nuevaFechaLimite, nuevaObligatoria, prerequisitos);
+        
+        System.out.println("La actividad ha sido editada exitosamente.");
+	}
+	
+	public void verRespuestasEstudiante(String id, String idUsuario) {
+		
+		 	Actividad actividadEncontrada = buscarActividadPorId(Integer.parseInt(id));
+	        
+	        Estudiante estudianteEncontrado = stringAEstudiante((Integer.parseInt(idUsuario)));
+	        
+	        LearningPath learningPath = buscarLearningPathPorActividad(actividadEncontrada);
+	        
+	        estudianteEncontrado.mostrarRespuestasEstudiantes(actividadEncontrada, learningPath);
+	}
+	
+	public void inscribirseLearningPath(String id) {
+		LearningPath learningPathEncontrado = buscarLearningPath(Integer.parseInt(id));
+        //Estudiante estudianteEncontrado = sistema.stringAEstudiante((Integer.parseInt(idUsuario)));
+        
+        Estudiante estudianteEncontrado = (Estudiante)obtenerUsuarioAutenticado();
+        
+        estudianteEncontrado.registrarseLearningPath(learningPathEncontrado);
+        learningPathEncontrado.asociarProgresoConEstudiante(estudianteEncontrado);
+        System.out.println("Se ha registrado al learning Path exitosamente.");
+	}
+	
+	public void iniciarActividad(String id, Scanner scanner) {
+		Estudiante estudianteEncontrado = (Estudiante)obtenerUsuarioAutenticado();
+        
+        Actividad actividadEncontrada = buscarActividadPorId(Integer.parseInt(id));
+        
+        estudianteEncontrado.iniciarActividad(actividadEncontrada);
+        
+        realizarActividadEstudiante(actividadEncontrada, estudianteEncontrado, scanner);
+	}
+	
+	public void verProgresoEstudiante(String id) {
+		Estudiante estudianteEncontrado = (Estudiante)obtenerUsuarioAutenticado();
+        
+        LearningPath learningPathEncontrado = buscarLearningPath(Integer.parseInt(id));
+        
+        System.out.println("El progreso de este Learning Path es : " + estudianteEncontrado.establecerProgresoEstudiante(learningPathEncontrado));
+	}
+	
+	public void crearFeedbackEstudiante(String id, String rating, String comentarioFeedback) {
+		Estudiante estudianteEncontrado = (Estudiante)obtenerUsuarioAutenticado();
+    	
+    	Actividad actividadEncontrada = buscarActividadPorId(Integer.parseInt(id));
+    	
+    	estudianteEncontrado.crearFeedbackEstudiante(estudianteEncontrado, actividadEncontrada, Integer.parseInt(rating), comentarioFeedback); 
+	}
+	
+	public void crearFeedbackProfesor(String id, String rating, String comentarioFeedback) {
+		Actividad actividadEncontrada = buscarActividadPorId(Integer.parseInt(id));
+    	
+    	Profesor profesorEncontrado = (Profesor)obtenerUsuarioAutenticado();
+    	
+    	profesorEncontrado.crearFeedbackProfesor(profesorEncontrado, actividadEncontrada, Integer.parseInt(rating), comentarioFeedback); 
+	}
+	
+	 
+	
+	
 }
 
 	

@@ -106,6 +106,9 @@ public class LearningPath implements Serializable{
 		return progresoEstudiante.get(estudiante).getRespuestasPorEstudianteQuiz().get(actividad);
 	}
 	
+	public HashMap<PreguntaVerdaderoFalso, String> obtenerRespuestaQuizDeEstudianteVF(Estudiante estudiante, Actividad actividad) {
+		return progresoEstudiante.get(estudiante).getRespuestasPorEstudianteQuizVF().get(actividad);
+	}
 	
 	public void agregarActividad(Actividad actividad) {
 		this.listaActividades.add(actividad);

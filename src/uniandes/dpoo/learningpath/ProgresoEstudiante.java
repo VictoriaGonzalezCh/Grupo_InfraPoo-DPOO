@@ -13,6 +13,7 @@ public class ProgresoEstudiante {
 	private HashMap<Actividad, HashMap<PreguntaOpcionMultiple, String>> respuestasPorEstudianteQuiz;
 	private HashMap<Actividad, HashMap<PreguntaAbierta, String>> respuestasPorEstudianteExamen;
 	private HashMap<Actividad, HashMap<PreguntaAbierta, String>> respuestasPorEstudianteEncuesta;
+	private HashMap<Actividad, HashMap<PreguntaVerdaderoFalso, String>> respuestasPorEstudianteQuizVF;
 	
 	private Estudiante estudiante;
 	private Actividad actividad;
@@ -26,6 +27,7 @@ public class ProgresoEstudiante {
 		this.respuestasPorEstudianteQuiz = new HashMap<>();
 		this.respuestasPorEstudianteExamen = new HashMap<>();
 		this.respuestasPorEstudianteEncuesta = new HashMap<>();
+		this.respuestasPorEstudianteQuizVF = new HashMap<>();
 	}
 		// TODO Auto-generated constructor stub
 	public ProgresoEstudiante(Estudiante estudiante, Actividad actividad, String fechaInicio, String fechaFinalizacion, int tiempoDedicado, int tasaExitoFracaso) {
@@ -37,13 +39,25 @@ public class ProgresoEstudiante {
 		this.respuestasPorEstudianteQuiz = new HashMap<>();
 		this.respuestasPorEstudianteExamen = new HashMap<>();
 		this.respuestasPorEstudianteEncuesta = new HashMap<>();
+		this.respuestasPorEstudianteQuizVF = new HashMap<>();
 	}	
 	
 	public void añadirRespuestasEstudiante(Estudiante estudiante, Actividad actividad) {
 		
 		if (actividad instanceof Quiz) {
-	        Quiz quiz = (Quiz) actividad;  // Realizamos un cast
-	        respuestasPorEstudianteQuiz.put(actividad, quiz.getRespuestasEstudiante());
+			Quiz quiz = (Quiz) actividad;  // Realizamos un cast
+	        
+			// Manejar respuestas de preguntas de opción múltiple
+            if (quiz.tienePreguntasOpcionMultiple()) {
+                respuestasPorEstudianteQuiz.put(actividad, quiz.getRespuestasEstudiante());
+            }
+
+            // Manejar respuestas de preguntas de verdadero/falso
+            if (quiz.tienePreguntasVerdaderoFalso()) {
+                respuestasPorEstudianteQuizVF.put(actividad, quiz.getRespuestasEstudianteVF());
+            }
+			
+			//respuestasPorEstudianteQuiz.put(actividad, quiz.getRespuestasEstudiante());
 	        
 	    } else if (actividad instanceof Examen) {
 	        Examen examen = (Examen) actividad;
@@ -93,6 +107,11 @@ public class ProgresoEstudiante {
 	public HashMap<Actividad, HashMap<PreguntaOpcionMultiple, String>> getRespuestasPorEstudianteQuiz() {
 		return respuestasPorEstudianteQuiz;
 	}
+	
+	public HashMap<Actividad, HashMap<PreguntaVerdaderoFalso, String>> getRespuestasPorEstudianteQuizVF() {
+		return respuestasPorEstudianteQuizVF;
+	}
+	
 	public void setRespuestasPorEstudianteQuiz(
 			HashMap<Actividad, HashMap<PreguntaOpcionMultiple, String>> respuestasPorEstudianteQuiz) {
 		this.respuestasPorEstudianteQuiz = respuestasPorEstudianteQuiz;
@@ -136,6 +155,11 @@ public class ProgresoEstudiante {
 		this.tasaExitoFracaso = tasaExitoFracaso;
 	}
 	
+	
+	public void setRespuestasPorEstudianteQuizVF(
+			HashMap<Actividad, HashMap<PreguntaVerdaderoFalso, String>> respuestasPorEstudianteQuizVF) {
+		this.respuestasPorEstudianteQuizVF = respuestasPorEstudianteQuizVF;
+	}
 	public int calculartiempoDedicado(String tiempoInicial, String tiempoFinal) {
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 		
@@ -148,6 +172,7 @@ public class ProgresoEstudiante {
         // Retornar el tiempo dedicado en minutos
         return (int) duracion.toMinutes(); 
 	}
+	
 	
 		
 }

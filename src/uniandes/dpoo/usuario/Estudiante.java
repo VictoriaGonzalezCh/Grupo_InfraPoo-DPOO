@@ -170,7 +170,7 @@ public class Estudiante extends Usuario implements Serializable{
 		
 		if (actividad instanceof Quiz) {
 	        Quiz quiz = (Quiz) actividad;  // Realizamos un cast
-	        quiz.responderPreguntas(scanner, quiz);  // Invocamos el método
+	        quiz.responderPreguntas(scanner);  // Invocamos el método
 	        registrarActividadCompletada(actividad);
 	        
 	    } else if (actividad instanceof Examen) {

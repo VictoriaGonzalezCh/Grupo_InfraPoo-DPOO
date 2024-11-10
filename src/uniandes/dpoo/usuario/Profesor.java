@@ -113,16 +113,30 @@ public class Profesor extends Usuario implements Serializable{
 	            break;
 	            
 	        case "quiz":
-	        	System.out.println("Especifique la calificacion minima para el quiz: ");
+	        	 System.out.println("Escriba el tipo de quiz (VerdaderoFalso o OpcionMultiple) ");
+	             String tipoQuiz = scanner.nextLine();
+	        	 System.out.println("Especifique la calificacion minima para el quiz: ");
 	             String calificacionMinima = scanner.nextLine();
-	             System.out.println("Especifique cuantas preguntas de opcion multiple quiere que tenga el quiz: ");
+	             System.out.println("Especifique cuantas preguntas quiere que tenga el quiz: ");
 	             String numPreguntas = scanner.nextLine();
 	    
-	            Quiz actividadQuiz = new Quiz(id, Integer.parseInt(calificacionMinima), titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+	            Quiz actividadQuiz = new Quiz(id, Integer.parseInt(calificacionMinima), tipoQuiz, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 	            
-	            for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
-	                actividadQuiz.agregarPregunta(scanner);
+	            
+	            // Añadir preguntas dependiendo del tipo de quiz
+	            if (tipoQuiz.equalsIgnoreCase("OpcionMultiple")) {
+	                for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
+	                    actividadQuiz.agregarPregunta(scanner);
+	                }
+	            } else if (tipoQuiz.equalsIgnoreCase("VerdaderoFalso")) {
+	                for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
+	                    actividadQuiz.agregarPreguntaVerdaderoFalso(scanner);
+	                }
 	            }
+	            
+	            //for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
+	            //    actividadQuiz.agregarPregunta(scanner);
+	            //}
 	            actividad = actividadQuiz;
 	            break;
 	            

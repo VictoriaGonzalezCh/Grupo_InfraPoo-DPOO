@@ -103,9 +103,6 @@ public class Actividad {
         this.actividadesSeguimientoRecomendadas.add(actividad);
     }
     
-    //public static void agregarActividadesSeguimientoRecomendadas(Actividad actividadBase, Actividad actividadSeguimiento) {
-        //actividadBase.getActividadesSeguimientoRecomendadas().add(actividadSeguimiento);
-    //}
 
 	public String getDescripcion() {
 		return descripcion;
