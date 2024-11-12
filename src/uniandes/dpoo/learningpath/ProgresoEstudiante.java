@@ -57,7 +57,6 @@ public class ProgresoEstudiante {
                 respuestasPorEstudianteQuizVF.put(actividad, quiz.getRespuestasEstudianteVF());
             }
 			
-			//respuestasPorEstudianteQuiz.put(actividad, quiz.getRespuestasEstudiante());
 	        
 	    } else if (actividad instanceof Examen) {
 	        Examen examen = (Examen) actividad;
@@ -82,9 +81,6 @@ public class ProgresoEstudiante {
             examen.calificarExamen();
         }
 		
-		
-		
-		//actividad.cambiarResultado(nuevoResultado);  // Suponiendo que Actividad tiene un método para cambiar el resultado
     }
 	
 	

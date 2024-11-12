@@ -49,14 +49,15 @@ public class Sistema {
     }
 
     public Usuario login(String login, String contraseña) {
-        for (Usuario usuario : usuarios) {
+    	for (Usuario usuario : usuarios) {
             if (usuario.getLogin().equals(login) && usuario.validarContraseña(contraseña)) {
             	this.usuarioAutenticado = usuario;
                 return usuario;
             }
         }
         return null;
-    }
+    } 
+    
     
     public void logout() {
         this.usuarioAutenticado = null; 

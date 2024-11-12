@@ -1,7 +1,10 @@
 package uniandes.dpoo.usuario;
 
-public class Usuario {
+import java.io.Serializable;
 
+public class Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	String login;
 	String contraseña;
 	int id;

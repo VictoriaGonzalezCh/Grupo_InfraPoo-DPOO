@@ -64,18 +64,58 @@ public class Consola {
         
     
     public void loginComoProfesor() throws IOException, ClassNotFoundException {
-        Scanner scanner = new Scanner(System.in);
-        
+    	Scanner scanner = new Scanner(System.in);
+        System.out.println("Bienvenido al sistema de Learning Path");
+
+        while (true) {
+            if (usuarioLogueado == null) {
+                // Opciones para no logueados
+                System.out.println("1. Iniciar sesión");
+                System.out.println("2. Registrar profesor");
+                int opcion = scanner.nextInt();
+                scanner.nextLine();  // Consumir la línea
+
+                switch (opcion) {
+                    case 1:
+                        login(scanner);
+                        break;
+                    case 2:
+                        registrarProfesor(scanner);
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+            } else {        
         System.out.println("¡Bienvenido, Profesor!");
-        menuProfesor(scanner);
+        menuProfesor(scanner);}}
         
     }
 
     public void loginComoEstudiante() throws IOException, ClassNotFoundException {
-        Scanner scanner = new Scanner(System.in);
-        
+    	Scanner scanner = new Scanner(System.in);
+        System.out.println("Bienvenido al sistema de Learning Path");
+
+        while (true) {
+            if (usuarioLogueado == null) {
+                // Opciones para no logueados
+                System.out.println("1. Iniciar sesión");
+                System.out.println("2. Registrar estudiante");
+                int opcion = scanner.nextInt();
+                scanner.nextLine();  // Consumir la línea
+
+                switch (opcion) {
+                    case 1:
+                        login(scanner);
+                        break;
+                    case 2:
+                        registrarEstudiante(scanner);
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+            } else {      
         System.out.println("¡Bienvenido, Estudiante!");
-        menuEstudiante(scanner);
+        menuEstudiante(scanner);}}
         
     }
     
@@ -202,16 +242,21 @@ public class Consola {
     }
     
 
-    @SuppressWarnings("unchecked")
-	private void login(Scanner scanner) throws ClassNotFoundException, IOException {
+    private void login(Scanner scanner) throws ClassNotFoundException, IOException {
         System.out.println("Login: ");
         String login = scanner.nextLine();
         System.out.println("Contraseña: ");
         String contraseña = scanner.nextLine();
         
-        //Usuario usuarios = (Usuario) Persistencia.cargarObjeto("Usuarios");
+        // Cargar la lista de usuarios registrados desde el archivo
+        // Suponiendo que en "Usuarios.dat" tienes una lista de usuarios serializados
         
-        usuarioLogueado = sistema.login(login, contraseña);
+        //@SuppressWarnings("unchecked")
+		//List<Usuario> usuarios = (List<Usuario>) Persistencia.cargarObjeto("Usuarios");
+        
+        // Usar la lista cargada para intentar iniciar sesión
+        usuarioLogueado = sistema.login(login, contraseña);  // Sistema que toma la lista de usuarios
+        
         if (usuarioLogueado != null) {
             System.out.println("Inicio de sesión exitoso.");
         } else {
@@ -219,7 +264,7 @@ public class Consola {
         }
     }
 
-    private void registrarProfesor(Scanner scanner) throws IOException {
+    private void registrarProfesor(Scanner scanner) throws IOException, ClassNotFoundException {
     	System.out.println("Login: ");
         String login = scanner.nextLine();
         
@@ -238,10 +283,12 @@ public class Consola {
         System.out.println("Profesor registrado exitosamente.");
         System.out.println("El id del usuario es " + id );
         
-        Persistencia.guardarObjeto(profesor, "Usuarios");
+        
+        //Persistencia.guardarObjeto(profesor, "Profesores");
+        //Persistencia.guardarObjeto(profesor, "Usuario");
     }
 
-    private void registrarEstudiante(Scanner scanner) throws IOException {
+    private void registrarEstudiante(Scanner scanner) throws IOException, ClassNotFoundException {
     	System.out.println("Login: ");
         String login = scanner.nextLine();
         
@@ -261,7 +308,10 @@ public class Consola {
         System.out.println("Estudiante registrado exitosamente.");
         System.out.println("El id del usuario es " + id );
         
-        Persistencia.guardarObjeto(estudiante, "Usuarios");
+       
+        //Persistencia.guardarObjeto(estudiante, "Estudiantes");
+        //Persistencia.guardarObjeto(estudiante, "Usuario");
+       
     }
     
     private void crearLearningPath(Scanner scanner) throws IOException {        

@@ -1,6 +1,7 @@
 package uniandes.dpoo.usuario;
 
 import java.util.ArrayList;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.learningpath.Quiz;
 import uniandes.dpoo.learningpath.RecursoEducativo;
 import uniandes.dpoo.learningpath.Tarea;
+import java.io.Serializable;
 
 public class Profesor extends Usuario implements Serializable{
 
@@ -48,7 +50,7 @@ public class Profesor extends Usuario implements Serializable{
         learningPath.setVersion();
 	}
 	
-	private static Actividad actualizarActividad(Actividad actividad, String nuevaDescripcion, String nuevoObjetivo, String nuevoNivelDificultad, String nuevaDuracionEsperada, List<Actividad> actividadesPreviasSugeridas, String nuevaFechaLimite, boolean nuevaObligatoria, List<Actividad> prerequisitos){
+	public static Actividad actualizarActividad(Actividad actividad, String nuevaDescripcion, String nuevoObjetivo, String nuevoNivelDificultad, String nuevaDuracionEsperada, List<Actividad> actividadesPreviasSugeridas, String nuevaFechaLimite, boolean nuevaObligatoria, List<Actividad> prerequisitos){
 		actividad.setDescripcion(nuevaDescripcion);
         actividad.setObjetivo(nuevoObjetivo);
         actividad.setNivelDificultad(nuevoNivelDificultad);
@@ -59,7 +61,7 @@ public class Profesor extends Usuario implements Serializable{
        	}
 	
 	
-	private static Actividad clonarActividad(Actividad actividad) {
+	public static Actividad clonarActividad(Actividad actividad) {
         // Crear una nueva instancia de Actividad con los mismos atributos
         Actividad actividadClonada = new Actividad();
         actividadClonada.setTituloActividad(actividad.getTituloActividad()+ " - clonada");
