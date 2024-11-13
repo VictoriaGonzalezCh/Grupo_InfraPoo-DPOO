@@ -7,6 +7,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import uniandes.dpoo.learningpath.Actividad;
+import uniandes.dpoo.learningpath.LearningPath;
+import uniandes.dpoo.learningpath.RecursoEducativo;
+import uniandes.dpoo.sistema.Sistema;
+import uniandes.dpoo.usuario.Estudiante;
+import uniandes.dpoo.usuario.Usuario;
+
 class SistemaTest {
 	private Sistema sistema;
     private Usuario usuario1;
@@ -20,7 +27,7 @@ class SistemaTest {
         usuario1 = new Usuario(1, "user1", "password1"); // Dependiendo de cómo esté implementada la clase Usuario
         usuario2 = new Usuario(2, "user2", "password2");
         learningPath1 = new LearningPath(1, "LP1", "Description", "Objective", "Easy", "5 stars");
-        actividad1 = new Actividad(1, "Actividad1", "Description", "Objective", "30 min", true, null, "Medium", null, null, null, null);
+        actividad1 = new RecursoEducativo(1, "Actividad1", "Description", "Objective", "30 min", null, null, "Medium", true, null, null, null);
         
         sistema.registrarUsuario(usuario1);
         sistema.registrarUsuario(usuario2);
@@ -123,3 +130,4 @@ class SistemaTest {
         sistema.agregarActividad(learningPath1, actividad1);
         assertTrue(learningPath1.obtenerListaActividades().contains(actividad1));
     }
+}
