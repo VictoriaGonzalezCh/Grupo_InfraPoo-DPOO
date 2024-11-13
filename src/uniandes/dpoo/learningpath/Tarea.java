@@ -3,6 +3,7 @@ package uniandes.dpoo.learningpath;
 import java.util.List;
 
 import uniandes.dpoo.usuario.Profesor;
+import uniandes.dpoo.usuario.ProfesorCreador;
 
 public class Tarea extends Actividad {
 
@@ -10,7 +11,7 @@ public class Tarea extends Actividad {
 	String medioEntrega;
 	
 	public Tarea(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
   super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.estado = "no enviada";

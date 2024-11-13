@@ -2,6 +2,7 @@ package uniandes.dpoo.learningpath;
 
 import java.time.LocalDate;
 
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,9 +80,6 @@ public class LearningPath implements Serializable{
     	}
     	   
     	
-	
-
-	
 	
 	public void asociarProgresoConEstudiante(Estudiante estudiante) {
 		if (!progresoEstudiante.containsKey(estudiante)) {

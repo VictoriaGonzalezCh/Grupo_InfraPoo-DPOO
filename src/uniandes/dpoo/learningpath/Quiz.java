@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.Map.Entry;
 
 import uniandes.dpoo.usuario.Profesor;
+import uniandes.dpoo.usuario.ProfesorCreador;
 
 
 public class Quiz extends Actividad {
@@ -21,7 +22,7 @@ public class Quiz extends Actividad {
 	
 	
 	public Quiz(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
 		super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();
@@ -29,7 +30,7 @@ public class Quiz extends Actividad {
 	}
 	
 	public Quiz(int id, int calificacionMinima, String tipoQuiz, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
   super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();

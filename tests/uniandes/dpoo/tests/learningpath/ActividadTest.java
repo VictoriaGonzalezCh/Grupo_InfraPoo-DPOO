@@ -1,8 +1,10 @@
-package uniandes.dpoo.learningpath.tests;
+package uniandes.dpoo.tests.learningpath;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.usuario.Profesor;
 import java.util.ArrayList;

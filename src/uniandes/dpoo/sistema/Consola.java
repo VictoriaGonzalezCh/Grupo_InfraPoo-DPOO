@@ -1,6 +1,7 @@
 package uniandes.dpoo.sistema;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +11,8 @@ import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.learningpath.ProgresoEstudiante;
 import uniandes.dpoo.persistencia.Persistencia;
 import uniandes.dpoo.usuario.Estudiante;
-import uniandes.dpoo.usuario.Profesor;
+import uniandes.dpoo.usuario.ProfesorCreador;
+import uniandes.dpoo.usuario.ProfesorSeguimiento;
 import uniandes.dpoo.usuario.Usuario;
 
 public class Consola {
@@ -31,8 +33,9 @@ public class Consola {
             if (usuarioLogueado == null) {
                 // Opciones para no logueados
                 System.out.println("1. Iniciar sesión");
-                System.out.println("2. Registrar profesor");
-                System.out.println("3. Registrar estudiante");
+                System.out.println("2. Registrar profesor creador");
+                System.out.println("3. Registrar profesor seguimiento");
+                System.out.println("4. Registrar estudiante");
                 int opcion = scanner.nextInt();
                 scanner.nextLine();  // Consumir la línea
 
@@ -41,18 +44,23 @@ public class Consola {
                         login(scanner);
                         break;
                     case 2:
-                        registrarProfesor(scanner);
+                        registrarProfesorCreador(scanner);
                         break;
                     case 3:
+                        registrarProfesorSeguimiento(scanner);
+                        break;
+                    case 4:
                         registrarEstudiante(scanner);
                         break;
                     default:
                         System.out.println("Opción no válida.");
                 }
             } else {
-                    if (usuarioLogueado instanceof Profesor) {
-                        menuProfesor(scanner);  // Menú para profesor
-                    } else if (usuarioLogueado instanceof Estudiante) {
+                    if (usuarioLogueado instanceof ProfesorCreador) {
+                        menuProfesorCreador(scanner);  // Menú para profesor
+                    } else if (usuarioLogueado instanceof ProfesorSeguimiento) {
+                        menuProfesorSeguimiento(scanner);  // Menú para estudiante
+                    }  else if (usuarioLogueado instanceof Estudiante) {
                         menuEstudiante(scanner);  // Menú para estudiante
                     }
             	
@@ -63,7 +71,7 @@ public class Consola {
     
         
     
-    public void loginComoProfesor() throws IOException, ClassNotFoundException {
+    public void loginComoProfesorCreador() throws IOException, ClassNotFoundException {
     	Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido al sistema de Learning Path");
 
@@ -80,14 +88,42 @@ public class Consola {
                         login(scanner);
                         break;
                     case 2:
-                        registrarProfesor(scanner);
+                        registrarProfesorCreador(scanner);
                         break;
                     default:
                         System.out.println("Opción no válida.");
                 }
             } else {        
-        System.out.println("¡Bienvenido, Profesor!");
-        menuProfesor(scanner);}}
+        System.out.println("¡Bienvenido, Profesor Creador!");
+        menuProfesorCreador(scanner);}}
+        
+    }
+    
+    public void loginComoProfesorSeguimiento() throws IOException, ClassNotFoundException {
+    	Scanner scanner = new Scanner(System.in);
+        System.out.println("Bienvenido al sistema de Learning Path");
+
+        while (true) {
+            if (usuarioLogueado == null) {
+                // Opciones para no logueados
+                System.out.println("1. Iniciar sesión");
+                System.out.println("2. Registrar profesor seguimiento");
+                int opcion = scanner.nextInt();
+                scanner.nextLine();  // Consumir la línea
+
+                switch (opcion) {
+                    case 1:
+                        login(scanner);
+                        break;
+                    case 2:
+                        registrarProfesorSeguimiento(scanner);
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+            } else {        
+        System.out.println("¡Bienvenido, Profesor Seguimiento!");
+        menuProfesorSeguimiento(scanner);}}
         
     }
 
@@ -119,7 +155,7 @@ public class Consola {
         
     }
     
-    private void menuProfesor(Scanner scanner) throws IOException {
+    private void menuProfesorCreador(Scanner scanner) throws IOException {
     	boolean continuar = true;
     	while (continuar) {
         // Opciones para profesor
@@ -127,14 +163,10 @@ public class Consola {
         System.out.println("2. Editar Learning Path");
         System.out.println("3. Crear Nueva Actividad");
         System.out.println("4. Editar Actividad");
-        System.out.println("5. Calificar actividad");
-        System.out.println("6. Crear reseña");
-        System.out.println("7. Ver reseñas de una actividad");
-        System.out.println("8. Ver información de una actividad");
-        System.out.println("9. Mostrar información de un LearningPath");
-        System.out.println("10. Mostrar respuestas de un estudiante");
-        System.out.println("11. Mostrar resultado de actividad por estudiante");
-        System.out.println("12. Salir");
+        System.out.println("5. Ver reseñas de una actividad");
+        System.out.println("6. Ver información de una actividad");
+        System.out.println("7. Mostrar información de un LearningPath");
+        System.out.println("8. Salir");
         int opcion = scanner.nextInt();
         scanner.nextLine();
 
@@ -152,27 +184,64 @@ public class Consola {
                 editarActividad(scanner);
                 break;
             case 5:
-                editarResultadoActividad(scanner);
-                break;
-            case 6:
-                crearFeedbackProfesor(scanner);
-                break;
-            case 7:
                 verReseñasActividades(scanner);
                 break;
-            case 8:
+            case 6:
                 mostrarInfoActividad(scanner);
                 break;
-            case 9:
+            case 7:
             	mostrarInfoLearningPath(scanner);
                 break;
-            case 10:
+            case 8:
+                continuar = false;  // Salir del menú de profesor
+                usuarioLogueado = null;
+                System.out.println("Volviendo al menú principal...");
+                break;    
+                
+            default:
+                System.out.println("Opción no válida.");
+            }
+        }
+    }
+    
+    private void menuProfesorSeguimiento(Scanner scanner) throws IOException {
+    	boolean continuar = true;
+    	while (continuar) {
+        // Opciones para profesor
+        System.out.println("1. Calificar actividad");
+        System.out.println("2. Crear reseña");
+        System.out.println("3. Ver reseñas de una actividad");
+        System.out.println("4. Ver información de una actividad");
+        System.out.println("5. Mostrar información de un LearningPath");
+        System.out.println("6. Mostrar respuestas de un estudiante");
+        System.out.println("7. Mostrar resultado de actividad por estudiante");
+        System.out.println("8. Salir");
+        int opcion = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (opcion) {
+            case 1:
+                editarResultadoActividad(scanner);
+                break;
+            case 2:
+                crearFeedbackProfesor(scanner);
+                break;
+            case 3:
+                verReseñasActividades(scanner);
+                break;
+            case 4:
+                mostrarInfoActividad(scanner);
+                break;
+            case 5:
+            	mostrarInfoLearningPath(scanner);
+                break;
+            case 6:
             	verRespuestasEstudiante(scanner);
                 break;
-            case 11:
+            case 7:
             	verResultadoEstudiante(scanner);
                 break;
-            case 12:
+            case 8:
                 continuar = false;  // Salir del menú de profesor
                 usuarioLogueado = null;
                 System.out.println("Volviendo al menú principal...");
@@ -264,7 +333,7 @@ public class Consola {
         }
     }
 
-    private void registrarProfesor(Scanner scanner) throws IOException, ClassNotFoundException {
+    private void registrarProfesorCreador(Scanner scanner) throws IOException, ClassNotFoundException {
     	System.out.println("Login: ");
         String login = scanner.nextLine();
         
@@ -278,7 +347,7 @@ public class Consola {
         
         int id = Sistema.generarIDUnicoUsuarios();
         
-        Profesor profesor = new Profesor(id, login, contraseña);
+        ProfesorCreador profesor = new ProfesorCreador(id, login, contraseña);
         sistema.registrarUsuario(profesor);
         System.out.println("Profesor registrado exitosamente.");
         System.out.println("El id del usuario es " + id );
@@ -287,6 +356,31 @@ public class Consola {
         //Persistencia.guardarObjeto(profesor, "Profesores");
         //Persistencia.guardarObjeto(profesor, "Usuario");
     }
+    
+    private void registrarProfesorSeguimiento(Scanner scanner) throws IOException, ClassNotFoundException {
+    	System.out.println("Login: ");
+        String login = scanner.nextLine();
+        
+        while (!sistema.loginUsuariosNoRepetidos(login)) {
+            System.out.println("El login ya está registrado. Por favor ingrese un nuevo login: ");
+            login = scanner.nextLine();  // Pedimos otro login
+        }
+        
+        System.out.println("Contraseña: ");
+        String contraseña = scanner.nextLine();
+        
+        int id = Sistema.generarIDUnicoUsuarios();
+        
+        ProfesorSeguimiento profesor = new ProfesorSeguimiento(id, login, contraseña);
+        sistema.registrarUsuario(profesor);
+        System.out.println("Profesor registrado exitosamente.");
+        System.out.println("El id del usuario es " + id );
+        
+        
+        //Persistencia.guardarObjeto(profesor, "Profesores");
+        //Persistencia.guardarObjeto(profesor, "Usuario");
+    }
+    
 
     private void registrarEstudiante(Scanner scanner) throws IOException, ClassNotFoundException {
     	System.out.println("Login: ");
@@ -372,7 +466,7 @@ public class Consola {
         
         int id = Sistema.generarIDUnicoActividades();
         
-        Profesor usuario = (Profesor) sistema.obtenerUsuarioAutenticado();
+        ProfesorCreador usuario = (ProfesorCreador) sistema.obtenerUsuarioAutenticado();
         
         // Aquí asumes que ya tienes la lista de actividades previas sugeridas
         List<Actividad> actividadesPreviasSugeridas = new ArrayList<>();  

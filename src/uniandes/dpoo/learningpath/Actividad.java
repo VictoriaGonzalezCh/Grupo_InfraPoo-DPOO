@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import uniandes.dpoo.usuario.Estudiante;
-import uniandes.dpoo.usuario.Profesor;
+import uniandes.dpoo.usuario.ProfesorCreador;
 
 public class Actividad {
 	
@@ -18,7 +18,7 @@ public class Actividad {
 	protected List<Actividad> actividadesSeguimientoRecomendadas;
 	protected String fechaLimite;
 	protected boolean obligatoria;
-	protected Profesor creador;
+	protected ProfesorCreador creador;
 	protected List<Actividad> prerequisitos;
 	protected String tituloActividad;
 	protected List<Feedback> feedbacks;
@@ -30,7 +30,7 @@ public class Actividad {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
+	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
 			this.id = id;
 			this.tituloActividad = tituloActividad;
 			this.descripcion = descripcion;
@@ -168,11 +168,11 @@ public class Actividad {
 		this.obligatoria = obligatoria;
 	}
 
-	public Profesor getCreador() {
+	public ProfesorCreador getCreador() {
 		return creador;
 	}
 
-	public void setCreador(Profesor creador) {
+	public void setCreador(ProfesorCreador creador) {
 		this.creador = creador;
 	}
 

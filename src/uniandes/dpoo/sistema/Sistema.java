@@ -1,6 +1,7 @@
 package uniandes.dpoo.sistema;
 
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +12,8 @@ import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.persistencia.Persistencia;
 import uniandes.dpoo.usuario.Estudiante;
-import uniandes.dpoo.usuario.Profesor;
+import uniandes.dpoo.usuario.ProfesorCreador;
+import uniandes.dpoo.usuario.ProfesorSeguimiento;
 import uniandes.dpoo.usuario.Usuario;
 
 public class Sistema {
@@ -147,10 +149,19 @@ public class Sistema {
         return null;  // Si no se encuentra, retorna null
     }
     
-    public Profesor stringAProfesor(int id) {
+    public ProfesorCreador stringAProfesorCreador(int id) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getId() == (id) && usuario instanceof Profesor) {
-                return (Profesor) usuario; 
+            if (usuario.getId() == (id) && usuario instanceof ProfesorCreador) {
+                return (ProfesorCreador) usuario; 
+            }
+        }
+        return null;  
+    }
+    
+    public ProfesorSeguimiento stringAProfesorSeguimiento(int id) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId() == (id) && usuario instanceof ProfesorSeguimiento) {
+                return (ProfesorSeguimiento) usuario; 
             }
         }
         return null;  
@@ -291,8 +302,8 @@ public class Sistema {
         //Persistencia.guardarObjeto(nuevoLearningPath, "LearningPaths");
 	}
 	
-	public void crearNuevaActividad(LearningPath learningPathEncontrado, String tipoActividad, int id, String tituloActividad, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, Profesor usuario, String nivelDificultad, List<Actividad>  actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner){
-		Actividad nuevaActividad = Profesor.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
+	public void crearNuevaActividad(LearningPath learningPathEncontrado, String tipoActividad, int id, String tituloActividad, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador usuario, String nivelDificultad, List<Actividad>  actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner){
+		Actividad nuevaActividad = ProfesorCreador.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
         
         learningPathEncontrado.agregarActividad(nuevaActividad);
         learningPathEncontrado.setDuracionMinutos();
@@ -300,16 +311,16 @@ public class Sistema {
 	}
 	
 	public void editarLearningPath(LearningPath learningPathEncontrado, String nuevoTitulo, String nuevaDescripcionContenido, String nuevaDescripcionObjetivo, String nuevoNivelDificultad, String nuevoRating) {
-		Profesor.editarLearningPath(learningPathEncontrado, nuevoTitulo, nuevaDescripcionContenido, nuevaDescripcionObjetivo, nuevoNivelDificultad, nuevoRating);
+		ProfesorCreador.editarLearningPath(learningPathEncontrado, nuevoTitulo, nuevaDescripcionContenido, nuevaDescripcionObjetivo, nuevoNivelDificultad, nuevoRating);
         
         System.out.println("El Learning Path ha sido editado exitosamente.");
 	}
 	
 	public void editarActividad(Actividad actividadEncontrada, String nuevaDescripcion, String nuevoObjetivo, String nuevoNivelDificultad, String nuevaDuracionEsperada, List<Actividad> actividadesPreviasSugeridas, String nuevaFechaLimite, boolean nuevaObligatoria, List<Actividad> prerequisitos) {
 
-        Profesor usuario = (Profesor)obtenerUsuarioAutenticado();
+        ProfesorCreador usuario = (ProfesorCreador)obtenerUsuarioAutenticado();
         
-        Profesor.editarActividad(actividadEncontrada, usuario, nuevaDescripcion, nuevoObjetivo, nuevoNivelDificultad, nuevaDuracionEsperada,
+        ProfesorCreador.editarActividad(actividadEncontrada, usuario, nuevaDescripcion, nuevoObjetivo, nuevoNivelDificultad, nuevaDuracionEsperada,
                 actividadesPreviasSugeridas, nuevaFechaLimite, nuevaObligatoria, prerequisitos);
         
         System.out.println("La actividad ha sido editada exitosamente.");
@@ -366,7 +377,7 @@ public class Sistema {
 	public void crearFeedbackProfesor(String id, String rating, String comentarioFeedback) {
 		Actividad actividadEncontrada = buscarActividadPorId(Integer.parseInt(id));
     	
-    	Profesor profesorEncontrado = (Profesor)obtenerUsuarioAutenticado();
+    	ProfesorSeguimiento profesorEncontrado = (ProfesorSeguimiento)obtenerUsuarioAutenticado();
     	
     	profesorEncontrado.crearFeedbackProfesor(profesorEncontrado, actividadEncontrada, Integer.parseInt(rating), comentarioFeedback); 
 	}

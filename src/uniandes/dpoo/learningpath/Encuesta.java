@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-import uniandes.dpoo.usuario.Profesor;
+
+import uniandes.dpoo.usuario.ProfesorCreador;
 
 public class Encuesta extends Actividad {
 	
@@ -15,7 +16,7 @@ public class Encuesta extends Actividad {
 	private HashMap<PreguntaAbierta, String> respuestasEstudiante = new HashMap<>(); 
 	
 	public Encuesta(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
   super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
   this.preguntasAbiertas = new ArrayList<>();
@@ -24,7 +25,7 @@ public class Encuesta extends Actividad {
 	}
 	
 	public Encuesta(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
-            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, Profesor creador,
+            List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, String estado, List<Actividad> actividadesSeguimientoRecomendadas) {
   super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
   this.preguntasAbiertas = new ArrayList<>();
