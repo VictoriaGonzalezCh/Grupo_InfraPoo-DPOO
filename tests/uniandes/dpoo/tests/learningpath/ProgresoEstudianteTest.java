@@ -26,8 +26,8 @@ class ProgresoEstudianteTest {
     @BeforeEach
     public void setUp() {
         estudiante = new Estudiante(0, "123", "Juan Pérez");
-        actividadQuiz = new Quiz(0, 0, "Quiz de Matemáticas", null, null, null, null, null, null, null, false, null, null, null);
-        actividadExamen = new Examen(0, "Examen de Física", null, null, null, null, null, null, false, null, null, null);
+        actividadQuiz = new Quiz(0, 0, "Quiz de Matemáticas", null, null, null, null, null, null, null, null, false, null, null, null);
+        actividadExamen = new Examen(0, "Examen de Física", null, null, null, null, null, null, null, false, null, null, null);
 
         progreso = new ProgresoEstudiante(estudiante, actividadQuiz, "2024-11-01T10:00:00", "2024-11-01T12:00:00", 0, 0);
     }
@@ -54,7 +54,7 @@ class ProgresoEstudianteTest {
 
     @Test
     public void testCambiarResultadoActividadTarea() {
-        Actividad tarea = new Tarea(0, "Tarea de Programación", null, null, null, null, null, null, false, null, null, null);
+        Actividad tarea = new Tarea(0, "Tarea de Programación", null, null, null, null, null, null, null, false, null, null, null);
         progreso.cambiarResultadoActividad(tarea, "Exitosa");
         assertEquals("Exitosa", ((Tarea) tarea).getEstado(), "El estado de la tarea debe cambiar a 'Exitosa'");
     }

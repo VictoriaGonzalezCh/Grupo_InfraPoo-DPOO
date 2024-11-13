@@ -154,6 +154,14 @@ public class Estudiante extends Usuario implements Serializable{
 		this.learningPathsCompletados = learningPathsCompletados;
 	}
 
+	public List<LearningPath> getLearningPathsEnCurso() {
+		return learningPathsEnCurso;
+	}
+
+	public void setLearningPathsEnCurso(List<LearningPath> learningPathsEnCurso) {
+		this.learningPathsEnCurso = learningPathsEnCurso;
+	}
+
 	public List<Actividad> getActividadesEnCurso() {
 		return actividadesEnCurso;
 	}

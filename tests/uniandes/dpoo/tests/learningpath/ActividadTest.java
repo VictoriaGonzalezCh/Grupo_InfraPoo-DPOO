@@ -25,7 +25,7 @@ public class ActividadTest {
     void setUp() throws Exception {
         creador = new ProfesorCreador(123287, "profesorjuan", "12345");
         actividad = new Actividad(1, "Actividad de Ejemplo", "Descripción de ejemplo", 
-                                  "Objetivo de ejemplo", "Media", "2 horas", 
+                                  "Objetivo de ejemplo", "Media", "260", "exitoso", 
                                   new ArrayList<>(), "2024-12-31", true, creador, 
                                   new ArrayList<>(), new ArrayList<>());
         

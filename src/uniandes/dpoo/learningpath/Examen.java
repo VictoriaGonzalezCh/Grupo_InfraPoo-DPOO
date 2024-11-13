@@ -15,18 +15,18 @@ public class Examen extends Actividad {
 	private String estado;
 	private HashMap<PreguntaAbierta, String> respuestasEstudiante = new HashMap<>(); 
 	
-	public Examen(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
+	public Examen(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, String resultado,
             List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
   this.preguntasAbiertas = new ArrayList<>();
   this.estado = "enviada";
 }
 
-	public Examen(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
+	public Examen(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, String resultado,
             List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, String estado, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
   this.preguntasAbiertas = new ArrayList<>();
   this.estado = estado;
 }

@@ -67,7 +67,9 @@ public class ProgresoEstudiante {
 	        respuestasPorEstudianteEncuesta.put(actividad, encuesta.getRespuestasEstudiante() );    
 	    
 	        
-	    }}
+	    }
+		estudiante.getActividadesCompletadas().add(actividad);
+	}
 	
 	
 	public void cambiarResultadoActividad(Actividad actividad, String nuevoResultado) {

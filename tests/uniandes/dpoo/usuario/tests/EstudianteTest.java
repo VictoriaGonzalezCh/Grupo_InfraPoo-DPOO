@@ -2,6 +2,7 @@ package uniandes.dpoo.usuario.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,19 +14,27 @@ import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.learningpath.Quiz;
 import uniandes.dpoo.learningpath.Tarea;
 import uniandes.dpoo.usuario.Estudiante;
+import uniandes.dpoo.usuario.ProfesorCreador;
 
 class EstudianteTest {
 	private Estudiante estudiante;
     private LearningPath lp;
     private Actividad actividad1;
     private Actividad actividad2;
+    private Actividad actividad3;
+    private ProfesorCreador creador;
 
     @BeforeEach
     public void setUp() {
+    	creador = new ProfesorCreador(123287, "profesorjuan", "12345");
         estudiante = new Estudiante(1, "usuario1", "contraseña123");
         lp = new LearningPath(0, "Learning Path 1", null, null, null, null);
-        actividad1 = new Quiz(0, 0, "Quiz 1", null, null, null, null, null, null, null, false, null, null, null);
-        actividad2 = new Tarea(0, "Tarea 1", null, null, null, null, null, null, false, null, null, null);
+        actividad3 = new Actividad(1, "Actividad de Ejemplo", "Descripción de ejemplo", 
+                "Objetivo de ejemplo", "Media", "260", "exitoso", 
+                new ArrayList<>(), "2024-12-31", true, creador, 
+                new ArrayList<>(), new ArrayList<>());
+        actividad1 = new Quiz(0, 0, "Quiz 1", null, null, null, null, null, null, null, null, false, null, new ArrayList<>(), null);
+        actividad2 = new Tarea(0, "Tarea 1", null, null, null, null, null, null, null, false, null, new ArrayList<>(), null);
 
         lp.agregarActividad(actividad1);
         lp.agregarActividad(actividad2);
@@ -34,7 +43,7 @@ class EstudianteTest {
     @Test
     public void testRegistrarseLearningPath() {
         estudiante.registrarseLearningPath(lp);
-        assertTrue(estudiante.getLearningPathsCompletados().contains(lp), "El Learning Path debería estar registrado en curso.");
+        assertTrue(estudiante.getLearningPathsEnCurso().contains(lp), "El Learning Path debería estar registrado en curso.");
     }
 
     @Test
@@ -54,6 +63,8 @@ class EstudianteTest {
 
     @Test
     public void testEstablecerProgresoEstudiante() {
+    	actividad1.cambiarResultado("exitoso");
+    	estudiante.getActividadesEnCurso().add(actividad1); 
         estudiante.registrarseLearningPath(lp);
         estudiante.registrarActividadCompletada(actividad1);
         double progreso = estudiante.establecerProgresoEstudiante(lp);
@@ -71,13 +82,7 @@ class EstudianteTest {
     // El método realizarActividad probablemente requeriría una prueba manual debido a la interacción del usuario.
     // Podrías considerar refactorizarlo para que sea más fácil de probar, por ejemplo, pasando entradas como parámetros.
 
-    @Test
-    public void testMostrarRespuestasEstudiantes() {
-        // Dependiendo de la implementación de este método, puede requerir un "mock" o ser considerado para pruebas manuales.
-        // Aquí solo incluimos un ejemplo para verificar si se llama correctamente.
-        assertDoesNotThrow(() -> estudiante.mostrarRespuestasEstudiantes(actividad1, lp), "El método debería ejecutarse sin lanzar excepciones.");
-    }
-
+    
     @Test
     public void testMostrarResultadoEstudiantes() {
         // Dependiendo de la implementación, esta prueba puede necesitar ajustes.

@@ -91,6 +91,7 @@ public class ProfesorCreador extends Usuario{
 		
 		public static Actividad nuevaActividad(String tipo, int id, String titulo, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador creador, String nivelDificultad, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner) {
 		    Actividad actividad = null;
+		    String resultado = "n.a";
 		    
 		    switch (tipo.toLowerCase()) {
 		        case "recurso educativo":
@@ -99,12 +100,12 @@ public class ProfesorCreador extends Usuario{
 		             System.out.println("Escriba lo que quiere que tenga el recurso: ");
 		             String recurso = scanner.nextLine();
 		             
-		            actividad = new RecursoEducativo(id, tipoRecurso, recurso, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+		            actividad = new RecursoEducativo(id, tipoRecurso, recurso, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            
 		            break;
 		            
 		        case "tarea":
-		            actividad = new Tarea(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+		            actividad = new Tarea(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            break;
 		            
 		        case "quiz":
@@ -115,7 +116,7 @@ public class ProfesorCreador extends Usuario{
 		             System.out.println("Especifique cuantas preguntas quiere que tenga el quiz: ");
 		             String numPreguntas = scanner.nextLine();
 		    
-		            Quiz actividadQuiz = new Quiz(id, Integer.parseInt(calificacionMinima), tipoQuiz, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+		            Quiz actividadQuiz = new Quiz(id, Integer.parseInt(calificacionMinima), tipoQuiz, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            
 		            
 		            // Añadir preguntas dependiendo del tipo de quiz
@@ -139,7 +140,7 @@ public class ProfesorCreador extends Usuario{
 		        	System.out.println("Especifique cuantas preguntas abiertas quiere que tenga el examen: ");
 		            String numPreguntasExamen = scanner.nextLine();
 		        	
-		            Examen actividadExamen = new Examen(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+		            Examen actividadExamen = new Examen(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            for (int i = 0; i < Integer.parseInt(numPreguntasExamen); i++) {
 		                actividadExamen.agregarPregunta(scanner);
 		            }
@@ -150,7 +151,7 @@ public class ProfesorCreador extends Usuario{
 		        	System.out.println("Especifique cuantas preguntas abiertas quiere que tenga el examen: ");
 		            String numPreguntasEncuesta = scanner.nextLine();
 		        	
-		            Encuesta actividadEncuesta = new Encuesta(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+		            Encuesta actividadEncuesta = new Encuesta(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            for (int i = 0; i < Integer.parseInt(numPreguntasEncuesta); i++) {
 		            	actividadEncuesta.agregarPregunta(scanner);
 		            }

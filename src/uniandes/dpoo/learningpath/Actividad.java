@@ -26,17 +26,18 @@ public class Actividad {
 	
 	public Actividad() {
 		this.feedbacks = new ArrayList<>();
-		this.resultado = "N.A";
+		//this.resultado = "N.A";
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
+	public Actividad(int id, String tituloActividad, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, String resultado, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
 			this.id = id;
 			this.tituloActividad = tituloActividad;
 			this.descripcion = descripcion;
 			this.objetivo = objetivo;
 			this.nivelDificultad = nivelDificultad;
 			this.duracionEsperada = duracionEsperada;
+			this.resultado = resultado;
 			this.actividadesPreviasSugeridas = actividadesPreviasSugeridas;
 			this.fechaLimite = fechaLimite;
 			this.obligatoria = obligatoria;
@@ -74,12 +75,15 @@ public class Actividad {
     }
 	
 	public void cambiarResultado(String cambioResultado) {
-		cambioResultado = resultado.toLowerCase();
+		String resultadoConvertido = cambioResultado.toLowerCase();
 
-	    if (cambioResultado.equals("exitosa") || cambioResultado.equals("no exitosa") || cambioResultado.equals("en progreso")) {
-	        this.resultado = cambioResultado;
-	        System.out.println("El estado del resultado ha sido actualizado a: " + resultado);}
+		if (resultadoConvertido.equals("exitosa") || resultadoConvertido.equals("no exitosa") || resultadoConvertido.equals("en progreso")) {
+	        this.resultado = resultadoConvertido;
+	        System.out.println("El estado del resultado ha sido actualizado a: " + this.resultado);
+	    } else {
+	        System.out.println("El estado proporcionado no es válido: " + cambioResultado);
 	    }
+	}
 	
 	public boolean isCompletada() {
 		

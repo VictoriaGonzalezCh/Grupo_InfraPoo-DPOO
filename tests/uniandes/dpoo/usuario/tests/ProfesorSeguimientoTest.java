@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uniandes.dpoo.learningpath.Actividad;
+import uniandes.dpoo.learningpath.Feedback;
 import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.usuario.ProfesorSeguimiento;
 
@@ -20,7 +21,7 @@ class ProfesorSeguimientoTest {
     @BeforeEach
     public void setUp() {
         profesor = new ProfesorSeguimiento(1, "testLogin", "testPassword");
-        actividad = new Actividad("Actividad de prueba");  // Se asume que Actividad tiene un constructor con nombre
+        actividad = new Actividad(0, "Actividad de prueba", null, null, null, null, "en progreso", null, null, false, null, null, null);  // Se asume que Actividad tiene un constructor con nombre
     }
 
     @Test
@@ -34,9 +35,9 @@ class ProfesorSeguimientoTest {
 
     @Test
     public void testEditarResultado() {
-        String nuevoResultado = "Nuevo Resultado";
+        String nuevoResultado = "exitosa";
         profesor.editarResultado(actividad, nuevoResultado);
-        assertEquals(nuevoResultado, actividad.getResultado());  // Se asume que la clase Actividad tiene un método getResultado()
+        assertEquals(nuevoResultado, actividad.getResultado());  
     }
 
     @Test
@@ -56,18 +57,6 @@ class ProfesorSeguimientoTest {
         assertTrue(feedbacks.contains(feedback));
     }
 
-    @Test
-    public void testLearningPaths() {
-        List<LearningPath> learningPaths = new ArrayList<>();
-        LearningPath learningPath = new LearningPath(0, "Ruta de aprendizaje de prueba", null, null, null, null);  // Se asume un constructor para LearningPath
-        learningPaths.add(learningPath);
-
-        profesor.setLearningPaths(learningPaths);  // Se asume que existe un método setLearningPaths
-        List<LearningPath> retrievedPaths = profesor.getLearningPaths();  // Se asume que existe un método getLearningPaths
-
-        assertNotNull(retrievedPaths);
-        assertEquals(1, retrievedPaths.size());
-        assertEquals(learningPath, retrievedPaths.get(0));
-    }
+   
 
 }

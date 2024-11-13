@@ -6,12 +6,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.learningpath.ProgresoEstudiante;
 import uniandes.dpoo.usuario.Estudiante;
+import uniandes.dpoo.usuario.ProfesorCreador;
 
 public class LearningPathTest {
     private LearningPath learningPath;
@@ -19,16 +21,21 @@ public class LearningPathTest {
     private Estudiante estudiante2;
     private Actividad actividad1;
     private Actividad actividad2;
+    private ProfesorCreador creador;
 
     @BeforeEach
     public void setUp() {
         learningPath = new LearningPath(1, "Título de Prueba", "Descripción de Contenido", "Descripción de Objetivo", "Intermedio", "4 estrellas");
         estudiante1 = new Estudiante(12334, "Juan", "Perez");
         estudiante2 = new Estudiante(34565, "Maria", "Lopez");
+        creador = new ProfesorCreador(123287, "profesorjuan", "12345");
 
         // Supongamos que Actividad tiene un constructor adecuado (debes definir la actividad según tu implementación real)
-        actividad1 = new Actividad(0, "Actividad 1", "30", null, null, "30", null, null, false, null, null, null); // Duración en minutos como string
-        actividad2 = new Actividad(0, "Actividad 2", "45", null, null, "45", null, null, false, null, null, null);
+        actividad1 = new Actividad(1, "Actividad 1", "Descripción de ejemplo", 
+                "Objetivo de ejemplo", "Media", "30", "exitoso", 
+                new ArrayList<>(), "2024-12-31", true, creador, 
+                new ArrayList<>(), new ArrayList<>());// Duración en minutos como string
+        actividad2 = new Actividad(0, "Actividad 2", "45", null, null, "45", null, null, null, false, null, null, null);
     }
 
     @Test
@@ -46,7 +53,7 @@ public class LearningPathTest {
     public void testRegistrarActividadCompletadaPorEstudiante() {
         learningPath.registrarActividadCompletadaPorEstudiante(estudiante1, actividad1);
 
-        ProgresoEstudiante progreso = learningPath.obtenerProgresoDeEstudiante(estudiante1);
+        //ProgresoEstudiante progreso = learningPath.obtenerProgresoDeEstudiante(estudiante1);
         //assertNotNull(progreso);
         assertTrue(estudiante1.getActividadesCompletadas().contains(actividad1));
     }

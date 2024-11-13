@@ -21,18 +21,18 @@ public class Quiz extends Actividad {
 	private HashMap<PreguntaVerdaderoFalso, String> respuestasEstudianteVF = new HashMap<>();
 	
 	
-	public Quiz(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
+	public Quiz(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, String resultado,
             List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-		super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+		super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();
 		this.preguntasVF = new ArrayList<>();
 	}
 	
-	public Quiz(int id, int calificacionMinima, String tipoQuiz, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada,
+	public Quiz(int id, int calificacionMinima, String tipoQuiz, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, String resultado,
             List<Actividad> actividadesPreviasSugeridas, String fechaLimite, boolean obligatoria, ProfesorCreador creador,
             List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
-  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
+  super(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		this.preguntasMultiples = new ArrayList<>();
 		this.preguntasVF = new ArrayList<>();
 		this.calificacionMinima = calificacionMinima;
