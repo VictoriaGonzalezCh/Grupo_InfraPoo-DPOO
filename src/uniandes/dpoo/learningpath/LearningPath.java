@@ -77,6 +77,8 @@ public class LearningPath implements Serializable{
     	    // Actualizar la fecha de finalización del progreso
     	    progreso.setFechaFinalizacion(java.time.LocalDateTime.now().toString());
     	    progreso.setTiempoDedicado(progreso.getFechaInicio(), progreso.getFechaFinalizacion());
+    	    
+    	    
     	}
     	   
     	

@@ -2,7 +2,6 @@ package uniandes.dpoo.learningpath;
 
 import java.util.List;
 
-import uniandes.dpoo.usuario.Profesor;
 import uniandes.dpoo.usuario.ProfesorCreador;
 
 public class Tarea extends Actividad {

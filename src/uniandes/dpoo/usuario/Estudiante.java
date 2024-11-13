@@ -100,12 +100,14 @@ public class Estudiante extends Usuario implements Serializable{
 	public void registrarActividadCompletada(Actividad actividad) {
 	    if (actividadesEnCurso.contains(actividad)) {
 	        if (actividad.getResultado().equals("exitoso")) {
+	        	
 	            actividadesCompletadas.add(actividad);
 	            actividadesEnCurso.remove(actividad);
 
 	            // Verificar si se completó el LearningPath
 	            for (LearningPath lp : learningPathsEnCurso) {
 	                if (lp.obtenerActividadesObligatorias().contains(actividad)) {
+	                	lp.registrarActividadCompletadaPorEstudiante(this, actividad);
 	                    if (verificarLearningPathCompletado(lp)) {
 	                        learningPathsCompletados.add(lp);
 	                        learningPathsEnCurso.remove(lp);

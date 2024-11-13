@@ -1,26 +1,29 @@
 package uniandes.dpoo.tests.learningpath;
 
-import static org.junit.jupiter.api.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import uniandes.dpoo.learningpath.Actividad;
-import uniandes.dpoo.usuario.Profesor;
+import uniandes.dpoo.usuario.ProfesorCreador;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActividadTest {
 
     private Actividad actividad;
-    private Profesor creador;
+    private ProfesorCreador creador;
     private List<Actividad> actividadesPreviasSugeridas;
     private List<Actividad> actividadesSeguimientoRecomendadas;
     private List<Actividad> prerequisitos;
 
     @BeforeEach
     void setUp() throws Exception {
-        creador = new Profesor(123287, "profesorjuan", "12345");
+        creador = new ProfesorCreador(123287, "profesorjuan", "12345");
         actividad = new Actividad(1, "Actividad de Ejemplo", "Descripción de ejemplo", 
                                   "Objetivo de ejemplo", "Media", "2 horas", 
                                   new ArrayList<>(), "2024-12-31", true, creador, 

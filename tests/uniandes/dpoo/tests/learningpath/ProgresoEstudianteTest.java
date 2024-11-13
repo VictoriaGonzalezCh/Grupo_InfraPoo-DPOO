@@ -45,7 +45,7 @@ class ProgresoEstudianteTest {
         PreguntaOpcionMultiple pregunta = new PreguntaOpcionMultiple("¿Cuánto es 2 + 2?", null, null, null);
         respuestas.put(pregunta, "4");
 
-        quiz.setRespuestasEstudiante(respuestas);
+        //quiz.setRespuestasEstudiante(respuestas);
         progreso.añadirRespuestasEstudiante(estudiante, quiz);
 
         assertTrue(progreso.getRespuestasPorEstudianteQuiz().containsKey(quiz));
@@ -56,7 +56,7 @@ class ProgresoEstudianteTest {
     public void testCambiarResultadoActividadTarea() {
         Actividad tarea = new Tarea(0, "Tarea de Programación", null, null, null, null, null, null, false, null, null, null);
         progreso.cambiarResultadoActividad(tarea, "Exitosa");
-        assertEquals("Exitosa", ((Tarea) tarea).getEstadoCalificacion(), "El estado de la tarea debe cambiar a 'Exitosa'");
+        assertEquals("Exitosa", ((Tarea) tarea).getEstado(), "El estado de la tarea debe cambiar a 'Exitosa'");
     }
 
 }

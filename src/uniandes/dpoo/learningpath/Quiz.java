@@ -1,12 +1,12 @@
 package uniandes.dpoo.learningpath;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
-import uniandes.dpoo.usuario.Profesor;
 import uniandes.dpoo.usuario.ProfesorCreador;
 
 
