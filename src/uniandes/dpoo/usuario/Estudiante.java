@@ -1,6 +1,7 @@
 package uniandes.dpoo.usuario;
 
 import java.util.ArrayList;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -17,7 +18,6 @@ import uniandes.dpoo.learningpath.PreguntaOpcionMultiple;
 import uniandes.dpoo.learningpath.Quiz;
 import uniandes.dpoo.learningpath.RecursoEducativo;
 import uniandes.dpoo.learningpath.Tarea;
-import uniandes.dpoo.persistencia.Persistencia;
 
 
 public class Estudiante extends Usuario implements Serializable{

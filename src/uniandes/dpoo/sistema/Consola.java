@@ -9,7 +9,6 @@ import java.util.Scanner;
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.learningpath.ProgresoEstudiante;
-import uniandes.dpoo.persistencia.Persistencia;
 import uniandes.dpoo.usuario.Estudiante;
 import uniandes.dpoo.usuario.ProfesorCreador;
 import uniandes.dpoo.usuario.ProfesorSeguimiento;

@@ -8,7 +8,7 @@ import uniandes.dpoo.usuario.ProfesorCreador;
 public class RecursoEducativo extends Actividad {
 
 	String tipoRecurso;
-	String recurso;
+	public String recurso;
 	String estado;
 	
 	public RecursoEducativo(int id, String titulo, String descripcion, String objetivo, String nivelDificultad, String duracionEsperada, String resultado,
