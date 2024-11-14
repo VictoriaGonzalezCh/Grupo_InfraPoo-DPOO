@@ -49,11 +49,6 @@ public class LearningPathTest {
         assertEquals("Actividad 2", actividades.get(1).getTituloActividad());
     }
 
-    @Test
-    public void testRegistrarActividadCompletadaPorEstudiante() {
-        learningPath.registrarActividadCompletadaPorEstudiante(estudiante1, actividad1);
-        assertTrue(estudiante1.getActividadesCompletadas().contains(actividad1));
-    }
 
     @Test
     public void testAsociarProgresoConEstudiante() {

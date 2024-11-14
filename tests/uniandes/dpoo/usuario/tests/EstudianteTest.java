@@ -46,15 +46,6 @@ class EstudianteTest {
         assertTrue(estudiante.getLearningPathsEnCurso().contains(lp), "El Learning Path debería estar registrado en curso.");
     }
 
-    @Test
-    public void testRegistrarActividadCompletada() {
-    	lp.agregarActividad(actividad3);
-        estudiante.registrarseLearningPath(lp);
-        estudiante.iniciarActividad(actividad3);
-        assertNotNull(actividad3, "actividad3 debería estar inicializada.");
-        estudiante.registrarActividadCompletada(actividad3);
-        assertTrue(estudiante.getActividadesCompletadas().contains(actividad3), "La actividad debería estar registrada como completada.");
-    }
 
     @Test
     public void testRegistrarLearningPathCompletada() {

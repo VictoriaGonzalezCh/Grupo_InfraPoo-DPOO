@@ -47,21 +47,20 @@ public class PersistenciaUsuarios {
                             jsonObj.getString("contraseña")
                         );
                         
-    				} else if (tipoUsuario.equals("Profesor Creador")){
+    				} else if (tipoUsuario.equals("ProfesorCreador")){
     					usuario = new ProfesorCreador(
                                 jsonObj.getInt("id"),
                                 jsonObj.getString("login"),
                                 jsonObj.getString("contraseña")
                             );
-                    } else if (tipoUsuario.equals("Profesor Seguimiento")){
+    					
+    				} else if (tipoUsuario.equals("ProfesorSeguimiento")) {
     					usuario = new ProfesorSeguimiento(
                                 jsonObj.getInt("id"),
                                 jsonObj.getString("login"),
                                 jsonObj.getString("contraseña")
                             );
-                    }
-    				
-    				else {
+                    } else {
                             continue;
     				}
     				usuarios.put(usuario.getLogin(), usuario);
@@ -106,9 +105,9 @@ public class PersistenciaUsuarios {
 	            if (usuario instanceof Estudiante) {
 	            	jsonObj.put("tipo", "Estudiante");
 	            } else if (usuario instanceof ProfesorCreador) { 
-	            	jsonObj.put("tipo", "Profesor Creador");}
-	            	else if (usuario instanceof ProfesorSeguimiento) { 
-		            	jsonObj.put("tipo", "Profesor Seguimiento");
+	            	jsonObj.put("tipo", "ProfesorCreador");
+	            } else if (usuario instanceof ProfesorSeguimiento) {
+	            	jsonObj.put("tipo", "ProfesorSeguimiento");
 	            }
 	            
 	            jsonArray.put(jsonObj);

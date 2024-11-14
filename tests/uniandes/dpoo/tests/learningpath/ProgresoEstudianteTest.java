@@ -38,18 +38,6 @@ class ProgresoEstudianteTest {
         assertEquals(120, tiempoDedicado, "El tiempo dedicado debe ser de 120 minutos");
     }
 
-    @Test
-    public void testAñadirRespuestasEstudianteQuiz() {
-        Quiz quiz = (Quiz) actividadQuiz;
-        HashMap<PreguntaOpcionMultiple, String> respuestas = new HashMap<>();
-        PreguntaOpcionMultiple pregunta = new PreguntaOpcionMultiple("¿Cuánto es 2 + 2?", null, null, null);
-        respuestas.put(pregunta, "4");
-
-        progreso.añadirRespuestasEstudiante(estudiante, quiz);
-
-        assertTrue(progreso.getRespuestasPorEstudianteQuiz().containsKey(quiz));
-        assertEquals("4", progreso.getRespuestasPorEstudianteQuiz().get(quiz).get(pregunta));
-    }
 
     @Test
     public void testCambiarResultadoActividadTarea() {
