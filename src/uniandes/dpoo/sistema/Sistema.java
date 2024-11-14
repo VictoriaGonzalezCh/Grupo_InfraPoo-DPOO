@@ -10,6 +10,7 @@ import java.util.Set;
 
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
+import uniandes.dpoo.persistencia.*;
 import uniandes.dpoo.usuario.Estudiante;
 import uniandes.dpoo.usuario.ProfesorCreador;
 import uniandes.dpoo.usuario.ProfesorSeguimiento;
@@ -26,13 +27,33 @@ public class Sistema {
 	private List<Usuario> usuarios;
 	private Usuario usuarioAutenticado;
     private List<LearningPath> learningPaths;
+	private PersistenciaUsuarios persistenciaUsuarios;
 
     public Sistema() {
         this.usuarios = new ArrayList<>();
         this.usuarioAutenticado = null;
         this.learningPaths = new ArrayList<>();
+        
+        this.persistenciaUsuarios = new PersistenciaUsuarios();
+        cargarUsuarios();
     }
 
+    private void cargarUsuarios() {
+    	for (Usuario usuario: persistenciaUsuarios.getUsuarios().values()) {
+    		usuarios.add(usuario);
+    	}
+    }
+    
+    public boolean existeUsuario(String login) {
+    	return persistenciaUsuarios.existeUsuario(login);
+    }
+    
+    
+    public Usuario cargarUsuario(String login) {
+    	return persistenciaUsuarios.cargarUsuario(login);
+    }
+    
+    
     public List<Integer> mostrarlistaUsuarios() {
         List<Integer> ids = new ArrayList<>();
         for (Usuario usuario : usuarios) {
@@ -47,6 +68,7 @@ public class Sistema {
     
     public void registrarUsuario(Usuario usuario) {
         usuarios.add(usuario);
+        persistenciaUsuarios.guardarUsuarios(usuario);
     }
 
     public Usuario login(String login, String contraseña) {
@@ -364,6 +386,7 @@ public class Sistema {
         LearningPath learningPathEncontrado = buscarLearningPath(Integer.parseInt(id));
         
         System.out.println("El progreso de este Learning Path es : " + estudianteEncontrado.establecerProgresoEstudiante(learningPathEncontrado));
+        System.out.println("La estadistica de progreso de este Learning Path es : " + verProgresoLearningPath(learningPathEncontrado,estudianteEncontrado));
 	}
 	
 	public void crearFeedbackEstudiante(String id, String rating, String comentarioFeedback) {
@@ -383,7 +406,10 @@ public class Sistema {
 	}
 	
 	 
-	
+	public double verProgresoLearningPath(LearningPath lp, Estudiante estudiante) {
+		double progreso = estudiante.establecerProgresoEstudiante(lp);
+		return progreso;
+	}
 	
 }
 
