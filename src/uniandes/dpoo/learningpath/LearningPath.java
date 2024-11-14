@@ -36,7 +36,7 @@ public class LearningPath implements Serializable{
 		this.listaActividades = new ArrayList<>();
 		this.progresoEstudiante = new HashMap<>();
 		this.duracionMinutos = 0;
-		this.fechaCreacion = "";
+		this.fechaCreacion = java.time.LocalDateTime.now().toString();
 		this.fechaModificacion = "";
 		this.version = 1;
 		

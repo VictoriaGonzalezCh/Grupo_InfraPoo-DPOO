@@ -308,6 +308,7 @@ public class Sistema {
         learningPathEncontrado.agregarActividad(nuevaActividad);
         learningPathEncontrado.setDuracionMinutos();
         System.out.println("El id para la actividad es " + id );
+        
 	}
 	
 	public void editarLearningPath(LearningPath learningPathEncontrado, String nuevoTitulo, String nuevaDescripcionContenido, String nuevaDescripcionObjetivo, String nuevoNivelDificultad, String nuevoRating) {

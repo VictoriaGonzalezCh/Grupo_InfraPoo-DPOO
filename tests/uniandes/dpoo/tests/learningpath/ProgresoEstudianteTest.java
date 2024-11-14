@@ -45,7 +45,6 @@ class ProgresoEstudianteTest {
         PreguntaOpcionMultiple pregunta = new PreguntaOpcionMultiple("¿Cuánto es 2 + 2?", null, null, null);
         respuestas.put(pregunta, "4");
 
-        //quiz.setRespuestasEstudiante(respuestas);
         progreso.añadirRespuestasEstudiante(estudiante, quiz);
 
         assertTrue(progreso.getRespuestasPorEstudianteQuiz().containsKey(quiz));

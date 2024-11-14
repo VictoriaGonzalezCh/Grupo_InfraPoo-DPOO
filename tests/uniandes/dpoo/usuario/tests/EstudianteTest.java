@@ -33,11 +33,11 @@ class EstudianteTest {
                 "Objetivo de ejemplo", "Media", "260", "exitoso", 
                 new ArrayList<>(), "2024-12-31", true, creador, 
                 new ArrayList<>(), new ArrayList<>());
-        actividad1 = new Quiz(0, 0, "Quiz 1", null, null, null, null, null, null, null, null, false, null, new ArrayList<>(), null);
-        actividad2 = new Tarea(0, "Tarea 1", null, null, null, null, null, null, null, false, null, new ArrayList<>(), null);
+        actividad1 = new Quiz(0, 0, "Quiz 1", null, null, null, null, null, "exitoso", new ArrayList<>(), null, true, null, new ArrayList<>(), new ArrayList<>());
+        actividad2 = new Tarea(0, "Tarea 1", null, null, null, null, "exitoso", new ArrayList<>(), null, true, null, new ArrayList<>(), new ArrayList<>());
 
         lp.agregarActividad(actividad1);
-        lp.agregarActividad(actividad2);
+        lp.agregarActividad(actividad3);
     }
 
     @Test
@@ -48,25 +48,26 @@ class EstudianteTest {
 
     @Test
     public void testRegistrarActividadCompletada() {
+    	lp.agregarActividad(actividad3);
         estudiante.registrarseLearningPath(lp);
-        estudiante.iniciarActividad(actividad1);
-        estudiante.registrarActividadCompletada(actividad1);
-        assertTrue(estudiante.getActividadesCompletadas().contains(actividad1), "La actividad debería estar registrada como completada.");
+        estudiante.iniciarActividad(actividad3);
+        assertNotNull(actividad3, "actividad3 debería estar inicializada.");
+        estudiante.registrarActividadCompletada(actividad3);
+        assertTrue(estudiante.getActividadesCompletadas().contains(actividad3), "La actividad debería estar registrada como completada.");
     }
 
     @Test
     public void testRegistrarLearningPathCompletada() {
         estudiante.registrarseLearningPath(lp);
-        estudiante.registrarLearningPathCompletada(lp);
+        estudiante.learningPathCompletada(lp);
         assertTrue(estudiante.getLearningPathsCompletados().contains(lp), "El Learning Path debería estar registrado como completado.");
     }
 
     @Test
     public void testEstablecerProgresoEstudiante() {
-    	actividad1.cambiarResultado("exitoso");
-    	estudiante.getActividadesEnCurso().add(actividad1); 
+    	 
         estudiante.registrarseLearningPath(lp);
-        estudiante.registrarActividadCompletada(actividad1);
+        estudiante.registrarActividadCompletada(actividad3);
         double progreso = estudiante.establecerProgresoEstudiante(lp);
         assertEquals(50.0, progreso, "El progreso debería ser del 50%.");
     }
@@ -78,10 +79,6 @@ class EstudianteTest {
         assertEquals(5, feedback.getRating(), "La calificación del feedback debería ser 5.");
         assertEquals("Buen quiz.", feedback.getComentario(), "El comentario del feedback debería coincidir.");
     }
-
-    // El método realizarActividad probablemente requeriría una prueba manual debido a la interacción del usuario.
-    // Podrías considerar refactorizarlo para que sea más fácil de probar, por ejemplo, pasando entradas como parámetros.
-
     
     @Test
     public void testMostrarResultadoEstudiantes() {

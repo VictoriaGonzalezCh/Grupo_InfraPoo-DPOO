@@ -52,9 +52,6 @@ public class LearningPathTest {
     @Test
     public void testRegistrarActividadCompletadaPorEstudiante() {
         learningPath.registrarActividadCompletadaPorEstudiante(estudiante1, actividad1);
-
-        //ProgresoEstudiante progreso = learningPath.obtenerProgresoDeEstudiante(estudiante1);
-        //assertNotNull(progreso);
         assertTrue(estudiante1.getActividadesCompletadas().contains(actividad1));
     }
 
