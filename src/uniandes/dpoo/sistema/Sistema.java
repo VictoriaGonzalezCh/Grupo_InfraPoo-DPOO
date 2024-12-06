@@ -8,6 +8,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
 import uniandes.dpoo.persistencia.*;
@@ -323,13 +325,16 @@ public class Sistema {
         //Persistencia.guardarObjeto(nuevoLearningPath, "LearningPaths");
 	}
 	
-	public void crearNuevaActividad(LearningPath learningPathEncontrado, String tipoActividad, int id, String tituloActividad, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador usuario, String nivelDificultad, List<Actividad>  actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner){
-		Actividad nuevaActividad = ProfesorCreador.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
-        
-        learningPathEncontrado.agregarActividad(nuevaActividad);
-        learningPathEncontrado.setDuracionMinutos();
-        System.out.println("El id para la actividad es " + id );
-        
+	public void crearNuevaActividad(LearningPath learningPathEncontrado, String tipoActividad, int id, String tituloActividad, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador usuario, String nivelDificultad, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner){
+	    // Crear la nueva actividad a través del diálogo gráfico
+	    Actividad nuevaActividad = ProfesorCreador.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
+	    
+	    // Agregar la nueva actividad al LearningPath
+	    learningPathEncontrado.agregarActividad(nuevaActividad);
+	    learningPathEncontrado.setDuracionMinutos();
+	    
+	    // Mostrar el ID de la nueva actividad
+	    JOptionPane.showMessageDialog(null, "El id para la actividad es " + id);
 	}
 	
 	public void editarLearningPath(LearningPath learningPathEncontrado, String nuevoTitulo, String nuevaDescripcionContenido, String nuevaDescripcionObjetivo, String nuevoNivelDificultad, String nuevoRating) {

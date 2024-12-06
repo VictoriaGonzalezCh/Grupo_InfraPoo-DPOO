@@ -3,9 +3,11 @@ package uniandes.dpoo.learningpath;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
 
 import uniandes.dpoo.usuario.ProfesorCreador;
 
@@ -32,23 +34,21 @@ public class Encuesta extends Actividad {
   this.estado = estado;
 }
 	
-	public void agregarPregunta(Scanner scanner) {
-        System.out.println("Creando una nueva pregunta...");
+	public void agregarPregunta() {
+	    JOptionPane.showMessageDialog(null, "Creando una nueva pregunta...");
 
-        // Solicitar enunciado de la pregunta
-        System.out.println("Escriba el enunciado de la pregunta: ");
-        String enunciado = scanner.nextLine();
+	    // Solicitar enunciado de la pregunta
+	    String enunciado = JOptionPane.showInputDialog(null, "Escriba el enunciado de la pregunta:");
 
-        // Solicitar explicación
-        System.out.println("Escriba la respuesta esperada de la respuesta correcta: ");
-        String explicacion = scanner.nextLine();
+	    // Solicitar explicación
+	    String explicacion = JOptionPane.showInputDialog(null, "Escriba la respuesta esperada de la respuesta correcta:");
 
-        // Crear la pregunta y agregarla a la lista
-        PreguntaAbierta pregunta = new PreguntaAbierta(enunciado, explicacion);
-        preguntasAbiertas.add(pregunta);
+	    // Crear la pregunta y agregarla a la lista
+	    PreguntaAbierta pregunta = new PreguntaAbierta(enunciado, explicacion);
+	    preguntasAbiertas.add(pregunta);
 
-        System.out.println("Pregunta agregada exitosamente.");
-    }
+	    JOptionPane.showMessageDialog(null, "Pregunta agregada exitosamente.");
+	}
 	
 	
 	public void nuevaEncuesta(List<PreguntaAbierta> preguntasAbiertas, String estado) {
@@ -70,36 +70,39 @@ public class Encuesta extends Actividad {
         }
     }
 	
-	public void responderPreguntas(Scanner scanner) {
-		if (preguntasAbiertas == null || preguntasAbiertas.isEmpty()) {
-	        System.out.println("No hay preguntas para responder.");
-	        return;
-	    }
-		
-		System.out.println("Responda las siguientes preguntas: ");
-        for (PreguntaAbierta pregunta : preguntasAbiertas) {
-            pregunta.mostrarPregunta();
-        	String respuestaIngresada = scanner.nextLine();
-        	respuestasEstudiante.put(pregunta, respuestaIngresada); 
-        }
-        
-    }
-	
-	public void mostrarRespuestasEstudiante() {
-	    if (respuestasEstudiante.isEmpty()) {
-	        System.out.println("No hay respuestas disponibles para esta actividad.");
+	public void responderPreguntas() {
+	    if (preguntasAbiertas == null || preguntasAbiertas.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "No hay preguntas para responder.");
 	        return;
 	    }
 
-	    System.out.println("Respuestas del estudiante para la actividad:");
-	    for (Entry<PreguntaAbierta, String> entrada : respuestasEstudiante.entrySet()) {
+	    JOptionPane.showMessageDialog(null, "Responda las siguientes preguntas:");
+	    for (PreguntaAbierta pregunta : preguntasAbiertas) {
+	        String respuestaIngresada = JOptionPane.showInputDialog(null, "Pregunta: " + pregunta.getEnunciado());
+	        if (respuestaIngresada != null && !respuestaIngresada.isEmpty()) {
+	            respuestasEstudiante.put(pregunta, respuestaIngresada);
+	        } else {
+	            JOptionPane.showMessageDialog(null, "No se ingresó una respuesta. Pasando a la siguiente pregunta.");
+	        }
+	    }
+	}
+	
+	public void mostrarRespuestasEstudiante() {
+	    if (respuestasEstudiante.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "No hay respuestas disponibles para esta actividad.");
+	        return;
+	    }
+
+	    StringBuilder respuestas = new StringBuilder("Respuestas del estudiante para la actividad:\n");
+	    for (Map.Entry<PreguntaAbierta, String> entrada : respuestasEstudiante.entrySet()) {
 	        PreguntaAbierta pregunta = entrada.getKey();
 	        String respuesta = entrada.getValue();
-	        
-	        System.out.println("Pregunta: " + pregunta.getEnunciado());
-	        System.out.println("Respuesta del estudiante: " + respuesta);
-	        System.out.println();
+
+	        respuestas.append("Pregunta: ").append(pregunta.getEnunciado()).append("\n");
+	        respuestas.append("Respuesta del estudiante: ").append(respuesta).append("\n\n");
 	    }
+
+	    JOptionPane.showMessageDialog(null, respuestas.toString());
 	}
 	
 	public HashMap<PreguntaAbierta, String> getRespuestasEstudiante() {

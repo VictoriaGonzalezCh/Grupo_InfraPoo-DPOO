@@ -188,12 +188,12 @@ public class Estudiante extends Usuario implements Serializable{
 	        
 	    } else if (actividad instanceof Examen) {
 	        Examen examen = (Examen) actividad;
-	        examen.responderPreguntas(scanner);
+	        examen.responderPreguntas();
 	        registrarActividadCompletada(actividad);
 	        
 	    } else if (actividad instanceof Encuesta) {
 	        Encuesta encuesta = (Encuesta) actividad;
-	        encuesta.responderPreguntas(scanner);
+	        encuesta.responderPreguntas();
 	        encuesta.setEstado("enviado");
 	        registrarActividadCompletada(actividad);
 	        

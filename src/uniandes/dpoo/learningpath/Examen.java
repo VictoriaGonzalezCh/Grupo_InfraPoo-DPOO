@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import java.util.Map.Entry;
 
 
@@ -31,23 +34,29 @@ public class Examen extends Actividad {
   this.estado = estado;
 }
 	
-	public void agregarPregunta(Scanner scanner) {
-        System.out.println("Creando una nueva pregunta...");
+	public void agregarPregunta() {
+	    JOptionPane.showMessageDialog(null, "Creando una nueva pregunta...");
 
-        // Solicitar enunciado de la pregunta
-        System.out.println("Escriba el enunciado de la pregunta: ");
-        String enunciado = scanner.nextLine();
+	    // Solicitar enunciado de la pregunta
+	    String enunciado = JOptionPane.showInputDialog(null, "Escriba el enunciado de la pregunta:");
+	    if (enunciado == null || enunciado.trim().isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "El enunciado no puede estar vacío. Operación cancelada.");
+	        return;
+	    }
 
-        // Solicitar explicación
-        System.out.println("Escriba la respuesta esperada de la respuesta correcta: ");
-        String explicacion = scanner.nextLine();
+	    // Solicitar la respuesta esperada
+	    String explicacion = JOptionPane.showInputDialog(null, "Escriba la respuesta esperada de la pregunta:");
+	    if (explicacion == null || explicacion.trim().isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "La respuesta esperada no puede estar vacía. Operación cancelada.");
+	        return;
+	    }
 
-        // Crear la pregunta y agregarla a la lista
-        PreguntaAbierta pregunta = new PreguntaAbierta(enunciado, explicacion);
-        preguntasAbiertas.add(pregunta);
+	    // Crear la pregunta y agregarla a la lista
+	    PreguntaAbierta pregunta = new PreguntaAbierta(enunciado, explicacion);
+	    preguntasAbiertas.add(pregunta);
 
-        System.out.println("Pregunta agregada exitosamente.");
-    }
+	    JOptionPane.showMessageDialog(null, "Pregunta agregada exitosamente.");
+	}
 	
 	
 	public void nuevoExamen(List<PreguntaAbierta> preguntasAbiertas, String estado) {
@@ -70,36 +79,42 @@ public class Examen extends Actividad {
     }
 	
 	
-	public void responderPreguntas(Scanner scanner) {
-		if (preguntasAbiertas == null || preguntasAbiertas.isEmpty()) {
-	        System.out.println("No hay preguntas para responder.");
-	        return;
-	    }
-		
-		System.out.println("Responda las siguientes preguntas: ");
-        for (PreguntaAbierta pregunta : preguntasAbiertas) {
-            pregunta.mostrarPregunta();
-        	String respuestaIngresada = scanner.nextLine();
-        	respuestasEstudiante.put(pregunta, respuestaIngresada); 
-        }
-        System.out.println("Respuesta guardada ");
-    }
-	
-	public void mostrarRespuestasEstudiante() {
-	    if (respuestasEstudiante.isEmpty()) {
-	        System.out.println("No hay respuestas disponibles para esta actividad.");
+	public void responderPreguntas() {
+	    if (preguntasAbiertas == null || preguntasAbiertas.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "No hay preguntas para responder.", "Información", JOptionPane.INFORMATION_MESSAGE);
 	        return;
 	    }
 
-	    System.out.println("Respuestas del estudiante para la actividad:");
+	    for (PreguntaAbierta pregunta : preguntasAbiertas) {
+	        // Mostrar la pregunta
+	        String respuestaIngresada = JOptionPane.showInputDialog(null, "Pregunta: " + pregunta.getEnunciado(), "Responder Pregunta", JOptionPane.QUESTION_MESSAGE);
+
+	        if (respuestaIngresada == null || respuestaIngresada.trim().isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "Respuesta vacía, no se guardará.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+	        } else {
+	            respuestasEstudiante.put(pregunta, respuestaIngresada);
+	        }
+	    }
+
+	    JOptionPane.showMessageDialog(null, "Todas las respuestas se han guardado exitosamente.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void mostrarRespuestasEstudiante() {
+	    if (respuestasEstudiante.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "No hay respuestas disponibles para esta actividad.", "Información", JOptionPane.INFORMATION_MESSAGE);
+	        return;
+	    }
+
+	    StringBuilder mensaje = new StringBuilder("Respuestas del estudiante para la actividad:\n\n");
 	    for (Entry<PreguntaAbierta, String> entrada : respuestasEstudiante.entrySet()) {
 	        PreguntaAbierta pregunta = entrada.getKey();
 	        String respuesta = entrada.getValue();
-	        
-	        System.out.println("Pregunta: " + pregunta.getEnunciado());
-	        System.out.println("Respuesta del estudiante: " + respuesta);
-	        System.out.println();
+
+	        mensaje.append("Pregunta: ").append(pregunta.getEnunciado()).append("\n");
+	        mensaje.append("Respuesta del estudiante: ").append(respuesta).append("\n\n");
 	    }
+
+	    JOptionPane.showMessageDialog(null, mensaje.toString(), "Respuestas del Estudiante", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public HashMap<PreguntaAbierta, String> getRespuestasEstudiante() {

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import java.util.Map.Entry;
 
 import uniandes.dpoo.usuario.ProfesorCreador;
@@ -40,54 +43,53 @@ public class Quiz extends Actividad {
 	}
 	
 	
-	public void agregarPregunta(Scanner scanner) {
-        System.out.println("Creando una nueva pregunta...");
+	public void agregarPregunta() {
+	    JOptionPane.showMessageDialog(null, "Creando una nueva pregunta...");
 
-        // Solicitar enunciado de la pregunta
-        System.out.println("Escriba el enunciado de la pregunta: ");
-        String enunciado = scanner.nextLine();
+	    // Solicitar enunciado de la pregunta
+	    String enunciado = JOptionPane.showInputDialog(null, "Escriba el enunciado de la pregunta:");
 
-        // Solicitar opciones
-        List<String> opciones = new ArrayList<>();
-        for (int i = 1; i <= 4; i++) {
-            System.out.println("Escriba la opción " + i + ": ");
-            String opcion = scanner.nextLine();
-            opciones.add(opcion);
-        }
+	    // Solicitar opciones
+	    List<String> opciones = new ArrayList<>();
+	    for (int i = 1; i <= 4; i++) {
+	        String opcion = JOptionPane.showInputDialog(null, "Escriba la opción " + i + ":");
+	        opciones.add(opcion);
+	    }
 
-        // Solicitar la opción correcta
-        System.out.println("¿Cuál es el número de la opción correcta (1-4)?: ");
-        int opcionCorrecta = Integer.parseInt(scanner.nextLine());
-        String respuestaCorrecta = opciones.get(opcionCorrecta - 1);
+	    // Solicitar la opción correcta
+	    String opcionCorrectaStr = JOptionPane.showInputDialog(null, "¿Cuál es el número de la opción correcta (1-4)?:");
+	    int opcionCorrecta = Integer.parseInt(opcionCorrectaStr);
+	    String respuestaCorrecta = opciones.get(opcionCorrecta - 1);
 
-        // Solicitar explicación
-        System.out.println("Escriba la explicación de la respuesta correcta: ");
-        String explicacion = scanner.nextLine();
+	    // Solicitar explicación
+	    String explicacion = JOptionPane.showInputDialog(null, "Escriba la explicación de la respuesta correcta:");
 
-        // Crear la pregunta y agregarla a la lista
-        PreguntaOpcionMultiple pregunta = new PreguntaOpcionMultiple(enunciado, opciones, respuestaCorrecta, explicacion);
-        preguntasMultiples.add(pregunta);
+	    // Crear la pregunta y agregarla a la lista
+	    PreguntaOpcionMultiple pregunta = new PreguntaOpcionMultiple(enunciado, opciones, respuestaCorrecta, explicacion);
+	    preguntasMultiples.add(pregunta);
 
-        System.out.println("Pregunta agregada exitosamente.");
-    }
+	    JOptionPane.showMessageDialog(null, "Pregunta agregada exitosamente.");
+	}
 	
-	public void agregarPreguntaVerdaderoFalso(Scanner scanner) {
-        System.out.println("Creando una nueva pregunta de verdadero/falso...");
+	public void agregarPreguntaVerdaderoFalso() {
+	    JOptionPane.showMessageDialog(null, "Creando una nueva pregunta de verdadero/falso...");
 
-        System.out.println("Escriba el enunciado de la pregunta: ");
-        String enunciado = scanner.nextLine();
+	    // Solicitar enunciado de la pregunta
+	    String enunciado = JOptionPane.showInputDialog(null, "Escriba el enunciado de la pregunta:");
 
-        System.out.println("¿La respuesta es verdadera o falsa? (true/false): ");
-        boolean respuestaCorrecta = Boolean.parseBoolean(scanner.nextLine());
+	    // Solicitar la respuesta correcta (true/false)
+	    String respuestaCorrectaStr = JOptionPane.showInputDialog(null, "¿La respuesta es verdadera o falsa? (true/false):");
+	    boolean respuestaCorrecta = Boolean.parseBoolean(respuestaCorrectaStr);
 
-        System.out.println("Escriba la explicación de la respuesta correcta: ");
-        String explicacion = scanner.nextLine();
+	    // Solicitar explicación
+	    String explicacion = JOptionPane.showInputDialog(null, "Escriba la explicación de la respuesta correcta:");
 
-        PreguntaVerdaderoFalso pregunta = new PreguntaVerdaderoFalso(enunciado, respuestaCorrecta, explicacion);
-        preguntasVF.add(pregunta);
+	    // Crear la pregunta y agregarla a la lista
+	    PreguntaVerdaderoFalso pregunta = new PreguntaVerdaderoFalso(enunciado, respuestaCorrecta, explicacion);
+	    preguntasVF.add(pregunta);
 
-        System.out.println("Pregunta de verdadero/falso agregada exitosamente.");
-    }
+	    JOptionPane.showMessageDialog(null, "Pregunta de verdadero/falso agregada exitosamente.");
+	}
 	
 	
 	public void nuevoQuiz(List<PreguntaOpcionMultiple> preguntasMultiples, int calificacionMinima) {

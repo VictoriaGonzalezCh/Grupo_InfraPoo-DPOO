@@ -3,6 +3,8 @@ package uniandes.dpoo.usuario;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.Encuesta;
 import uniandes.dpoo.learningpath.Examen;
@@ -95,30 +97,23 @@ public class ProfesorCreador extends Usuario{
 		    
 		    switch (tipo.toLowerCase()) {
 		        case "recurso educativo":
-		        	System.out.println("Especifique el tipo de recurso para el recurso educativo: ");
-		             String tipoRecurso = scanner.nextLine();
-		             System.out.println("Escriba lo que quiere que tenga el recurso: ");
-		             String recurso = scanner.nextLine();
-		             
+		            String tipoRecurso = JOptionPane.showInputDialog(null, "Especifique el tipo de recurso para el recurso educativo:");
+		            String recurso = JOptionPane.showInputDialog(null, "Escriba lo que quiere que tenga el recurso:");
+
 		            actividad = new RecursoEducativo(id, tipoRecurso, recurso, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
-		            
 		            break;
-		            
+		        
 		        case "tarea":
 		            actividad = new Tarea(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            break;
-		            
+		        
 		        case "quiz":
-		        	 System.out.println("Escriba el tipo de quiz (VerdaderoFalso o OpcionMultiple) ");
-		             String tipoQuiz = scanner.nextLine();
-		        	 System.out.println("Especifique la calificacion minima para el quiz: ");
-		             String calificacionMinima = scanner.nextLine();
-		             System.out.println("Especifique cuantas preguntas quiere que tenga el quiz: ");
-		             String numPreguntas = scanner.nextLine();
-		    
+		            String tipoQuiz = JOptionPane.showInputDialog(null, "Escriba el tipo de quiz (VerdaderoFalso o OpcionMultiple):");
+		            String calificacionMinima = JOptionPane.showInputDialog(null, "Especifique la calificación mínima para el quiz:");
+		            String numPreguntas = JOptionPane.showInputDialog(null, "Especifique cuántas preguntas quiere que tenga el quiz:");
+
 		            Quiz actividadQuiz = new Quiz(id, Integer.parseInt(calificacionMinima), tipoQuiz, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
-		            
-		            
+
 		            // Añadir preguntas dependiendo del tipo de quiz
 		            if (tipoQuiz.equalsIgnoreCase("OpcionMultiple")) {
 		                for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
@@ -129,42 +124,34 @@ public class ProfesorCreador extends Usuario{
 		                    actividadQuiz.agregarPreguntaVerdaderoFalso(scanner);
 		                }
 		            }
-		            
-		            //for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
-		            //    actividadQuiz.agregarPregunta(scanner);
-		            //}
 		            actividad = actividadQuiz;
 		            break;
-		            
+		        
 		        case "examen":
-		        	System.out.println("Especifique cuantas preguntas abiertas quiere que tenga el examen: ");
-		            String numPreguntasExamen = scanner.nextLine();
-		        	
+		            String numPreguntasExamen = JOptionPane.showInputDialog(null, "Especifique cuántas preguntas abiertas quiere que tenga el examen:");
+
 		            Examen actividadExamen = new Examen(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            for (int i = 0; i < Integer.parseInt(numPreguntasExamen); i++) {
 		                actividadExamen.agregarPregunta(scanner);
 		            }
 		            actividad = actividadExamen;
-		            
-		            break;  
+		            break;
+		        
 		        case "encuesta":
-		        	System.out.println("Especifique cuantas preguntas abiertas quiere que tenga el examen: ");
-		            String numPreguntasEncuesta = scanner.nextLine();
-		        	
+		            String numPreguntasEncuesta = JOptionPane.showInputDialog(null, "Especifique cuántas preguntas abiertas quiere que tenga la encuesta:");
+
 		            Encuesta actividadEncuesta = new Encuesta(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            for (int i = 0; i < Integer.parseInt(numPreguntasEncuesta); i++) {
-		            	actividadEncuesta.agregarPregunta(scanner);
+		                actividadEncuesta.agregarPregunta(scanner);
 		            }
 		            actividad = actividadEncuesta;
-		            
-		            break;   
+		            break;
 		        
-		            
 		        default:
-		            System.out.println("Tipo de actividad no reconocido.");
+		            JOptionPane.showMessageDialog(null, "Tipo de actividad no reconocido.");
 		            break;
 		    }
-		    
+
 		    return actividad;
 		}
 		
