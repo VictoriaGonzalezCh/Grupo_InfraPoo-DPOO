@@ -117,11 +117,11 @@ public class ProfesorCreador extends Usuario{
 		            // Añadir preguntas dependiendo del tipo de quiz
 		            if (tipoQuiz.equalsIgnoreCase("OpcionMultiple")) {
 		                for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
-		                    actividadQuiz.agregarPregunta(scanner);
+		                    actividadQuiz.agregarPregunta();
 		                }
 		            } else if (tipoQuiz.equalsIgnoreCase("VerdaderoFalso")) {
 		                for (int i = 0; i < Integer.parseInt(numPreguntas); i++) {
-		                    actividadQuiz.agregarPreguntaVerdaderoFalso(scanner);
+		                    actividadQuiz.agregarPreguntaVerdaderoFalso();
 		                }
 		            }
 		            actividad = actividadQuiz;
@@ -132,7 +132,7 @@ public class ProfesorCreador extends Usuario{
 
 		            Examen actividadExamen = new Examen(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            for (int i = 0; i < Integer.parseInt(numPreguntasExamen); i++) {
-		                actividadExamen.agregarPregunta(scanner);
+		                actividadExamen.agregarPregunta();
 		            }
 		            actividad = actividadExamen;
 		            break;
@@ -142,7 +142,7 @@ public class ProfesorCreador extends Usuario{
 
 		            Encuesta actividadEncuesta = new Encuesta(id, titulo, descripcion, objetivo, nivelDificultad, duracionEsperada, resultado, actividadesPreviasSugeridas, fechaLimite, obligatoria, creador, prerequisitos, actividadesSeguimientoRecomendadas);
 		            for (int i = 0; i < Integer.parseInt(numPreguntasEncuesta); i++) {
-		                actividadEncuesta.agregarPregunta(scanner);
+		                actividadEncuesta.agregarPregunta();
 		            }
 		            actividad = actividadEncuesta;
 		            break;

@@ -24,19 +24,65 @@ import uniandes.dpoo.sistema.Sistema;
 public class InterfazProfesorCreador extends JFrame {
 	
 	Sistema sistema = new Sistema();
+	private ProfesorCreador profesor;
 
-    public InterfazProfesorCreador() {
+	public InterfazProfesorCreador(ProfesorCreador profesor, Sistema sistema) {
+        this.profesor = profesor; // Guardar la referencia del profesor
+		
         // Configurar la ventana principal
         setTitle("Menú Profesor Creador");
-        setSize(400, 400);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centrar la ventana en la pantalla
 
-        // Crear el panel principal
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(8, 1, 10, 10)); // 8 filas, 1 columna, espaciado de 10px
+        // Crear el panel izquierdo (Perfil del profesor)
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Espaciado interno
 
-        // Crear los botones para cada opción
+        // Imagen del profesor
+        JLabel lblImagenProfesor = new JLabel();
+        lblImagenProfesor.setIcon(new ImageIcon("ruta_a_imagen.png")); // Cambiar a la ruta de tu imagen
+        lblImagenProfesor.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(lblImagenProfesor);
+
+        // Nombre del profesor
+        String nombre = profesor.getLogin();
+        JLabel lblNombreProfesor = new JLabel("Profesor: " + nombre);
+        lblNombreProfesor.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(lblNombreProfesor);
+
+        // Desplegable de Learning Paths
+        
+        List<LearningPath> learningpaths = profesor.getLearningPaths();
+
+        JComboBox<String> comboLearningPaths = new JComboBox<>();
+        if (learningpaths == null || learningpaths.isEmpty()) {
+            // Agregar mensaje al JComboBox si no hay LearningPaths
+            comboLearningPaths.addItem("Aún no hay LearningPaths creados.");
+        } else {
+            // Llenar el JComboBox con los nombres de los LearningPaths
+            for (LearningPath lp : learningpaths) {
+                comboLearningPaths.addItem(lp.getTitulo());
+            }
+        }
+
+        // Configurar dimensiones y agregar al panel izquierdo
+        comboLearningPaths.setMaximumSize(new Dimension(200, 30)); // Ancho fijo
+        leftPanel.add(Box.createVerticalStrut(10)); // Espaciado
+        leftPanel.add(new JLabel("Learning Paths creados:"));
+        leftPanel.add(comboLearningPaths);
+       
+        comboLearningPaths.addActionListener(e -> {
+            String selectedPath = (String) comboLearningPaths.getSelectedItem();
+            JOptionPane.showMessageDialog(this, "Seleccionaste: " + selectedPath);
+        });
+
+        // Crear el panel derecho (Botones del menú)
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new GridLayout(8, 1, 10, 10)); // 8 filas, 1 columna, espaciado de 10px
+
+        // Crear los botones
         JButton btnCrearLearningPath = new JButton("Crear Learning Path");
         JButton btnEditarLearningPath = new JButton("Editar Learning Path");
         JButton btnCrearActividad = new JButton("Crear Nueva Actividad");
@@ -56,22 +102,25 @@ public class InterfazProfesorCreador extends JFrame {
         btnVerInfoLearningPath.addActionListener(e -> mostrarInfoLearningPath());
         btnSalir.addActionListener(e -> salir());
 
-        // Agregar los botones al panel
-        panel.add(btnCrearLearningPath);
-        panel.add(btnEditarLearningPath);
-        panel.add(btnCrearActividad);
-        panel.add(btnEditarActividad);
-        panel.add(btnVerReseñas);
-        panel.add(btnVerInfoActividad);
-        panel.add(btnVerInfoLearningPath);
-        panel.add(btnSalir);
+        // Agregar botones al panel derecho
+        rightPanel.add(btnCrearLearningPath);
+        rightPanel.add(btnEditarLearningPath);
+        rightPanel.add(btnCrearActividad);
+        rightPanel.add(btnEditarActividad);
+        rightPanel.add(btnVerReseñas);
+        rightPanel.add(btnVerInfoActividad);
+        rightPanel.add(btnVerInfoLearningPath);
+        rightPanel.add(btnSalir);
 
-        // Agregar el panel a la ventana
-        add(panel);
+        // Dividir en dos paneles con JSplitPane
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPane.setDividerLocation(200); // Configurar ancho del panel izquierdo
+
+        // Agregar el SplitPane al marco principal
+        add(splitPane);
 
         setVisible(true); // Hacer visible la ventana
     }
-
     // Métodos que se llaman al presionar los botones (puedes implementar la lógica aquí)
     private void crearActividad() {
         // Paso 1: Buscar el Learning Path por ID

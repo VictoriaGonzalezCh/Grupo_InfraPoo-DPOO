@@ -1,8 +1,20 @@
 package uniandes.dpoo.learningpath;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import uniandes.dpoo.usuario.Estudiante;
 import uniandes.dpoo.usuario.ProfesorCreador;
@@ -60,15 +72,35 @@ public class Actividad {
         System.out.println("Feedback agregado: " + feedback.getComentario());
     }
 
-    public void mostrarFeedbacks() {
-        System.out.println("Feedbacks para la actividad: " + tituloActividad);
-        for (Feedback fb : feedbacks) {
-            System.out.println("Autor: " + fb.getAutor());
-            System.out.println("Comentario: " + fb.getComentario());
-            System.out.println("Comentario: " + fb.getRating());
-            System.out.println("-----------------------------");
-        }
-    }
+	public void mostrarFeedbacks() {
+	    // Crear un panel principal con un layout vertical
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+	    // Agregar el título de la actividad
+	    panel.add(new JLabel("Feedbacks para la actividad: " + tituloActividad));
+	    panel.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+	    // Mostrar cada feedback
+	    for (Feedback fb : feedbacks) {
+	        JPanel feedbackPanel = new JPanel();
+	        feedbackPanel.setLayout(new GridLayout(0, 1));
+	        feedbackPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	        feedbackPanel.setBackground(new Color(245, 245, 245));
+
+	        feedbackPanel.add(new JLabel("Autor: " + fb.getAutor()));
+	        feedbackPanel.add(new JLabel("Comentario: " + fb.getComentario()));
+	        feedbackPanel.add(new JLabel("Rating: " + fb.getRating()));
+	        feedbackPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+	        panel.add(feedbackPanel);
+	    }
+
+	    // Mostrar el panel en un cuadro de diálogo
+	    JScrollPane scrollPane = new JScrollPane(panel);
+	    scrollPane.setPreferredSize(new Dimension(400, 300));
+	    JOptionPane.showMessageDialog(null, scrollPane, "Feedbacks", JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 	public void marcarResultado(String resultado) {
         this.resultado = resultado;
@@ -215,29 +247,47 @@ public class Actividad {
 	}
 
 	public void mostrarInfoActividad() {
-        System.out.println("Descripción: " + descripcion);
-        System.out.println("Objetivo: " + objetivo);
-        System.out.println("Nivel de Dificultad: " + nivelDificultad);
-        System.out.println("Duración Esperada: " + duracionEsperada);
-        System.out.println("Fecha Límite: " + fechaLimite);
-        System.out.println("Obligatoria: " + (obligatoria ? "Sí" : "No"));
-        System.out.println("Creador: " + creador.getLogin());
-        System.out.println("Resultado: " + resultado);
-        
-        // Mostrar actividades previas sugeridas
-        System.out.println("Actividades Previas Sugeridas:");
-        for (Actividad act : actividadesPreviasSugeridas) {
-            System.out.println("- " + act.getTituloActividad());
-        }
+	    // Crear el panel principal
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        // Mostrar prerrequisitos
-        System.out.println("Prerrequisitos:");
-        for (Actividad act : prerequisitos) {
-            System.out.println("- " + act.getTituloActividad());
-        }
-    }
-	 
-		
+	    // Añadir información básica
+	    panel.add(new JLabel("Descripción: " + descripcion));
+	    panel.add(new JLabel("Objetivo: " + objetivo));
+	    panel.add(new JLabel("Nivel de Dificultad: " + nivelDificultad));
+	    panel.add(new JLabel("Duración Esperada: " + duracionEsperada));
+	    panel.add(new JLabel("Fecha Límite: " + fechaLimite));
+	    panel.add(new JLabel("Obligatoria: " + (obligatoria ? "Sí" : "No")));
+	    panel.add(new JLabel("Creador: " + creador.getLogin()));
+	    panel.add(new JLabel("Resultado: " + resultado));
+	    panel.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+	    // Panel para actividades previas sugeridas
+	    panel.add(new JLabel("Actividades Previas Sugeridas:"));
+	    if (actividadesPreviasSugeridas.isEmpty()) {
+	        panel.add(new JLabel("No hay actividades previas sugeridas."));
+	    } else {
+	        for (Actividad act : actividadesPreviasSugeridas) {
+	            panel.add(new JLabel("- " + act.getTituloActividad()));
+	        }
+	    }
+	    panel.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+	    // Panel para prerrequisitos
+	    panel.add(new JLabel("Prerrequisitos:"));
+	    if (prerequisitos.isEmpty()) {
+	        panel.add(new JLabel("No hay prerrequisitos."));
+	    } else {
+	        for (Actividad act : prerequisitos) {
+	            panel.add(new JLabel("- " + act.getTituloActividad()));
+	        }
+	    }
+
+	    // Mostrar el panel en un cuadro de diálogo
+	    JScrollPane scrollPane = new JScrollPane(panel);
+	    scrollPane.setPreferredSize(new Dimension(400, 300));
+	    JOptionPane.showMessageDialog(null, scrollPane, "Información de la Actividad", JOptionPane.INFORMATION_MESSAGE);
+	}
 		
     }
 	

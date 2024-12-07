@@ -9,8 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+
 import uniandes.dpoo.usuario.Estudiante;
 
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 import java.io.Serializable;
 
 public class LearningPath implements Serializable{
@@ -129,22 +138,24 @@ public class LearningPath implements Serializable{
         return actividadesObligatorias;
     }
 	
-	
-	 public void mostrarInfoLearningPath() {
-	        System.out.println("Título: " + titulo);
-	        System.out.println("Descripción del Contenido: " + descripcionContenido);
-	        System.out.println("Descripción del Objetivo: " + descripcionObjetivo);
-	        System.out.println("Nivel de Dificultad: " + nivelDificultad);
-	        System.out.println("Duración Total: " + duracionMinutos);
-	        System.out.println("Rating: " + rating);
-	        
-	        // Mostrar actividades
-	        System.out.println("Lista de Actividades:");
-	        for (Actividad actividad : listaActividades) {
-	            actividad.mostrarInfoActividad();  // Llama al método para mostrar información de cada actividad
-	        }
-	    }
-	
+	public void mostrarInfoLearningPath() {
+	    // Crear un panel principal con un layout vertical
+	    JPanel panel = new JPanel();
+	    panel.setLayout((LayoutManager) new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+	    // Agregar etiquetas con la información del Learning Path
+	    panel.add(new JLabel("Título: " + titulo));
+	    panel.add(new JLabel("Descripción del Contenido: " + descripcionContenido));
+	    panel.add(new JLabel("Descripción del Objetivo: " + descripcionObjetivo));
+	    panel.add(new JLabel("Nivel de Dificultad: " + nivelDificultad));
+	    panel.add(new JLabel("Duración Total: " + duracionMinutos + " minutos"));
+	    panel.add(new JLabel("Rating: " + rating));
+
+	    // Mostrar el panel en un JOptionPane
+	    JScrollPane scrollPane = new JScrollPane(panel);
+	    scrollPane.setPreferredSize(new Dimension(400, 300));
+	    JOptionPane.showMessageDialog(null, scrollPane, "Información del Learning Path", JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 	public String getTitulo() {
 		return titulo;

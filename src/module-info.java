@@ -13,4 +13,5 @@ module Proyecto1 {
     requires org.junit.jupiter.engine;
     requires org.json;
 	requires java.desktop;
+	
 }
