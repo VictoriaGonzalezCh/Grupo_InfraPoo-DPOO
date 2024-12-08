@@ -151,6 +151,20 @@ public class LearningPath implements Serializable{
 	    panel.add(new JLabel("Duración Total: " + duracionMinutos + " minutos"));
 	    panel.add(new JLabel("Rating: " + rating));
 
+	 // Título para la lista de actividades
+	    panel.add(new JLabel("Actividades en este Learning Path:"));
+
+	    // Verificar si hay actividades en el Learning Path
+	    if (listaActividades == null || listaActividades.isEmpty()) {
+	        panel.add(new JLabel("No hay actividades asociadas a este Learning Path."));
+	    } else {
+	        // Agregar cada actividad a la lista
+	        for (int i = 0; i < listaActividades.size(); i++) {
+	            panel.add(new JLabel((i + 1) + ". " + listaActividades.get(i).getTituloActividad() + " - " 
+	                    + listaActividades.get(i).getId()));
+	        }
+	    }
+	    
 	    // Mostrar el panel en un JOptionPane
 	    JScrollPane scrollPane = new JScrollPane(panel);
 	    scrollPane.setPreferredSize(new Dimension(400, 300));
@@ -277,5 +291,17 @@ public class LearningPath implements Serializable{
 	public void setProgresoEstudiante(HashMap<Estudiante, ProgresoEstudiante> progresoEstudiante) {
 		this.progresoEstudiante = progresoEstudiante;
 	}
+
+
+	public List<Actividad> getListaActividades() {
+		return listaActividades;
+	}
+
+
+	public void setListaActividades(List<Actividad> listaActividades) {
+		this.listaActividades = listaActividades;
+	}
+	
+	
 	
 }

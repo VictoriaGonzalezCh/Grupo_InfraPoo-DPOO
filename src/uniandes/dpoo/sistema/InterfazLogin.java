@@ -44,7 +44,7 @@ class InterfazLogin extends JFrame {
                 JOptionPane.showMessageDialog(null, "Bienvenido, " + usuarioLogueado.getLogin());
                 // Abrir menú correspondiente
                 if (usuarioLogueado instanceof ProfesorCreador) {
-                    new InterfazProfesorCreador((ProfesorCreador) usuarioLogueado, sistema);
+                    new InterfazProfesorCreador((ProfesorCreador) usuarioLogueado, sistema, this);
                 } else if (usuarioLogueado instanceof ProfesorSeguimiento) {
                     // new InterfazProfesorSeguimiento((ProfesorSeguimiento) usuarioLogueado, sistema);
                 } else if (usuarioLogueado instanceof Estudiante) {

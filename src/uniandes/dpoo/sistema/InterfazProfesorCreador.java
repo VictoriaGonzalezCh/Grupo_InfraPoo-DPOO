@@ -26,8 +26,9 @@ public class InterfazProfesorCreador extends JFrame {
 	Sistema sistema = new Sistema();
 	private ProfesorCreador profesor;
 	JComboBox<String> comboLearningPaths = new JComboBox<>();
+	private JFrame ventanaPrincipal;
 
-	public InterfazProfesorCreador(ProfesorCreador profesor, Sistema sistema) {
+	public InterfazProfesorCreador(ProfesorCreador profesor, Sistema sistema, JFrame ventanaPrincipal) {
         this.profesor = profesor; // Guardar la referencia del profesor
 		
         // Configurar la ventana principal
@@ -76,7 +77,23 @@ public class InterfazProfesorCreador extends JFrame {
        
         comboLearningPaths.addActionListener(e -> {
             String selectedPath = (String) comboLearningPaths.getSelectedItem();
-            //JOptionPane.showMessageDialog(this, "Seleccionaste: " + selectedPath);
+            if (selectedPath == null || selectedPath.equals("Aún no hay LearningPaths creados.")) {
+                //JOptionPane.showMessageDialog(this, "No hay Learning Paths para mostrar.");
+                return;
+            }
+
+            try {
+                // Extraer el ID del LearningPath del string seleccionado (suponiendo el formato "ID: <id> - <título>")
+                String[] parts = selectedPath.split(" - ");
+                String idPart = parts[0].replace("ID: ", "").trim();
+                int id = Integer.parseInt(idPart);
+
+                // Mostrar la información del LearningPath
+                mostrarInfoLearningPath(id); // Asumiendo que este método ya muestra la info en JOptionPane
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar mostrar la información: " + ex.getMessage(),
+                                              "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         // Crear el panel derecho (Botones del menú)
@@ -90,9 +107,11 @@ public class InterfazProfesorCreador extends JFrame {
         JButton btnEditarActividad = new JButton("Editar Actividad");
         JButton btnVerReseñas = new JButton("Ver Reseñas de una Actividad");
         JButton btnVerInfoActividad = new JButton("Ver Información de una Actividad");
-        JButton btnVerInfoLearningPath = new JButton("Mostrar Información de un Learning Path");
         JButton btnSalir = new JButton("Salir");
+        JButton btnVolver = new JButton("Volver");
 
+        
+        
         // Agregar listeners a los botones
         btnCrearLearningPath.addActionListener(e -> crearLearningPath());
         btnEditarLearningPath.addActionListener(e -> editarLearningPath());
@@ -100,8 +119,11 @@ public class InterfazProfesorCreador extends JFrame {
         btnEditarActividad.addActionListener(e -> editarActividad());
         btnVerReseñas.addActionListener(e -> verReseñasActividades());
         btnVerInfoActividad.addActionListener(e -> mostrarInfoActividad());
-        btnVerInfoLearningPath.addActionListener(e -> mostrarInfoLearningPath());
         btnSalir.addActionListener(e -> salir());
+        btnVolver.addActionListener(e -> {
+            ventanaPrincipal.setVisible(true); // Mostrar la ventana principal
+            dispose(); // Cerrar esta ventana
+        });
 
         // Agregar botones al panel derecho
         rightPanel.add(btnCrearLearningPath);
@@ -110,8 +132,8 @@ public class InterfazProfesorCreador extends JFrame {
         rightPanel.add(btnEditarActividad);
         rightPanel.add(btnVerReseñas);
         rightPanel.add(btnVerInfoActividad);
-        rightPanel.add(btnVerInfoLearningPath);
         rightPanel.add(btnSalir);
+        rightPanel.add(btnVolver);
 
         // Dividir en dos paneles con JSplitPane
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
@@ -121,7 +143,16 @@ public class InterfazProfesorCreador extends JFrame {
         add(splitPane);
 
         setVisible(true); // Hacer visible la ventana
-    }
+        
+     // Acción al pulsar el botón "Volver a la Interfaz Principal"
+        btnVolver.addActionListener(e -> {
+            ventanaPrincipal.setVisible(true); // Mostrar la ventana principal
+            dispose(); // Cerrar esta ventana
+        });
+
+        // Agregar el botón "Volver" al panel derecho
+        rightPanel.add(btnVolver);
+	}
 	
 	
 	
@@ -303,7 +334,7 @@ public class InterfazProfesorCreador extends JFrame {
             int id = Sistema.generarIDUnicoLearningPaths();
             sistema.crearLearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating, profesor);
 
-            JOptionPane.showMessageDialog(this, "El Learning Path ha sido registrado exitosamente.\nID: " + id);
+            //JOptionPane.showMessageDialog(this, "El Learning Path ha sido registrado exitosamente.\nID: " + id);
             actualizarListaLearningPaths();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al crear el Learning Path: " + e.getMessage(), 
@@ -622,15 +653,10 @@ public class InterfazProfesorCreador extends JFrame {
         }
     }
 
-    private void mostrarInfoLearningPath() {
-        String id = JOptionPane.showInputDialog(this, "Escriba el ID del Learning Path del cual quiere ver la información:");
-        if (id == null) {
-            JOptionPane.showMessageDialog(this, "Operación cancelada.");
-            return;
-        }
+    private void mostrarInfoLearningPath(int id) {
 
         try {
-            LearningPath LPEncontrado = sistema.buscarLearningPath(Integer.parseInt(id));
+            LearningPath LPEncontrado = sistema.buscarLearningPath(id);
             if (LPEncontrado == null) {
                 JOptionPane.showMessageDialog(this, "No se encontró un Learning Path con el ID proporcionado.");
                 return;
@@ -647,6 +673,7 @@ public class InterfazProfesorCreador extends JFrame {
         JOptionPane.showMessageDialog(this, "Saliendo...");
         dispose(); // Cierra la ventana
     }
+    
 
     
 }
