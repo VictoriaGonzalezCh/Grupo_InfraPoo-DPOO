@@ -315,19 +315,22 @@ public class Sistema {
         System.out.println("Estudiante " + estudiante.getLogin() + " agregado con éxito.");
     }
 	
-	public void crearLearningPath(int id, String titulo, String descripcionContenido, String descripcionObjetivo, String nivelDificultad, String rating) {
-		LearningPath nuevoLearningPath = new LearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating);
+	public void crearLearningPath(int id, String titulo, String descripcionContenido, String descripcionObjetivo, String nivelDificultad, String rating, ProfesorCreador profesor) {
+		//LearningPath nuevoLearningPath = new LearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating);
         
+		//ProfesorCreador usuario = (ProfesorCreador)obtenerUsuarioAutenticado();
+		LearningPath nuevoLearningPath = profesor.nuevoLearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating);
+		
         agregarLearningPath(nuevoLearningPath);
         nuevoLearningPath.setFechaCreacion();
-        System.out.println("El id para el Learning Path es " + id );
+        //System.out.println("El id para el Learning Path es " + id );
         
         //Persistencia.guardarObjeto(nuevoLearningPath, "LearningPaths");
 	}
 	
-	public void crearNuevaActividad(LearningPath learningPathEncontrado, String tipoActividad, int id, String tituloActividad, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador usuario, String nivelDificultad, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner){
+	public void crearNuevaActividad(LearningPath learningPathEncontrado, String tipoActividad, int id, String tituloActividad, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador usuario, String nivelDificultad, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas){
 	    // Crear la nueva actividad a través del diálogo gráfico
-	    Actividad nuevaActividad = ProfesorCreador.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
+	    Actividad nuevaActividad = ProfesorCreador.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas);
 	    
 	    // Agregar la nueva actividad al LearningPath
 	    learningPathEncontrado.agregarActividad(nuevaActividad);

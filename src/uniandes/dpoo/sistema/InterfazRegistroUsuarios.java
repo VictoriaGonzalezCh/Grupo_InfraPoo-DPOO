@@ -139,18 +139,4 @@ public class InterfazRegistroUsuarios extends JFrame {
         formulario.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        // Crear instancia del sistema
-        Sistema sistema = new Sistema();
-
-        // Crear ventana principal
-        JFrame ventanaPrincipal = new JFrame("Ventana Principal");
-        ventanaPrincipal.setSize(400, 200);
-        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaPrincipal.setLocationRelativeTo(null);
-        ventanaPrincipal.setVisible(true);
-
-        // Mostrar interfaz de registro
-        new InterfazRegistroUsuarios(sistema, ventanaPrincipal);
-    }
 }

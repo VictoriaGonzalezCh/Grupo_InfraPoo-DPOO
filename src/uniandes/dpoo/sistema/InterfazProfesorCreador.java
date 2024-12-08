@@ -25,6 +25,7 @@ public class InterfazProfesorCreador extends JFrame {
 	
 	Sistema sistema = new Sistema();
 	private ProfesorCreador profesor;
+	JComboBox<String> comboLearningPaths = new JComboBox<>();
 
 	public InterfazProfesorCreador(ProfesorCreador profesor, Sistema sistema) {
         this.profesor = profesor; // Guardar la referencia del profesor
@@ -54,19 +55,19 @@ public class InterfazProfesorCreador extends JFrame {
 
         // Desplegable de Learning Paths
         
-        List<LearningPath> learningpaths = profesor.getLearningPaths();
+     // Desplegable de Learning Paths
+        List<LearningPath> learningPaths = profesor.getLearningPaths();
 
-        JComboBox<String> comboLearningPaths = new JComboBox<>();
-        if (learningpaths == null || learningpaths.isEmpty()) {
+        if (learningPaths == null || learningPaths.isEmpty()) {
             // Agregar mensaje al JComboBox si no hay LearningPaths
             comboLearningPaths.addItem("Aún no hay LearningPaths creados.");
         } else {
-            // Llenar el JComboBox con los nombres de los LearningPaths
-            for (LearningPath lp : learningpaths) {
-                comboLearningPaths.addItem(lp.getTitulo());
+            // Llenar el JComboBox con los nombres de los LearningPaths y su código
+            for (LearningPath lp : learningPaths) {
+                comboLearningPaths.addItem("ID: " + lp.getId() + " - " + lp.getTitulo());
             }
         }
-
+        
         // Configurar dimensiones y agregar al panel izquierdo
         comboLearningPaths.setMaximumSize(new Dimension(200, 30)); // Ancho fijo
         leftPanel.add(Box.createVerticalStrut(10)); // Espaciado
@@ -75,7 +76,7 @@ public class InterfazProfesorCreador extends JFrame {
        
         comboLearningPaths.addActionListener(e -> {
             String selectedPath = (String) comboLearningPaths.getSelectedItem();
-            JOptionPane.showMessageDialog(this, "Seleccionaste: " + selectedPath);
+            //JOptionPane.showMessageDialog(this, "Seleccionaste: " + selectedPath);
         });
 
         // Crear el panel derecho (Botones del menú)
@@ -121,6 +122,9 @@ public class InterfazProfesorCreador extends JFrame {
 
         setVisible(true); // Hacer visible la ventana
     }
+	
+	
+	
     // Métodos que se llaman al presionar los botones (puedes implementar la lógica aquí)
     private void crearActividad() {
         // Paso 1: Buscar el Learning Path por ID
@@ -191,8 +195,7 @@ public class InterfazProfesorCreador extends JFrame {
 
 		// Paso 3: Crear la nueva actividad en el sistema
         sistema.crearNuevaActividad(learningPathEncontrado, tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario,
-				nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, null // No necesitas scanner aquí
-);
+				nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas);
 
         JOptionPane.showMessageDialog(this, "Actividad creada exitosamente con ID: " + id);
     }
@@ -288,24 +291,42 @@ public class InterfazProfesorCreador extends JFrame {
             JOptionPane.showMessageDialog(this, "Operación cancelada.");
             return; // Salir si el usuario cancela
         }
-
+        
         String rating = JOptionPane.showInputDialog(this, "Calificación inicial (rating):");
         if (rating == null) {
             JOptionPane.showMessageDialog(this, "Operación cancelada.");
             return; // Salir si el usuario cancela
         }
-
+        
+        
         try {
             int id = Sistema.generarIDUnicoLearningPaths();
-            sistema.crearLearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating);
+            sistema.crearLearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating, profesor);
 
             JOptionPane.showMessageDialog(this, "El Learning Path ha sido registrado exitosamente.\nID: " + id);
+            actualizarListaLearningPaths();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al crear el Learning Path: " + e.getMessage(), 
                                           "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
     }
 
+    private void actualizarListaLearningPaths() {
+        List<LearningPath> learningPaths = profesor.getLearningPaths();
+        comboLearningPaths.removeAllItems(); // Limpiar los elementos actuales
+       
+        if (learningPaths.isEmpty()) {
+            comboLearningPaths.addItem("Aún no hay LearningPaths creados.");
+        } else {
+            // Llenar el JComboBox con los nuevos LearningPaths
+            for (LearningPath lp : learningPaths) {
+                comboLearningPaths.addItem("ID: " + lp.getId() + " - " + lp.getTitulo());
+            }
+        }
+    }
+    
     public void editarActividad() {
         String idActividadParaEditar = JOptionPane.showInputDialog(this, "Escriba el ID de la Actividad que quiere editar:");
         if (idActividadParaEditar == null) {
@@ -433,42 +454,132 @@ public class InterfazProfesorCreador extends JFrame {
 
         switch (tipoActividadRelacionada) {
             case 0: // Prerrequisito
-                añadirPrerequisito(actividadEncontrada, actividadRelacionada);
+                añadirPrerequisito();
                 break;
             case 1: // Seguimiento
-                añadirActividadesSeguimiento(actividadEncontrada, actividadRelacionada);
+                añadirActividadesSeguimiento();
                 break;
             case 2: // Actividad previa
-                añadirActividadPrevia(actividadEncontrada, actividadRelacionada);
+                añadirActividadPrevia();
                 break;
         }
     }
 
-    private void añadirPrerequisito(Actividad actividadEncontrada, Actividad actividadRelacionada) {
-        try {
-            sistema.añadirPrerequisito(actividadEncontrada, actividadRelacionada);
-            JOptionPane.showMessageDialog(this, "Prerrequisito añadido exitosamente.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al añadir el prerrequisito: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    private void añadirActividadesSeguimiento() {
+        String id = JOptionPane.showInputDialog(this, "Escriba el id de la actividad a la cual le quiere añadir una actividad de seguimiento recomendada:");
+        if (id == null || id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
         }
+        
+        Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
+        if (actividadEncontrada == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la actividad con el ID proporcionado.");
+            return;
+        }
+
+        String numActividadesStr = JOptionPane.showInputDialog(this, "Cuantas actividades de seguimiento recomendadas desea añadir?");
+        if (numActividadesStr == null || numActividadesStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        int numActividades = Integer.parseInt(numActividadesStr);
+        for (int i = 0; i < numActividades; i++) {
+            String idActividadParaAñadir = JOptionPane.showInputDialog(this, "Escriba el id de la actividad a añadir a la lista de actividades de seguimiento recomendada:");
+            if (idActividadParaAñadir == null || idActividadParaAñadir.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Operación cancelada.");
+                return;
+            }
+
+            Actividad actividadEncontradaParaAñadir = sistema.buscarActividadPorId(Integer.parseInt(idActividadParaAñadir));
+            if (actividadEncontradaParaAñadir == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró la actividad con el ID proporcionado.");
+                return;
+            }
+
+            actividadEncontrada.agregarActividadesSeguimientoRecomendadas(actividadEncontradaParaAñadir);
+        }
+
+        JOptionPane.showMessageDialog(this, "Actividad de seguimiento añadida.");
+    }
+    
+    private void añadirPrerequisito() {
+        String id = JOptionPane.showInputDialog(this, "Escriba el id de la actividad a la cual le quiere añadir una actividad prerequisito:");
+        if (id == null || id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
+        if (actividadEncontrada == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la actividad con el ID proporcionado.");
+            return;
+        }
+
+        String numActividadesStr = JOptionPane.showInputDialog(this, "Cuantas actividades prerequisito desea añadir?");
+        if (numActividadesStr == null || numActividadesStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        int numActividades = Integer.parseInt(numActividadesStr);
+        for (int i = 0; i < numActividades; i++) {
+            String idActividadParaAñadir = JOptionPane.showInputDialog(this, "Escriba el id de la actividad a añadir a la lista de prerequisitos:");
+            if (idActividadParaAñadir == null || idActividadParaAñadir.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Operación cancelada.");
+                return;
+            }
+
+            Actividad actividadEncontradaParaAñadir = sistema.buscarActividadPorId(Integer.parseInt(idActividadParaAñadir));
+            if (actividadEncontradaParaAñadir == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró la actividad con el ID proporcionado.");
+                return;
+            }
+
+            actividadEncontrada.agregarPrerequisito(actividadEncontradaParaAñadir);
+        }
+
+        JOptionPane.showMessageDialog(this, "Actividad prerequisito añadida.");
     }
 
-    private void añadirActividadesSeguimiento(Actividad actividadEncontrada, Actividad actividadRelacionada) {
-        try {
-            Consola.añadirSeguimiento(actividadEncontrada, actividadRelacionada);
-            JOptionPane.showMessageDialog(this, "Seguimiento añadido exitosamente.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al añadir el seguimiento: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    private void añadirActividadPrevia() {
+        String id = JOptionPane.showInputDialog(this, "Escriba el id de la actividad a la cual le quiere añadir una actividad previa:");
+        if (id == null || id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
         }
-    }
 
-    private void añadirActividadPrevia(Actividad actividadEncontrada, Actividad actividadRelacionada) {
-        try {
-            sistema.añadirActividadPrevia(actividadEncontrada, actividadRelacionada);
-            JOptionPane.showMessageDialog(this, "Actividad previa añadida exitosamente.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al añadir la actividad previa: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        Actividad actividadEncontrada = sistema.buscarActividadPorId(Integer.parseInt(id));
+        if (actividadEncontrada == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la actividad con el ID proporcionado.");
+            return;
         }
+
+        String numActividadesStr = JOptionPane.showInputDialog(this, "Cuantas actividades previas desea añadir?");
+        if (numActividadesStr == null || numActividadesStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        int numActividades = Integer.parseInt(numActividadesStr);
+        for (int i = 0; i < numActividades; i++) {
+            String idActividadParaAñadir = JOptionPane.showInputDialog(this, "Escriba el id de la actividad a añadir a la lista de actividades previas:");
+            if (idActividadParaAñadir == null || idActividadParaAñadir.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Operación cancelada.");
+                return;
+            }
+
+            Actividad actividadEncontradaParaAñadir = sistema.buscarActividadPorId(Integer.parseInt(idActividadParaAñadir));
+            if (actividadEncontradaParaAñadir == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró la actividad con el ID proporcionado.");
+                return;
+            }
+
+            actividadEncontrada.agregarActividadPrevia(actividadEncontradaParaAñadir);
+        }
+
+        JOptionPane.showMessageDialog(this, "Actividad previa añadida.");
     }
 
     private void verReseñasActividades() {
@@ -537,8 +648,5 @@ public class InterfazProfesorCreador extends JFrame {
         dispose(); // Cierra la ventana
     }
 
-    // Método principal para ejecutar la aplicación
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(InterfazProfesorCreador::new);
-    }
+    
 }

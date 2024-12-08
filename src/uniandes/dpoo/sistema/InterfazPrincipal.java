@@ -19,17 +19,29 @@ public class InterfazPrincipal extends JFrame {
 
         // Crear el panel principal con opciones
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(4, 1, 10, 10));
+        mainPanel.setLayout(new GridLayout(3, 1, 10, 10)); // Cambié el GridLayout para ajustarlo mejor al diseño
+
+        // Título en la parte superior
+        JLabel lblTitulo = new JLabel("LearningPaths", JLabel.CENTER);
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
+        mainPanel.add(lblTitulo);
 
         // Botones principales
         JButton btnLogin = new JButton("Iniciar Sesión");
         JButton btnRegistrar = new JButton("Registrar Usuario");
-        
+
+        // Estilo de los botones (opcional, para que se vean más estilizados)
+        btnLogin.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnRegistrar.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        // Cambiar el tamaño de los botones para que sean más pequeños
+        btnLogin.setPreferredSize(new Dimension(200, 30)); // Botón más pequeño
+        btnRegistrar.setPreferredSize(new Dimension(200, 30)); // Botón más pequeño
 
         // Agregar listeners a los botones
         btnLogin.addActionListener(e -> mostrarLogin());
         btnRegistrar.addActionListener(e -> mostrarFormularioRegistro());
-        
+
         // Agregar botones al panel
         mainPanel.add(btnLogin);
         mainPanel.add(btnRegistrar);
@@ -48,7 +60,7 @@ public class InterfazPrincipal extends JFrame {
 
     // Método para mostrar el formulario de registro
     private void mostrarFormularioRegistro() {
-        new InterfazRegistroUsuarios(sistema, this );
+        new InterfazRegistroUsuarios(sistema, this);
         dispose(); // Cerrar la ventana actual
     }
 

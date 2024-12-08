@@ -1,11 +1,15 @@
 package uniandes.dpoo.sistema;
 
 import java.io.IOException;
+import javax.swing.*;
+
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 import uniandes.dpoo.learningpath.Actividad;
 import uniandes.dpoo.learningpath.LearningPath;
@@ -15,7 +19,7 @@ import uniandes.dpoo.usuario.ProfesorCreador;
 import uniandes.dpoo.usuario.ProfesorSeguimiento;
 import uniandes.dpoo.usuario.Usuario;
 
-public class Consola {
+public class Consola extends JFrame{
 	
     private static Sistema sistema;
     private Usuario usuarioLogueado;
@@ -172,13 +176,13 @@ public class Consola {
 
         switch (opcion) {
             case 1:
-                crearLearningPath(scanner);
+                crearLearningPath();
                 break;
             case 2:
                 editarLearningPath(scanner);
                 break;
             case 3:
-                crearActividad(scanner);
+                crearActividad();
                 break;
             case 4:
                 editarActividad(scanner);
@@ -408,61 +412,124 @@ public class Consola {
        
     }
     
-    private void crearLearningPath(Scanner scanner) throws IOException {        
-        System.out.println("Título del Learning Path: ");
-        String titulo = scanner.nextLine();
-        
-        System.out.println("Descripción del contenido: ");
-        String descripcionContenido = scanner.nextLine();
-        
-        System.out.println("Descripción del objetivo: ");
-        String descripcionObjetivo = scanner.nextLine();
-        
-        System.out.println("Nivel de dificultad (por ejemplo, fácil, medio, difícil): ");
-        String nivelDificultad = scanner.nextLine();
-        
-        System.out.println("Calificación inicial (rating): ");
-        String rating = scanner.nextLine();
+    void crearLearningPath() {        
+    	String titulo = JOptionPane.showInputDialog(this, "Título del Learning Path:");
+        if (titulo == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return; // Salir si el usuario cancela
+        }
+
+        String descripcionContenido = JOptionPane.showInputDialog(this, "Descripción del contenido:");
+        if (descripcionContenido == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return; // Salir si el usuario cancela
+        }
+
+        String descripcionObjetivo = JOptionPane.showInputDialog(this, "Descripción del objetivo:");
+        if (descripcionObjetivo == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return; // Salir si el usuario cancela
+        }
+
+        String nivelDificultad = JOptionPane.showInputDialog(this, "Nivel de dificultad (por ejemplo, fácil, medio, difícil):");
+        if (nivelDificultad == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return; // Salir si el usuario cancela
+        }
+
+        String rating = JOptionPane.showInputDialog(this, "Calificación inicial (rating):");
+        if (rating == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return; // Salir si el usuario cancela
+        }
         
         int id = Sistema.generarIDUnicoLearningPaths();
         
-        System.out.println("El Learning Path ha sido registrado exitosamente.");        
+        JOptionPane.showMessageDialog(this, "El Learning Path ha sido registrado exitosamente.\nID: " + id);
+                
         
         sistema.crearLearningPath(id, titulo, descripcionContenido, descripcionObjetivo, nivelDificultad, rating);
     }
     
-    public static void crearActividad(Scanner scanner) {        
+    public void crearActividad() {        
     	
-    	LearningPath learningPathEncontrado = null;
-    	
-    	while (learningPathEncontrado == null){
-    	System.out.println("Escriba el id del Learning Path dentro del cual quiere crear la actividad: ");
-        String idLP = scanner.nextLine();
-        learningPathEncontrado = sistema.buscarLearningPath(Integer.parseInt(idLP));}
+    	// Obtener el ID del Learning Path
+        String idLP = JOptionPane.showInputDialog(this, "Escriba el id del Learning Path dentro del cual quiere crear la actividad:");
+        if (idLP == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return; // Salir si el usuario cancela
+        }
+
+        LearningPath learningPathEncontrado = null;
+        try {
+            learningPathEncontrado = sistema.buscarLearningPath(Integer.parseInt(idLP));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID no válido.");
+            return; // Salir si el ID no es válido
+        }
         
-        System.out.println("Escriba el tipo de Actividad (tarea, quiz, examen, recurso educativo, encuesta): ");
-        String tipoActividad = scanner.nextLine();
-        
-        System.out.println("Escriba el título de la Actividad: ");
-        String tituloActividad = scanner.nextLine();
-    	
-        System.out.println("Descripción de la actividad: ");
-        String descripcion = scanner.nextLine();
+        if (learningPathEncontrado == null) {
+            JOptionPane.showMessageDialog(this, "Learning Path no encontrado.");
+            return;
+        }
 
-        System.out.println("Descripción del objetivo: ");
-        String objetivo = scanner.nextLine();
+        // Obtener el tipo de actividad
+        String tipoActividad = JOptionPane.showInputDialog(this, "Escriba el tipo de Actividad (tarea, quiz, examen, recurso educativo, encuesta):");
+        if (tipoActividad == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return; // Salir si el usuario cancela
+        }
 
-        System.out.println("Nivel de dificultad (por ejemplo, fácil, medio, difícil): ");
-        String nivelDificultad = scanner.nextLine();
+        // Obtener el título de la actividad
+        String tituloActividad = JOptionPane.showInputDialog(this, "Escriba el título de la Actividad:");
+        if (tituloActividad == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
 
-        System.out.println("Duración esperada (en minutos): ");
-        String duracionEsperada = scanner.nextLine();
-        
-        System.out.println("Fecha límite (formato: dd/MM/yyyy): ");
-        String fechaLimite = scanner.nextLine();
+        // Obtener la descripción de la actividad
+        String descripcion = JOptionPane.showInputDialog(this, "Descripción de la actividad:");
+        if (descripcion == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
 
-        System.out.println("¿Es una actividad obligatoria? (true/false): ");
-        boolean obligatoria = Boolean.parseBoolean(scanner.nextLine());
+        // Obtener la descripción del objetivo
+        String objetivo = JOptionPane.showInputDialog(this, "Descripción del objetivo:");
+        if (objetivo == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        // Obtener el nivel de dificultad
+        String nivelDificultad = JOptionPane.showInputDialog(this, "Nivel de dificultad (por ejemplo, fácil, medio, difícil):");
+        if (nivelDificultad == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        // Obtener la duración esperada de la actividad
+        String duracionEsperada = JOptionPane.showInputDialog(this, "Duración esperada (en minutos):");
+        if (duracionEsperada == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        // Obtener la fecha límite de la actividad
+        String fechaLimite = JOptionPane.showInputDialog(this, "Fecha límite (formato: dd/MM/yyyy):");
+        if (fechaLimite == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+
+        // Preguntar si es obligatoria
+        String obligatoriaString = JOptionPane.showInputDialog(this, "¿Es una actividad obligatoria? (true/false):");
+        if (obligatoriaString == null) {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            return;
+        }
+        boolean obligatoria = Boolean.parseBoolean(obligatoriaString);
+
         
         int id = Sistema.generarIDUnicoActividades();
         
@@ -473,7 +540,7 @@ public class Consola {
         List<Actividad> prerequisitos = new ArrayList<>();
         List<Actividad> actividadesSeguimientoRecomendadas = new ArrayList<>();
         
-        sistema.crearNuevaActividad(learningPathEncontrado, tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
+        sistema.crearNuevaActividad(learningPathEncontrado, tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas);
         //Actividad nuevaActividad = Profesor.nuevaActividad(tipoActividad, id, tituloActividad, descripcion, objetivo, duracionEsperada, obligatoria, usuario, nivelDificultad, actividadesPreviasSugeridas, fechaLimite, prerequisitos, actividadesSeguimientoRecomendadas, scanner);
         
         //learningPathEncontrado.agregarActividad(nuevaActividad);

@@ -1,5 +1,6 @@
 package uniandes.dpoo.usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ import uniandes.dpoo.learningpath.Tarea;
 
 public class ProfesorCreador extends Usuario{
 		
-		List<LearningPath> learningPaths;
+		List<LearningPath> learningPaths = new ArrayList<>();
 		
 		
 		public static ProfesorCreador nuevoProfesorCreador(int id, String login, String contraseña) {
@@ -91,7 +92,7 @@ public class ProfesorCreador extends Usuario{
 			return resultado;
 		}
 		
-		public static Actividad nuevaActividad(String tipo, int id, String titulo, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador creador, String nivelDificultad, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas, Scanner scanner) {
+		public static Actividad nuevaActividad(String tipo, int id, String titulo, String descripcion, String objetivo, String duracionEsperada, boolean obligatoria, ProfesorCreador creador, String nivelDificultad, List<Actividad> actividadesPreviasSugeridas, String fechaLimite, List<Actividad> prerequisitos, List<Actividad> actividadesSeguimientoRecomendadas) {
 		    Actividad actividad = null;
 		    String resultado = "n.a";
 		    
