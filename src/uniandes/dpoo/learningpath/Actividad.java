@@ -247,22 +247,23 @@ public class Actividad {
 	}
 
 	public void mostrarInfoActividad() {
-	    // Crear el panel principal
+	    System.out.println("El método mostrarInfoActividad() se está ejecutando.");
+
 	    JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-	    // Añadir información básica
-	    panel.add(new JLabel("Descripción: " + descripcion));
-	    panel.add(new JLabel("Objetivo: " + objetivo));
-	    panel.add(new JLabel("Nivel de Dificultad: " + nivelDificultad));
-	    panel.add(new JLabel("Duración Esperada: " + duracionEsperada));
-	    panel.add(new JLabel("Fecha Límite: " + fechaLimite));
+	    // Manejo de valores nulos
+	    panel.add(new JLabel("Descripción: " + (descripcion != null ? descripcion : "No disponible")));
+	    panel.add(new JLabel("Objetivo: " + (objetivo != null ? objetivo : "No disponible")));
+	    panel.add(new JLabel("Nivel de Dificultad: " + (nivelDificultad != null ? nivelDificultad : "No especificado")));
+	    panel.add(new JLabel("Duración Esperada: " + (duracionEsperada != null ? duracionEsperada : "No especificada")));
+	    panel.add(new JLabel("Fecha Límite: " + (fechaLimite != null ? fechaLimite : "No especificada")));
 	    panel.add(new JLabel("Obligatoria: " + (obligatoria ? "Sí" : "No")));
-	    panel.add(new JLabel("Creador: " + creador.getLogin()));
-	    panel.add(new JLabel("Resultado: " + resultado));
+	    panel.add(new JLabel("Creador: " + (creador != null ? creador.getLogin() : "No disponible")));
+	    panel.add(new JLabel("Resultado: " + (resultado != null ? resultado : "No disponible")));
 	    panel.add(new JSeparator(SwingConstants.HORIZONTAL));
 
-	    // Panel para actividades previas sugeridas
+	    // Actividades previas sugeridas
 	    panel.add(new JLabel("Actividades Previas Sugeridas:"));
 	    if (actividadesPreviasSugeridas.isEmpty()) {
 	        panel.add(new JLabel("No hay actividades previas sugeridas."));
@@ -273,7 +274,7 @@ public class Actividad {
 	    }
 	    panel.add(new JSeparator(SwingConstants.HORIZONTAL));
 
-	    // Panel para prerrequisitos
+	    // Prerrequisitos
 	    panel.add(new JLabel("Prerrequisitos:"));
 	    if (prerequisitos.isEmpty()) {
 	        panel.add(new JLabel("No hay prerrequisitos."));
@@ -282,12 +283,23 @@ public class Actividad {
 	            panel.add(new JLabel("- " + act.getTituloActividad()));
 	        }
 	    }
+	    
+	    panel.add(new JLabel("Actividades de Seguimiento:"));
+	    if (actividadesSeguimientoRecomendadas == null || actividadesSeguimientoRecomendadas.isEmpty()) {
+	        panel.add(new JLabel("No hay actividades de seguimiento."));
+	    } else {
+	        for (Actividad act : actividadesSeguimientoRecomendadas) {
+	            panel.add(new JLabel("- " + act.getTituloActividad()));
+	        }
+	    }
 
 	    // Mostrar el panel en un cuadro de diálogo
 	    JScrollPane scrollPane = new JScrollPane(panel);
-	    scrollPane.setPreferredSize(new Dimension(400, 300));
+	    scrollPane.setPreferredSize(new Dimension(500, 400));
 	    JOptionPane.showMessageDialog(null, scrollPane, "Información de la Actividad", JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	
 		
     }
 	
